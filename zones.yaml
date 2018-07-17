@@ -1,0 +1,23 @@
+- name: Home
+  latitude: !secret zone_home_latitude
+  longitude: !secret zone_home_longitude
+  radius: 600
+  icon: mdi:home
+
+#- name: Warm House
+#  latitude: !secret zone_warm_latitude
+#  longitude: !secret zone_warm_longitude
+#  radius: 1200
+#  icon: mdi:home-map-marker
+
+- name: Work
+  latitude: !secret zone_work_latitude
+  longitude: !secret zone_work_longitude
+  radius: 500
+  icon: mdi:briefcase
+
+- name: Lady
+  latitude: !secret zone_lady_latitude
+  longitude: !secret zone_lady_longitude
+  radius: 500
+  icon: mdi:cat
