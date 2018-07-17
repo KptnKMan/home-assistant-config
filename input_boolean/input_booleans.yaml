@@ -1,0 +1,15 @@
+
+vacation_mode:
+  name: "On Vacation"
+  initial: off
+  icon: mdi:airplane
+
+friend_visiting:
+  name: "Friend Visiting"
+  initial: off
+  icon: mdi:human-greeting
+
+kids_in_the_house:
+  name: "Kids in the House"
+  initial: off
+  icon: mdi:human-child

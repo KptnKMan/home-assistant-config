@@ -1,0 +1,5 @@
+sleep_optimus: '/usr/bin/curl -X GET "http://192.168.178.120:7760/suspend"'
+## More info: http://www.ireksoftware.com/SleepOnLan
+
+sleep_soundwave: '/usr/bin/curl -X GET "http://192.168.178.100:7760/suspend"'
+## More info: http://www.ireksoftware.com/SleepOnLan

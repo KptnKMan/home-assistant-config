@@ -1,0 +1,27 @@
+target_temp:
+  name: Target Temp
+  initial: 20
+  min: 14
+  max: 25
+  step: 1
+  mode: slider
+  unit_of_measurement: °C  
+  icon: mdi:thermometer-lines
+rest_temp:
+  name: Rest Temp
+  initial: 17
+  min: 14
+  max: 25
+  step: 1
+  mode: slider
+  unit_of_measurement: °C  
+  icon: mdi:thermometer-lines
+away_temp:
+  name: Away Temp
+  initial: 14
+  min: 14
+  max: 25
+  step: 1
+  mode: slider
+  unit_of_measurement: °C  
+  icon: mdi:thermometer-lines
