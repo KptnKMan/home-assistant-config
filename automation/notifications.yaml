@@ -1,0 +1,145 @@
+##################################
+#### NOTIFICATION AUTOMATIONS ####
+##################################
+
+## Tell me when Home Assistant starts/restarts
+- id: ha_notification_startup
+  alias: HA Notification Startup
+  trigger:
+    - platform: homeassistant
+      # Event can also be 'shutdown'
+      event: start
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: 'Home Assistant Started!'
+        message: "Home Assistant started and available!"
+
+## Tell me when Home Assistant Stopping/Shutdown
+- id: ha_notification_shutdown
+  alias: HA Notification Shutdown
+  trigger:
+    - platform: homeassistant
+      event: shutdown
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: 'Home Assistant Stopping!'
+        message: "Home Assistant shutting down!"
+
+## Tell me when Home Assistant update available
+- id: ha_notification_available
+  alias: HA Notification Update Available
+  trigger:
+    - platform: state
+      entity_id: updater.updater
+  action:
+    - service: notify.pushbullet
+      data: 
+        #target: 'YOUR_TARGET_HERE' #See Pushbullet component for usage
+        target: !secret email_target_pushbullet
+        title: 'New Home Assistant Release'
+        message: "Home Assistant  {{ states.updater.updater.state }}  is now available."
+
+## Tell me when new devices detected on network
+- id: ha_notification_new_nmap_device
+  alias: HA Notification New NMAP Device
+  trigger:
+    - platform: event
+      event_type: device_tracker_new_device
+  action:
+    - service: notify.pushbullet
+      data:
+        target: !secret email_target_pushbullet
+        title: 'New Device detected!'
+        message: "New unknown NMAP device detected!"
+#        message: "New unknown NMAP device detected! > {{ states.updater.updater.state }}"
+
+## Tell me there is an intruder ## entrance
+- id: ha_notification_there_is_an_intruder_entrance
+  alias: HA Notification There is an intruder ENTRANCE
+  trigger:
+    - platform: state
+      entity_id: !secret coolcam_motion_sensor_1
+      from: 'off'
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_select.house_presence
+      state: 'Nobody Home'
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: 'ALERT! Movement at Home!'
+        message: "Movement has been detected at ENTRANCE!"
+
+## Tell me there is an intruder ## downstairs
+- id: ha_notification_there_is_an_intruder_downstairs
+  alias: HA Notification There is an intruder DOWNSTAIRS
+  trigger:
+    - platform: state
+      entity_id: !secret coolcam_motion_sensor_2
+      from: 'off'
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_select.house_presence
+      state: 'Nobody Home'
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: 'ALERT! Movement at Home!'
+        message: "Movement has been detected DOWNSTAIRS!"
+
+## Tell me there is an intruder ## upstairs
+- id: ha_notification_there_is_an_intruder_upstairs
+  alias: HA Notification There is an intruder UPSTAIRS
+  trigger:
+    - platform: state
+      entity_id: !secret 6in1_sensor_move_1
+      from: 'off'
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_select.house_presence
+      state: 'Nobody Home'
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: 'ALERT! Movement at Home!'
+        message: "Movement has been detected UPSTAIRS!"
+
+## Tell me there is an intruder ## living room
+- id: ha_notification_there_is_an_intruder_livingroom
+  alias: HA Notification There is an intruder LIVINGROOM
+  trigger:
+    - platform: state
+      entity_id: !secret 6in1_sensor_move_2
+      from: 'off'
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_select.house_presence
+      state: 'Nobody Home'
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: 'ALERT! Movement at Home!'
+        message: "Movement has been detected at LIVINGROOM!"
+
+## Tell me there is an emergency
+#tbc

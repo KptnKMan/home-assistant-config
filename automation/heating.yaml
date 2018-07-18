@@ -1,0 +1,252 @@
+##########################
+#### HEATING PRESENCE ####
+##########################
+
+## Heating When Waking up, check ever 5 minutes
+- id: heating_detect_kareems_home_wakeup
+  alias: Heating DETECT Kareems HOME Wakeup
+  trigger:
+    - platform: time
+      at: '06:00:00'
+    - platform: time
+      # You can also match on interval. This will match every x minutes
+      minutes: '/5'
+      seconds: 00
+    - platform: state
+      entity_id: input_select.house_presence
+      to: 'Home'
+    - platform: state
+      entity_id: input_select.house_presence
+      to: 'Lady and The Tramp'
+    - platform: state
+      entity_id: input_select.house_presence
+      to: 'lady ALONE'
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: '06:00:00'
+      before: '09:00:00'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.house_presence
+        state: 'Home'
+      - condition: state
+        entity_id: input_select.house_presence
+        state: 'Lady and The Tramp'
+      - condition: state
+        entity_id: input_select.house_presence
+        state: 'lady ALONE'
+  action:
+    - service: climate.set_temperature
+      entity_id: climate.house_heating
+      data_template:
+        temperature: "{{ states('input_number.rest_temp') }}"
+#    - service: climate.set_temperature
+#      data:
+#        entity_id: climate.house_heating
+#        temperature: 18
+#        operation_mode: Heat
+#    - service: notify.pushbullet
+#      data: 
+#        target: !secret email_target_pushbullet
+#        title: 'Heating Waking up'
+#        message: "House waking up!"
+
+## Pre-Heat HOME
+#- id: heating_detect_kareems_coming_home
+#  alias: Heating DETECT Kareems coming HOME
+#  trigger:
+#    - platform: state
+#      entity_id: input_select.house_presence
+#      to: 'Warm House'
+#  condition:
+#    condition: and
+#    conditions:
+#    - condition: time
+#      after: '09:00:00'
+#      before: '23:00:00'
+#    - condition: state
+#      entity_id: input_select.house_presence
+#      state: 'Warm House'
+#  action:
+#    - service: climate.set_temperature
+#      entity_id: climate.house_heating
+#      data_template:
+#        temperature: "{{ states('input_number.rest_temp') }}"
+
+## Heating AT HOME
+- id: heating_detect_kareems_arrived
+  alias: Heating DETECT Kareems ARRIVED
+  trigger:
+    - platform: time
+      at: '09:00:00'
+    - platform: state
+      entity_id: input_select.house_presence
+      to: 'Home'
+    - platform: state
+      entity_id: input_select.house_presence
+      to: 'Lady and The Tramp'
+    - platform: state
+      entity_id: input_select.house_presence
+      to: 'lady ALONE'
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: '09:00:00'
+      before: '23:00:00'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.house_presence
+        state: 'Home'
+      - condition: state
+        entity_id: input_select.house_presence
+        state: 'Lady and The Tramp'
+      - condition: state
+        entity_id: input_select.house_presence
+        state: 'lady ALONE'
+  action:
+    - service: climate.set_temperature
+      entity_id: climate.house_heating
+      data_template:
+        temperature: "{{ states('input_number.target_temp') }}"
+#    - service: climate.set_temperature
+#      data:
+#        entity_id: climate.house_heating
+#        temperature: 20
+#        operation_mode: Heat
+#    - service: notify.pushbullet
+#      data: 
+#        target: !secret email_target_pushbullet
+#        title: 'Heating ON'
+#        message: "House warming for you!"
+
+## Heating When AT HOME, check ever 5 minutes
+- id: heating_detect_kareems_home_day
+  alias: Heating DETECT Kareems HOME Day
+  trigger:
+    - platform: time
+      at: '09:00:00'
+    - platform: time
+      # You can also match on interval. This will match every x minutes
+      minutes: '/5'
+      seconds: 00
+    - platform: state
+      entity_id: input_select.house_presence
+      to: 'Home'
+    - platform: state
+      entity_id: input_select.house_presence
+      to: 'Lady and The Tramp'
+    - platform: state
+      entity_id: input_select.house_presence
+      to: 'lady ALONE'
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: '09:00:00'
+      before: '23:00:00'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.house_presence
+        state: 'Home'
+      - condition: state
+        entity_id: input_select.house_presence
+        state: 'Lady and The Tramp'
+      - condition: state
+        entity_id: input_select.house_presence
+        state: 'lady ALONE'
+  action:
+    - service: climate.set_temperature
+      entity_id: climate.house_heating
+      data_template:
+        temperature: "{{ states('input_number.target_temp') }}"
+#    - service: climate.set_temperature
+#      data:
+#        entity_id: climate.house_heating
+#        temperature: 20
+#        operation_mode: Heat
+#    - service: notify.pushbullet
+#      data: 
+#        target: !secret email_target_pushbullet
+#        title: 'Heating STILL ON'
+#        message: "House toasty!"
+
+## Heating When Nobody Home
+- id: heating_detect_kareems_leaving
+  alias: Heating DETECT Kareems LEAVING
+  trigger:
+    - platform: state
+      entity_id: input_select.house_presence
+      to: 'Nobody Home'
+    - platform: time
+      minutes: '/5'
+      seconds: 00
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_select.house_presence
+      state: 'Nobody Home'
+  action:
+    - service: climate.set_temperature
+      entity_id: climate.house_heating
+      data_template:
+        temperature: "{{ states('input_number.away_temp') }}"
+#    - service: climate.set_temperature
+#      data:
+#        entity_id: climate.house_heating
+#        temperature: 14
+#        operation_mode: Heat
+#    - service: notify.pushbullet
+#      data: 
+#        target: !secret email_target_pushbullet
+#        title: 'Heating OFF'
+#        message: "House cooling!"
+
+##########################
+#### HEATING SCHEDULE ####
+##########################
+
+## Night Heating
+- id: heating_schedule_night
+  alias: Heating SCHEDULE Night
+  trigger:
+    - platform: time
+      at: '23:00:00'
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: '23:00:00'
+      before: '06:00:00'
+  action:
+    - service: climate.set_temperature
+      entity_id: climate.house_heating
+      data_template:
+        temperature: "{{ states('input_number.away_temp') }}"
+#    - service: climate.set_temperature
+#      data:
+#        entity_id: climate.house_heating
+#        temperature: 14
+#        operation_mode: Heat
+
+################################
+#### HEATING MANUAL CONTROL ####
+################################
+
+## manual control of heating via slider
+- id: heating_slider_moved
+  alias: Heating slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.target_temp
+  action:
+    - service: climate.set_temperature
+      entity_id: climate.house_heating
+      data_template:
+        temperature: "{{ states('input_number.target_temp') }}"

@@ -1,0 +1,170 @@
+##########################
+### MANUAL AUTOMATIONS ###
+##########################
+
+## Turn on bedroom things with button
+- id: sw1_bedroom_things
+  alias: sw1 Bedroom Things
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.switch_158d000186dbec
+        click_type: single
+  action:
+    - service: homeassistant.toggle
+      entity_id: group.bedroom_things
+
+## Toggle nightlight with button double-click
+- id: sw1_gateway_nightlight
+  alias: sw1 Gateway Nightlight
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.switch_158d000186dbec
+        click_type: double
+  action:
+    - service: homeassistant.toggle
+      entity_id: !secret light_xiaomi_gateway
+
+## Turn off all lights on long press
+- id: sw1_lights_out
+  alias: sw1 Lights Out
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.switch_158d000186dbec
+        click_type: long_click_press
+  action:
+    - service: homeassistant.turn_off
+      entity_id:
+      - !secret light_upstairs
+      - !secret light_downstairs
+      - !secret light_entrance
+      - !secret light_closet
+      - !secret light_spots_1
+      - !secret light_table_1
+      - !secret light_bedroom_1
+      - !secret light_bedroom_2
+      - !secret light_gameroom_1
+      - !secret light_gameroom_2
+    - service: light.turn_on
+      data:
+        entity_id: !secret light_xiaomi_gateway
+        brightness: 40
+        transition: 2
+        color_name: red
+    # - service: homeassistant.turn_on
+    #   entity_id:
+    #   - !secret light_xiaomi_gateway
+    # - service: notify.pushbullet
+    #   data: 
+    #     target: !secret email_target_pushbullet
+    #     title: 'Lights out!'
+    #     message: "All lights off!"
+
+## Lock doors
+- id: sw2_lock_doors
+  alias: sw2 lock doors
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.switch_158d00018726b8
+        click_type: single
+  action:
+      ## placeholder notification
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: 'Doors locked!'
+        message: "Doors locked!"
+
+## Disarm Alarm system
+- id: sw2_disarm_alarm_system
+  alias: sw2 Disarm Alarm System
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.switch_158d00018726b8
+        click_type: double
+  action:
+      ## placeholder notification
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: 'Alarm Disarmed!'
+        message: "Alarm switch disarmed!"
+
+## Open door strike long press
+- id: sw2_door_strike
+  alias: sw2 Door Strike
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.switch_158d00018726b8
+        click_type: long_click_press
+  action:
+    - service: homeassistant.toggle
+      entity_id:
+        - switch.pi_door_strike
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: 'Door strike activated!'
+        message: "Door Strike activated!"
+
+## Activate OPTIMUS single click
+- id: sw3_activate_optimus
+  alias: sw3 Activate OPTIMUS
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.switch_158d0001870a09
+        click_type: single
+  action:
+      ## Turn on Triple Monitors
+    - service: homeassistant.turn_on
+      entity_id: !secret plug_1
+      ## wait x seconds
+    - delay: 00:00:05
+      ## Turn on OPTIMUS
+    - service: homeassistant.turn_on
+      entity_id: switch.computer_optimus
+
+## Turn off OPTIMUS double click
+- id: sw3_deactivate_optimus
+  alias: sw3 Deactivate OPTIMUS
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.switch_158d0001870a09
+        click_type: double
+  action:
+      ## Turn off OPTIMUS
+    - service: homeassistant.turn_off
+      entity_id: switch.computer_optimus
+      ## wait x seconds
+    - delay: 00:00:05
+      ## Turn off Triple Monitors
+    - service: homeassistant.turn_off
+      entity_id: !secret plug_1
+
+## Turn on Livingroom things with button
+- id: sw4_livingroom_things
+  alias: sw4 Livingroom Things
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.switch_158d0001870ad7
+        click_type: single
+  action:
+    - service: homeassistant.toggle
+      entity_id: group.livingroom_things

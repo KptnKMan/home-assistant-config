@@ -1,0 +1,55 @@
+#####################
+### VACATION MODE ###
+#####################
+
+## https://github.com/ronmarco/home-assistant-config/blob/master/yaml_automation/status-vacation.yaml
+
+## Vacation Mode
+# Inspired by geek of week
+# https://github.com/geekofweek/homeassistant
+
+# Turn vacation mode on automatically
+- id: vacation_mode_on_when_gone_24_hours
+  alias: Vacation mode on when gone 24 hours
+  trigger:
+    - platform: state
+      entity_id: group.kareem_status
+      from: 'home'
+      to: 'not_home'
+      for:
+        hours: 24
+        minutes: 0
+        seconds: 0
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.vacation_mode
+
+# Turn on lights when vacation mode active
+- id: vacation_lights_at_sunset_when_vacation_mode_on
+  alias: Vacation lights at sunset when vacation mode on
+  trigger:
+    - platform: state
+      entity_id: sun.sun
+      from: 'above_horizon'
+      to: 'below_horizon'
+  condition:
+    - condition: state
+      entity_id: input_boolean.vacation_mode
+      state: 'on'
+  action:
+    - service: script.vacation_lights_init
+
+# Turn vacation mode off automatically
+- id: vacation_mode_off_when_home
+  alias: Vacation mode off when home
+  trigger:
+    - platform: state
+      entity_id: group.kareem_status
+      from: 'not_home'
+      to: 'home'
+  action:
+    - service: homeassistant.turn_off
+      entity_id:
+        - input_boolean.vacation_mode
+        - script.vacation_lights_away_sequence
+        - script.vacation_lights_init
