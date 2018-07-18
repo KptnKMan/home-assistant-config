@@ -175,13 +175,13 @@
       friendly_name: Livingroom Display
       icon: mdi:star
     !secret plug_8:
-      friendly_name: Livingroom Google Home
+      friendly_name: Livingroom Fan
       icon: mdi:star
     !secret plug_9:
       friendly_name: Pantry Light
       icon: mdi:star
     !secret plug_10:
-      friendly_name: Switch 10
+      friendly_name: HA Hard Reset
       icon: mdi:star
 
 ## Light switches

@@ -290,12 +290,12 @@
     control: hidden
     entities:
       - !secret plug_9
-      - !secret plug_10
   livingroom_things:
     view: no
     name: Livingroom Things
     entities:
       - !secret plug_6
+      - !secret plug_10
   bedroom_things:
     view: no
     name: Bedroom Things
