@@ -50,11 +50,8 @@ updater:
 http:
   ## Uncomment this to add a password (recommended!)
   api_password: !secret api_password
-#  ssl_certificate: /ssl/fullchain.pem
-#  ssl_key: /ssl/privkey.pem
-#  ssl_certificate: /ssl/letsencrypt/live/straker-me/fullchain.pem
-#  ssl_key: /ssl/letsencrypt/live/straker-me/privkey.pem
-#  /data/letsencrypt/live/straker.me/fullchain.pem
+  # ssl_certificate: /ssl/fullchain.pem
+  # ssl_key: /ssl/privkey.pem
 
 ## Enables support for tracking
 recorder:
@@ -224,10 +221,7 @@ climate:
   - platform: generic_thermostat
     name: House Heating
     heater: switch.pi_boiler_switch
-    ## Multi-sensor 6
-    # target_sensor: !secret 6in1_sensor_temp_2
-    ## Xiaomi temp sensor
-    target_sensor: sensor.temperature_158d00019ce72e
+    target_sensor: !secret xiaomi_temp_2
     min_temp: 10
     max_temp: 25
     target_temp: 21
@@ -236,7 +230,6 @@ climate:
     icon: mdi:guage
     min_cycle_duration:
       minutes: 1
-      # seconds: 5
 
 binary_sensor:
   - platform: ring
