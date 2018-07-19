@@ -295,7 +295,6 @@
     name: Livingroom Things
     entities:
       - !secret plug_6
-      - !secret plug_10
   bedroom_things:
     view: no
     name: Bedroom Things
@@ -454,6 +453,8 @@
     control: hidden
     entities:
       - !secret plug_4
+      - !secret plug_8
+      - !secret plug_10
   monitor_things:
     view: no
     name: Monitor Things
