@@ -187,6 +187,7 @@ notify:
     api_key: !secret apikey_pushbullet
 
 mqtt:
+  password: !secret api_password
 #  broker: 127.0.0.1
   broker: 192.168.178.130
   port: 1883
