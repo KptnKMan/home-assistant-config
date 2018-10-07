@@ -75,12 +75,27 @@
         entity_id: binary_sensor.switch_158d00018726b8
         click_type: single
   action:
-      ## placeholder notification
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet
-        title: 'Doors locked!'
-        message: "Doors locked!"
+        title: '1 min to Arming Home!'
+        message: "1 min to Arming Home!"
+    - delay: 0:59
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.house_presence
+        option: 'Nobody Home'
+    ## placeholder for door locks
+    # - service: notify.pushbullet
+    #   data: 
+    #     target: !secret email_target_pushbullet
+    #     title: 'Doors locked!'
+    #     message: "Doors locked!"
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: 'Home Armed!'
+        message: "Home Armed!"
 
 ## Disarm Alarm system
 - id: sw2_disarm_alarm_system
@@ -92,7 +107,10 @@
         entity_id: binary_sensor.switch_158d00018726b8
         click_type: double
   action:
-      ## placeholder notification
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.house_presence
+        option: 'Home'
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet
@@ -156,6 +174,19 @@
     - service: homeassistant.turn_off
       entity_id: !secret plug_1
 
+## Toggle Gameroom Light with button long press
+- id: sw3_gameroom_light
+  alias: sw1 Gameroom Light
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.switch_158d0001870a09
+        click_type: long_click_press
+  action:
+    - service: homeassistant.toggle
+      entity_id: !secret light_gameroom_1
+
 ## Turn on Livingroom things with button
 - id: sw4_livingroom_things
   alias: sw4 Livingroom Things
@@ -168,3 +199,16 @@
   action:
     - service: homeassistant.toggle
       entity_id: group.livingroom_things
+
+## Toggle Livingroom Spots with button long press
+- id: sw4_livingroom_spots
+  alias: sw4 Livingroom Spots
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.switch_158d0001870ad7
+        click_type: long_click_press
+  action:
+    - service: homeassistant.toggle
+      entity_id: !secret light_spots_1
