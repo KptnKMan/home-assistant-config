@@ -113,23 +113,21 @@ xiaomi_aqara:
 ## Enable Google Assistant API
 google_assistant:
   project_id: !secret google_assistant_project_id
-  client_id: !secret google_assistant_client_id
-  access_token: !secret google_assistant_access_token
+  # client_id: !secret google_assistant_client_id
+  # access_token: !secret google_assistant_access_token
   # agent_user_id: google_assistant_agent_user_id
   api_key: google_assistant_api_key
   exposed_domains:
+     - group
+    #  - input_boolean
+     - scene
+     - script
      - switch
+    #  - fan
      - light
     #  - cover
      - media_player
-     - group
-    #  - fan
-     - scene
-     - script
      - climate
-    #  - input_number
-    #  - input_boolean
-    #  - input_select
   entity_config:
     group.bedroom_things:
       name: Bedroom Things
