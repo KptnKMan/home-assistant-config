@@ -8,6 +8,7 @@ www/*
 .ring_cache.pickle
 .smbdeleteAAA1be9
 .uuid
+.HA_VERSION
 OZW_Log.txt
 entity_registry.yaml
 home-assistant.log
