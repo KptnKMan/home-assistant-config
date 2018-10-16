@@ -279,7 +279,8 @@ input_select:
     icon: mdi:home-map-marker
 
 ## Automation programs
-automation: !include_dir_merge_list automation
+automation: !include automations.yaml
+automation old: !include_dir_merge_list automation
 ## Device Tracker module
 device_tracker: !include_dir_merge_list device_tracker
 ## Views (Tabs) and Groups
