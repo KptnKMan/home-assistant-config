@@ -31,9 +31,9 @@
 #      - kareem
 #      - kareem kareem
 
-## OwnTracks via their HTTP publishing method
-  - platform: owntracks_http
-    track_new_devices: yes
-    max_gps_accuracy: 200
-    interval_seconds: 240
-    consider_home: 600
+# ## OwnTracks via their HTTP publishing method
+#   - platform: owntracks_http
+#     track_new_devices: yes
+#     max_gps_accuracy: 200
+#     interval_seconds: 240
+#     consider_home: 600
