@@ -11,8 +11,6 @@
       - !secret 6in1_sensor_temp_1
       - device_tracker.kareem_ot
       - device_tracker.kareem_g6
-#      - device_tracker.lady_iphone
-#      - group.kareem_status
       - group.date_and_time
       - group.house_operation
       - group.environment_inside
@@ -52,7 +50,27 @@
       - group.soundwave
       - group.sharing_things
       - group.unused_things
-      - group.media_things
+  media:
+    view: yes
+    name: Media
+    icon: mdi:play-network
+    entities:
+      # - group.media_things
+      - media_player.plex_chromecast
+      - media_player.plex_chromecast_2
+      - media_player.plex_web_chrome
+      - media_player.plex_plex_web_chrome
+      - media_player.plex_chrome_3
+      - media_player.plex_galaxy_s6
+      - media_player.livingroom_tv
+      - media_player.bedroom_tv
+      - media_player.livingroom_speaker
+      - media_player.bedroom_speaker
+      - media_player.gameroom_speaker
+      - media_player.mobile_speaker
+      - media_player.the_whole_house
+      - media_player.upstairs
+      - media_player.downstairs
   metrics:
     view: yes
     name: Metrics
@@ -60,6 +78,7 @@
     entities:
       - group.pi_monitor
       - group.kareem_status
+      - group.friends_status
       - group.xiaomi_things
       - group.vera_things
       - group.alarm_things
@@ -85,11 +104,17 @@
 ### GROUPS OF ENTITIES # FOR REFERENCE USE ###
 ##############################################
 
+  # tracker group for master
   kareem_status:
     view: no
     entities:
       - device_tracker.kareem_ot
       - device_tracker.kareem_g6
+  # tracker group for guests
+  friends_status:
+    view: no
+    entities:
+      - device_tracker.lady_iphone
   date_and_time:
     view: no
     name: Date and Time
@@ -335,12 +360,15 @@
     view: no
     name: media Things
     entities:
-      - media_player.bedroom_tv
       - media_player.livingroom_tv
-      - media_player.bedroom_speaker
+      - media_player.bedroom_tv
       - media_player.livingroom_speaker
+      - media_player.bedroom_speaker
       - media_player.gameroom_speaker
+      - media_player.mobile_speaker
       - media_player.the_whole_house
+      - media_player.upstairs
+      - media_player.downstairs
       - media_player.plex_chromecast
       - media_player.plex_chromecast_2
       - media_player.plex_galaxy_s6
