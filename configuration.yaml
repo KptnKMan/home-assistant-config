@@ -106,9 +106,12 @@ vera:
 
 ## Xiaomi component for temp sensors and buttons
 xiaomi_aqara:
+  discovery_retry: 10
   gateways:
-   - mac: !secret mac_address_xiaomi
+   - mac: !secret xiaomi_mac_address
      key: !secret xiaomi_password
+     host: !secret xiaomi_host_ip
+     disable: false
 
 ## Enable Google Assistant API
 google_assistant:
@@ -211,9 +214,11 @@ media_player:
     entity_namespace: 'plex'
     include_non_clients: true
     scan_interval: 5
-    show_all_controls: true
+    show_all_controls: false
     use_custom_entity_ids: false
-    use_episode_art: false
+    use_episode_art: true
+    remove_unavailable_clients: false
+    client_remove_interval: 600
 
 climate:
   - platform: generic_thermostat
