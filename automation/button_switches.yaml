@@ -84,7 +84,7 @@
     - service: input_select.select_option
       data:
         entity_id: input_select.house_presence
-        option: 'Nobody Home'
+        option: 'Away'
     ## placeholder for door locks
     # - service: notify.pushbullet
     #   data: 

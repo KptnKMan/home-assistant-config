@@ -1,0 +1,17 @@
+# - platform: limitlessled
+#   bridges:
+#     - host: 192.168.1.24
+#       groups:
+#       - number: 1
+#         type: rgbw
+#         name: Cabinet 1
+#       - number: 2
+#         type: rgbw
+#         name: Cabinet 2
+#       - number: 3
+#         type: rgbw
+#         name: Kitchen
+#         fade: true
+#       - number: 4
+#         type: rgbw
+#         name: Livingroom

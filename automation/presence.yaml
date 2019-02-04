@@ -19,17 +19,9 @@
     - condition: time
       after: '01:30:00'
       before: '17:00:00'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Home'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Lady and The Tramp'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'lady ALONE'
+    - condition: state
+      entity_id: input_select.house_presence
+      state: 'Home'
   action:
     service: homeassistant.turn_on
     entity_id: script.timed_lamp_upstairs_night
@@ -51,17 +43,9 @@
     - condition: time
       after: '17:00:00'
       before: '01:30:00'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Home'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Lady and The Tramp'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'lady ALONE'
+    - condition: state
+      entity_id: input_select.house_presence
+      state: 'Home'
   action:
     service: homeassistant.turn_on
     entity_id: script.timed_lamp_upstairs
@@ -80,17 +64,9 @@
     - condition: state
       entity_id: sun.sun
       state: 'below_horizon'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Home'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Lady and The Tramp'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'lady ALONE'
+    - condition: state
+      entity_id: input_select.house_presence
+      state: 'Home'
   action:
     service: homeassistant.turn_on
     entity_id: script.timed_lamp_downstairs
@@ -109,17 +85,9 @@
     # - condition: state
     #   entity_id: sun.sun
     #   state: 'below_horizon'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Home'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Lady and The Tramp'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'lady ALONE'
+    - condition: state
+      entity_id: input_select.house_presence
+      state: 'Home'
   action:
     service: homeassistant.turn_on
     entity_id: script.timed_lamp_entrance
@@ -141,17 +109,9 @@
     - condition: time
       after: '01:30:00'
       before: '17:00:00'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Home'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Lady and The Tramp'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'lady ALONE'
+    - condition: state
+      entity_id: input_select.house_presence
+      state: 'Home'
   action:
     service: homeassistant.turn_on
     entity_id: script.timed_lamp_closet_night
@@ -173,45 +133,37 @@
     - condition: time
       after: '17:00:00'
       before: '01:30:00'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Home'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Lady and The Tramp'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'lady ALONE'
+    - condition: state
+      entity_id: input_select.house_presence
+      state: 'Home'
   action:
     service: homeassistant.turn_on
     entity_id: script.timed_lamp_closet
 
-## Kareems OUT! Nobody Home, set presence to 'Nobody Home'
+## Kareems OUT! Nobody Home, set presence to 'Away'
 - id: nobody_home
   alias: Nobody Home
   trigger:
     - platform: state
       entity_id: group.kareem_status
-      to: 'not_home'
+      to: 'away'
     - platform: state
-      entity_id: device_tracker.lady_iphone
-      to: 'not_home'
+      entity_id: group.friends_status
+      to: 'away'
   condition:
   - condition: and
     conditions:
     - condition: state
       entity_id: group.kareem_status
-      state: 'not_home'
+      state: 'away'
     - condition: state
-      entity_id: device_tracker.lady_iphone
-      state: 'not_home'
+      entity_id: group.friends_status
+      state: 'away'
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.house_presence
-        option: 'Nobody Home'
+        option: 'Away'
     # - service: notify.pushbullet
     #   data:
     #     target: !secret email_target_pushbullet
@@ -224,7 +176,7 @@
   trigger:
     - platform: state
       entity_id: input_select.house_presence
-      to: 'Nobody Home'
+      to: 'Away'
       for:
         minutes: 30
   action:
@@ -281,9 +233,9 @@
     - platform: state
       entity_id: group.kareem_status
       to: 'home'
-    # - platform: state
-    #   entity_id: device_tracker.lady_iphone
-    #   to: 'not_home'
+    - platform: state
+      entity_id: group.friends_status
+      to: 'away'
   condition:
   - condition: and
     conditions:
@@ -291,8 +243,8 @@
       entity_id: group.kareem_status
       state: 'home'
     - condition: state
-      entity_id: device_tracker.lady_iphone
-      state: 'not_home'
+      entity_id: group.friends_status
+      state: 'away'
   action:
     - service: input_select.select_option
       data:
@@ -313,74 +265,75 @@
 #   trigger:
 #     - platform: state
 #       entity_id: group.kareem_status
-#       from: 'not_home'
-#       to: 'warm_house'
+#       from: 'away'
+#       to: 'home'
 #   action:
 #     - service: input_select.select_option
 #       data:
 #         entity_id: input_select.house_presence
 #         option: 'Warm House'
 
-## Kareems HOME and lady! set presence to 'Lady and The Tramp'.
-- id: kareems_home_with_lady
-  alias: Kareems HOME with lady
-  trigger:
-    - platform: state
-      entity_id: group.kareem_status
-      to: 'home'
-    - platform: state
-      entity_id: device_tracker.lady_iphone
-      to: 'home'
-  condition:
-  - condition: and
-    conditions:
-    - condition: state
-      entity_id: group.kareem_status
-      state: 'home'
-    - condition: state
-      entity_id: device_tracker.lady_iphone
-      state: 'home'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.house_presence
-        option: 'Lady and The Tramp'
-    - service: homeassistant.turn_on
-      entity_id:
-        - script.timed_lamp_entrance
-    # - service: notify.pushbullet
-    #   data: 
-    #     target: !secret email_target_pushbullet
-    #     title: 'Lady Arrived'
-    #     message: "Lady Arrived!"
+## Kareems HOME and guests! set presence to 'Lady and The Tramp'.
+# - id: kareems_home_with_lady
+#   alias: Kareems HOME with lady
+#   trigger:
+#     - platform: state
+#       entity_id: group.kareem_status
+#       to: 'home'
+#     - platform: state
+#       entity_id: group.friends_status
+#       to: 'home'
+#   condition:
+#   - condition: and
+#     conditions:
+#     - condition: state
+#       entity_id: group.kareem_status
+#       state: 'home'
+#     - condition: state
+#       entity_id: group.friends_status
+#       state: 'home'
+#   action:
+#     - service: input_select.select_option
+#       data:
+#         entity_id: input_select.house_presence
+#         option: 'Lady and The Tramp'
+#     - service: homeassistant.turn_on
+#       entity_id:
+#         - script.timed_lamp_entrance
+#     - service: notify.pushbullet
+#       data: 
+#         target: !secret email_target_pushbullet
+#         title: 'Lady Arrived'
+#         message: "Lady Arrived!"
 
-## Lady is HOME ALONE! set presence to 'Lady and The Tramp'.
-- id: lady_home_alone
-  alias: Lady HOME ALONE
+## Guests are HOME ALONE! set presence to 'Guests HOME ALONE'.
+- id: guests_home_alone
+  alias: Guests HOME ALONE
   trigger:
-    # - platform: state
-    #   entity_id: group.kareem_status
-    #   to: 'not_home'
     - platform: state
-      entity_id: device_tracker.lady_iphone
-      # from: 'not_home'
+      entity_id: group.kareem_status
+      from: 'home'
+      to: 'away'
+    - platform: state
+      entity_id: group.friends_status
+      from: 'away'
       to: 'home'
   condition:
   - condition: and
     conditions:
     - condition: state
       entity_id: group.kareem_status
-      state: 'not_home'
+      state: 'away'
     - condition: state
-      entity_id: device_tracker.lady_iphone
+      entity_id: group.friends_status
       state: 'home'
   action:
     - service: input_select.select_option
       data:
         entity_id: input_select.house_presence
-        option: 'lady ALONE'
+        option: 'Guests ALONE'
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet
-        title: 'Lady HOME ALONE'
-        message: "Lady HOME ALONE!"
+        title: 'Guests HOME ALONE'
+        message: "Guests HOME ALONE!"

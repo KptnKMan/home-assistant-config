@@ -70,7 +70,7 @@
     conditions:
     - condition: state
       entity_id: input_select.house_presence
-      state: 'Nobody Home'
+      state: 'Away'
   action:
     - service: notify.pushbullet
       data: 
@@ -91,7 +91,7 @@
     conditions:
     - condition: state
       entity_id: input_select.house_presence
-      state: 'Nobody Home'
+      state: 'Away'
   action:
     - service: notify.pushbullet
       data: 
@@ -112,7 +112,7 @@
     conditions:
     - condition: state
       entity_id: input_select.house_presence
-      state: 'Nobody Home'
+      state: 'Away'
   action:
     - service: notify.pushbullet
       data: 
@@ -133,7 +133,7 @@
     conditions:
     - condition: state
       entity_id: input_select.house_presence
-      state: 'Nobody Home'
+      state: 'Away'
   action:
     - service: notify.pushbullet
       data: 
