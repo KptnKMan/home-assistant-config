@@ -15,7 +15,7 @@
     - platform: state
       entity_id: group.kareem_status
       from: 'home'
-      to: 'not_home'
+      to: 'away'
       for:
         hours: 24
         minutes: 0
@@ -45,7 +45,7 @@
   trigger:
     - platform: state
       entity_id: group.kareem_status
-      from: 'not_home'
+      from: 'away'
       to: 'home'
   action:
     - service: homeassistant.turn_off

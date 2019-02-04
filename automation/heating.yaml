@@ -8,19 +8,13 @@
   trigger:
     - platform: time
       at: '06:00:00'
-    - platform: time
+    - platform: time_pattern
       # You can also match on interval. This will match every x minutes
       minutes: '/5'
-      seconds: 00
+      # seconds: 00
     - platform: state
       entity_id: input_select.house_presence
       to: 'Home'
-    - platform: state
-      entity_id: input_select.house_presence
-      to: 'Lady and The Tramp'
-    - platform: state
-      entity_id: input_select.house_presence
-      to: 'lady ALONE'
   condition:
     condition: and
     conditions:
@@ -32,12 +26,6 @@
       - condition: state
         entity_id: input_select.house_presence
         state: 'Home'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Lady and The Tramp'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'lady ALONE'
   action:
     - service: climate.set_temperature
       entity_id: climate.house_heating
@@ -54,28 +42,6 @@
 #        title: 'Heating Waking up'
 #        message: "House waking up!"
 
-## Pre-Heat HOME
-#- id: heating_detect_kareems_coming_home
-#  alias: Heating DETECT Kareems coming HOME
-#  trigger:
-#    - platform: state
-#      entity_id: input_select.house_presence
-#      to: 'Warm House'
-#  condition:
-#    condition: and
-#    conditions:
-#    - condition: time
-#      after: '09:00:00'
-#      before: '23:00:00'
-#    - condition: state
-#      entity_id: input_select.house_presence
-#      state: 'Warm House'
-#  action:
-#    - service: climate.set_temperature
-#      entity_id: climate.house_heating
-#      data_template:
-#        temperature: "{{ states('input_number.rest_temp') }}"
-
 ## Heating AT HOME
 - id: heating_detect_kareems_arrived
   alias: Heating DETECT Kareems ARRIVED
@@ -85,29 +51,15 @@
     - platform: state
       entity_id: input_select.house_presence
       to: 'Home'
-    - platform: state
-      entity_id: input_select.house_presence
-      to: 'Lady and The Tramp'
-    - platform: state
-      entity_id: input_select.house_presence
-      to: 'lady ALONE'
   condition:
     condition: and
     conditions:
     - condition: time
       after: '09:00:00'
       before: '23:00:00'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Home'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Lady and The Tramp'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'lady ALONE'
+    - condition: state
+      entity_id: input_select.house_presence
+      state: 'Home'
   action:
     - service: climate.set_temperature
       entity_id: climate.house_heating
@@ -130,36 +82,22 @@
   trigger:
     - platform: time
       at: '09:00:00'
-    - platform: time
+    - platform: time_pattern
       # You can also match on interval. This will match every x minutes
       minutes: '/5'
-      seconds: 00
+      # seconds: 00
     - platform: state
       entity_id: input_select.house_presence
       to: 'Home'
-    - platform: state
-      entity_id: input_select.house_presence
-      to: 'Lady and The Tramp'
-    - platform: state
-      entity_id: input_select.house_presence
-      to: 'lady ALONE'
   condition:
     condition: and
     conditions:
     - condition: time
       after: '09:00:00'
       before: '23:00:00'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Home'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'Lady and The Tramp'
-      - condition: state
-        entity_id: input_select.house_presence
-        state: 'lady ALONE'
+    - condition: state
+      entity_id: input_select.house_presence
+      state: 'Home'
   action:
     - service: climate.set_temperature
       entity_id: climate.house_heating
@@ -176,22 +114,22 @@
 #        title: 'Heating STILL ON'
 #        message: "House toasty!"
 
-## Heating When Nobody Home
+## Heating When Away
 - id: heating_detect_kareems_leaving
   alias: Heating DETECT Kareems LEAVING
   trigger:
     - platform: state
       entity_id: input_select.house_presence
-      to: 'Nobody Home'
-    - platform: time
+      to: 'Away'
+    - platform: time_pattern
       minutes: '/5'
-      seconds: 00
+      # seconds: 00
   condition:
     condition: and
     conditions:
     - condition: state
       entity_id: input_select.house_presence
-      state: 'Nobody Home'
+      state: 'Away'
   action:
     - service: climate.set_temperature
       entity_id: climate.house_heating
@@ -224,6 +162,9 @@
     - condition: time
       after: '23:00:00'
       before: '06:00:00'
+    # - condition: state
+    #   entity_id: input_select.house_presence
+    #   state: 'Home'
   action:
     - service: climate.set_temperature
       entity_id: climate.house_heating

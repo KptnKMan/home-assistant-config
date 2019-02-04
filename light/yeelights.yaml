@@ -1,0 +1,22 @@
+- platform: yeelight
+  devices:
+    192.168.178.151:
+      name: Yeelight 1
+      transition: 500
+      # use_music_mode: True #(defaults to False)
+      # save_on_change: False #(defaults to True)
+    192.168.178.152:
+      name: Yeelight 2
+      transition: 500
+      # use_music_mode: True #(defaults to False)
+      # save_on_change: False #(defaults to True)
+    192.168.178.153:
+      name: Yeelight 3
+      transition: 500
+      # use_music_mode: True #(defaults to False)
+      # save_on_change: False #(defaults to True)
+    192.168.178.154:
+      name: Yeelight 4
+      transition: 500
+      # use_music_mode: True #(defaults to False)
+      # save_on_change: False #(defaults to True)

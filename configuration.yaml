@@ -56,12 +56,12 @@ http:
 ## Enables support for tracking
 recorder:
   ## (days) Enable scheduled purge of older events and states
-  purge_interval: 5
+  purge_interval: 1
   ## (days) Specify number of history days to keep in recorder database after purge
   ## You can use service call recorder.purge when needed
-  purge_keep_days: 10
+  purge_keep_days: 7
   ## The URL which point to your database
-  # db_url: !secret dburl_mariadb
+  db_url: !secret dburl_mariadb_addon
   ## Specify domains of metrics to keep
   # include:
   #   domains:
@@ -78,58 +78,90 @@ recorder:
   #     - sensor.date
   #     - sensor.time
 
-## Setup tracking using InfluxDB
+# # Setup tracking using InfluxDB
 # influxdb:
 #   host: !secret dburl_influxdb
 #   port: !secret dburl_influxdb_port
 #   database: !secret dburl_influxdb_name
+#   username: !secret dburl_influxdb_username
+#   password: !secret dburl_influxdb_password
+#   ssl: true
+#   verify_ssl: true
+#   max_retries: 3
+#   default_measurement: state
+#   tags:
+#    instance: prod
+#    source: hass
 
-  # username: !secret dburl_influxdb_username
-  # password: !secret dburl_influxdb_password
-  # ssl: true
-  # verify_ssl: true
-  # max_retries: 3
-  # default_measurement: state
-  # tags:
-  #  instance: prod
-  #  source: hass
-
-## Open Z-Wave configuration!
+# # Open Z-Wave configuration!
 # zwave:
 #   usb_path: /dev/ttyACM0
 #   network_key: !secret zwave_networkkey
-  # config_path: /srv/hass/src/python-openzwave/openzwave/config
+#   config_path: /srv/hass/src/python-openzwave/openzwave/config
+
+mqtt:
+#  broker: 127.0.0.1
+  broker: 192.168.178.130
+  port: 1883
+  client_id: home-assistant-1
+  keepalive: 60
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+#  certificate: /home/paulus/dev/addtrustexternalcaroot.crt
+#  protocol: 3.1
+  birth_message:
+    topic: 'hass/status'
+    payload: 'online'
+    qos: 1
+    retain: true
+  will_message:
+    topic: 'hass/status'
+    payload: 'offline'
+    qos: 1
+    retain: true
+
+## Ring.com doorbell
+ring:
+  username: !secret ring_username
+  password: !secret ring_password
 
 ## Vera gateway for Z-Wave & Zigbee
 vera:
-  vera_controller_url: !secret vera_url
+  vera_controller_url: http://192.168.178.22:3480/
 
-## Xiaomi component for temp sensors and buttons
+## Xiaomi component for Zigbee temp sensors and buttons
 xiaomi_aqara:
+  discovery_retry: 10
   gateways:
-   - mac: !secret mac_address_xiaomi
+   - mac: !secret xiaomi_mac_address
      key: !secret xiaomi_password
+     host: '192.168.178.23'
+     disable: false
+
+## Pushbullet Token/API setup (Disabled in January)
+notify:
+  - name: pushbullet
+    platform: pushbullet
+    api_key: !secret apikey_pushbullet
 
 ## Enable Google Assistant API
 google_assistant:
   project_id: !secret google_assistant_project_id
-  client_id: !secret google_assistant_client_id
-  access_token: !secret google_assistant_access_token
+  # client_id: !secret google_assistant_client_id
+  # access_token: !secret google_assistant_access_token
   # agent_user_id: google_assistant_agent_user_id
   api_key: google_assistant_api_key
   exposed_domains:
+     - group
+    #  - input_boolean
+     - scene
+     - script
      - switch
+    #  - fan
      - light
     #  - cover
      - media_player
-     - group
-    #  - fan
-     - scene
-     - script
      - climate
-    #  - input_number
-    #  - input_boolean
-    #  - input_select
   entity_config:
     group.bedroom_things:
       name: Bedroom Things
@@ -155,11 +187,6 @@ google_assistant:
     #     - server
     #     - the tape deck
 
-## Ring.com doorbell
-ring:
-  username: !secret ring_username
-  password: !secret ring_password
-
 ## Sabnzbd download manager
 sabnzbd:
   api_key: !secret apikey_sabnzbd
@@ -180,42 +207,17 @@ sabnzbd:
     - month_size
     - total_size
 
-## Pushbullet Token/API setup (Disabled in January)
-notify:
-  - name: pushbullet
-    platform: pushbullet
-    api_key: !secret apikey_pushbullet
-
-mqtt:
-#  broker: 127.0.0.1
-  broker: 192.168.178.130
-  port: 1883
-  client_id: home-assistant-1
-  keepalive: 60
-  username: !secret mqtt_username
-  password: !secret mqtt_password
-#  certificate: /home/paulus/dev/addtrustexternalcaroot.crt
-#  protocol: 3.1
-  birth_message:
-    topic: 'hass/status'
-    payload: 'online'
-    qos: 1
-    retain: true
-  will_message:
-    topic: 'hass/status'
-    payload: 'offline'
-    qos: 1
-    retain: true
-
 media_player:
-  - platform: cast
+  # - platform: cast
   - platform: plex
     entity_namespace: 'plex'
     include_non_clients: true
     scan_interval: 5
-    show_all_controls: true
+    show_all_controls: false
     use_custom_entity_ids: false
-    use_episode_art: false
+    use_episode_art: true
+    remove_unavailable_clients: false
+    client_remove_interval: 600
 
 climate:
   - platform: generic_thermostat
@@ -237,68 +239,58 @@ binary_sensor:
       - ding
       - motion
 
-light:
-  - platform: yeelight
-    devices:
-      192.168.178.151:
-        name: Yeelight 1
-        transition: 500
-        # use_music_mode: True #(defaults to False)
-        # save_on_change: False #(defaults to True)
-      192.168.178.152:
-        name: Yeelight 2
-        transition: 500
-        # use_music_mode: True #(defaults to False)
-        # save_on_change: False #(defaults to True)
-      192.168.178.153:
-        name: Yeelight 3
-        transition: 500
-        # use_music_mode: True #(defaults to False)
-        # save_on_change: False #(defaults to True)
-      192.168.178.154:
-        name: Yeelight 4
-        transition: 500
-        # use_music_mode: True #(defaults to False)
-        # save_on_change: False #(defaults to True)
-
 # Front Page Input States and Options, used for Automation
 input_select:
   house_presence:
     name: Who's Home?
     options:
       - Home
-      - Nobody Home
-      - Lady and The Tramp
-      - lady ALONE
-      - Night
+      - Away
+      # - Night
+      # - Vacation
+      - Guests Home
+      - Guests ALONE
+      # - Guests Kids
       # - Warm House
-      # - Visitors
-      # - Visitors with Kids
       # - Open Door!
       # - Intruder!
       # - Emergency!
-    initial: Nobody Home
+    initial: Away
     icon: mdi:home-map-marker
 
+## Setup lights (Yeelight, MiLight, etc)
+light: !include_dir_merge_list light
+
 ## Automation programs
-automation: !include_dir_merge_list automation
+automation: !include automations.yaml
+automation old: !include_dir_merge_list automation
+
 ## Device Tracker module
 device_tracker: !include_dir_merge_list device_tracker
+
 ## Views (Tabs) and Groups
 group: !include_dir_merge_named group
+
 ## Sets of on/off boolean switches
 input_boolean: !include_dir_merge_named input_boolean
+
 ## Virtual input number sliders
 input_number: !include_dir_merge_named input_number
+
 ## Scene setups
 # scene: !include_dir_merge_list scene
+
 ## Scripts for automation
 script: !include_dir_merge_named script
+
 ## Custom sensors
 sensor: !include_dir_merge_list sensor
+
 ## Shell commands for automations
 shell_command: !include_dir_merge_named shell_command
+
 ## Switches physical (eg: GPIO) and virtual
 switch: !include_dir_merge_list switch
+
 ## Zones using GPS
 zone: !include_dir_merge_list zone

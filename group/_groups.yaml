@@ -8,16 +8,15 @@
     icon: mdi:home
     entities:
       - !secret 6in1_sensor_temp_2
+      - sensor.temperature_158d00019ce72e
       - !secret 6in1_sensor_temp_1
+      - sensor.temperature_158d00019ce5c7
       - device_tracker.kareem_ot
       - device_tracker.kareem_g6
-#      - device_tracker.lady_iphone
-#      - group.kareem_status
       - group.date_and_time
-      - group.house_operation
       - group.environment_inside
-      - sensor.temperature_158d00019ce5c7
-      - sensor.temperature_158d00019ce72e
+      - group.house_downstairs
+      - group.house_upstairs
   weather:
     view: yes
     name: Weather
@@ -52,7 +51,28 @@
       - group.soundwave
       - group.sharing_things
       - group.unused_things
-      - group.media_things
+  media:
+    view: yes
+    name: Media
+    icon: mdi:play-network
+    entities:
+      # - group.media_things
+      - media_player.plex_chromecast
+      - media_player.plex_chromecast_2
+      - media_player.plex_web_chrome
+      - media_player.plex_plex_web_chrome
+      - media_player.plex_chrome_3
+      - media_player.plex_galaxy_s6
+      - media_player.chromecast1
+      - media_player.chromecast2
+      - media_player.chromecast3
+      - media_player.livingroom_speaker
+      - media_player.bedroom_speaker
+      - media_player.gameroom_speaker
+      - media_player.mobile_speaker
+      - media_player.the_whole_house
+      - media_player.upstairs
+      - media_player.downstairs
   metrics:
     view: yes
     name: Metrics
@@ -60,6 +80,7 @@
     entities:
       - group.pi_monitor
       - group.kareem_status
+      - group.friends_status
       - group.xiaomi_things
       - group.vera_things
       - group.alarm_things
@@ -85,11 +106,18 @@
 ### GROUPS OF ENTITIES # FOR REFERENCE USE ###
 ##############################################
 
+  # tracker group for master
   kareem_status:
     view: no
     entities:
       - device_tracker.kareem_ot
       - device_tracker.kareem_g6
+  # tracker group for guests
+  friends_status:
+    view: no
+    entities:
+      - device_tracker.lady_iphone_old
+      - device_tracker.lady_iphone
   date_and_time:
     view: no
     name: Date and Time
@@ -97,7 +125,8 @@
       - sun.sun
       - sensor.date
       - sensor.time
-      - group.weather_things
+      - sensor.pws_weather
+#      - group.weather_things
 #      - sensor.date__time
 #      - sensor.time__date
 #      - sensor.time_utc
@@ -107,9 +136,9 @@
     entities:
       - sensor.last_boot
       - sensor.since_last_boot
-      - sensor.disk_free_
-      - sensor.disk_use_
-      - sensor.disk_use_percent_
+      - sensor.disk_free
+      - sensor.disk_use
+      - sensor.disk_use_percent
       - sensor.swap_free
       - sensor.swap_use
       - sensor.swap_use_percent
@@ -124,9 +153,9 @@
       - sensor.network_out_eth0
       - sensor.ipv4_address_eth0
       - sensor.ipv6_address_eth0
-  house_operation:
+  house_downstairs:
     view: no
-    name: House Operation
+    name: House Downstairs
     control: hidden
     entities:
       - group.control_door
@@ -134,15 +163,20 @@
       - !secret light_downstairs
       - !secret light_spots_1
       - !secret light_table_1
+      - group.livingroom_things
+      - group.control_things
+      - automation.sw1_lights_out
+  house_upstairs:
+    view: no
+    name: House Upstairs
+    control: hidden
+    entities:
       - !secret light_upstairs
       - !secret light_gameroom_1
       - !secret light_bedroom_1
       - !secret light_closet
       - !secret light_xiaomi_gateway
-      - group.livingroom_things
       - group.bedroom_things
-      - group.control_things
-      - automation.sw1_lights_out
   environment_inside:
     view: no
     name: Environment Inside
@@ -335,12 +369,16 @@
     view: no
     name: media Things
     entities:
-      - media_player.bedroom_tv
-      - media_player.livingroom_tv
-      - media_player.bedroom_speaker
+      - media_player.chromecast1
+      - media_player.chromecast2
+      - media_player.chromecast3
       - media_player.livingroom_speaker
+      - media_player.bedroom_speaker
       - media_player.gameroom_speaker
+      - media_player.mobile_speaker
       - media_player.the_whole_house
+      - media_player.upstairs
+      - media_player.downstairs
       - media_player.plex_chromecast
       - media_player.plex_chromecast_2
       - media_player.plex_galaxy_s6
@@ -402,9 +440,8 @@
       - automation.heating_slider_moved
       - automation.kareems_home_alone
       - automation.kareems_home_alone_detect_after_startup
-      - automation.kareems_home_with_lady
       - automation.kareems_leaving
-      - automation.lady_home_alone
+      - automation.guests_home_alone
       - automation.nobody_home
       - automation.pi_door_strike_reset
       - automation.sw1_bedroom_things
@@ -585,7 +622,7 @@
     name: ZWave Things
     control: hidden
     entities:
-      - zwave._
+      # - zwave._
       - zwave.aeotec_zw090_zstick_gen5
   environment_outside_yr:
     view: no

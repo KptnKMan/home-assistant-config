@@ -87,7 +87,7 @@ When enbarking on this, I made sure to make clear a set of taks that I wanted to
   - I should be able to buzz my door when without using a key
   - I should be able to see who is at the door
 - [x] voice control
-  - I want to be able to control, using my voice: 
+  - I want to be able to control, using my voice:
     - lights
     - automations
 - [ ] plant watering

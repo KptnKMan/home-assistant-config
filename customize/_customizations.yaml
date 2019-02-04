@@ -7,6 +7,14 @@
 #      assumed_state: false
 #      sensor_class: opening
 
+## Chromecasts
+    media_player.chromecast1:
+      friendly_name: Gameroom TV
+    media_player.chromecast2:
+      friendly_name: Livingroom TV
+    media_player.chromecast3:
+      friendly_name: Bedroom TV
+
 ## Switch aliases
 ## Pi Switches
     switch.pi_boiler_switch:
