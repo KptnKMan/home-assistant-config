@@ -8,12 +8,20 @@
 #      sensor_class: opening
 
 ## Chromecasts
-    media_player.chromecast1:
+    media_player.chromecast_audio_1:
+      friendly_name: Livingroom Player
+      icon: mdi:cast
+#     media_player.chromecast_audio_2:
+#       friendly_name: Bedroom Player?
+    media_player.chromecast_tv_1:
       friendly_name: Gameroom TV
-    media_player.chromecast2:
+      icon: mdi:cast
+    media_player.chromecast_tv_2:
       friendly_name: Livingroom TV
-    media_player.chromecast3:
+      icon: mdi:cast
+    media_player.chromecast_tv_3:
       friendly_name: Bedroom TV
+      icon: mdi:cast
 
 ## Switch aliases
 ## Pi Switches
