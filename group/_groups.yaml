@@ -22,6 +22,7 @@
     name: Weather
     icon: mdi:weather-snowy-rainy
     entities:
+      - climate.house_heating
       - group.travel_things
       - group.weather_things
       - group.monitor_things
@@ -42,7 +43,7 @@
     name: Game Room
     icon: mdi:floppy
     entities:
-      - !secret coolcam_sensor_3
+      # - !secret coolcam_sensor_3
       - !secret coolcam_motion_sensor_3
       - device_tracker.optimus
       - device_tracker.soundwave
@@ -50,22 +51,17 @@
       - group.optimus
       - group.soundwave
       - group.sharing_things
-      - group.unused_things
   media:
     view: yes
     name: Media
     icon: mdi:play-network
     entities:
+      - group.google_homes
       # - group.media_things
-      - media_player.plex_chromecast
-      - media_player.plex_chromecast_2
-      - media_player.plex_web_chrome
-      - media_player.plex_plex_web_chrome
-      - media_player.plex_chrome_3
-      - media_player.plex_galaxy_s6
-      - media_player.chromecast1
-      - media_player.chromecast2
-      - media_player.chromecast3
+      - media_player.chromecast_tv_1
+      - media_player.chromecast_tv_2
+      - media_player.chromecast_tv_3
+      - media_player.chromecast_audio_1
       - media_player.livingroom_speaker
       - media_player.bedroom_speaker
       - media_player.gameroom_speaker
@@ -73,14 +69,23 @@
       - media_player.the_whole_house
       - media_player.upstairs
       - media_player.downstairs
+      - media_player.plex_chromecast
+      - media_player.plex_chromecast_2
+      - media_player.plex_galaxy_s6
+      - media_player.plex_web_chrome
+      - media_player.plex_plex_web_chrome
+      # - media_player.plex_chrome
+      # - media_player.plex_chrome_2
+      # - media_player.plex_chrome_3
   metrics:
     view: yes
     name: Metrics
     icon: mdi:trending-up
     entities:
+      - climate.house_heating
       - group.pi_monitor
-      - group.kareem_status
-      - group.friends_status
+      - group.presence_kareem
+      - group.presence_friends
       - group.xiaomi_things
       - group.vera_things
       - group.alarm_things
@@ -107,17 +112,17 @@
 ##############################################
 
   # tracker group for master
-  kareem_status:
+  presence_kareem:
     view: no
     entities:
       - device_tracker.kareem_ot
       - device_tracker.kareem_g6
   # tracker group for guests
-  friends_status:
+  presence_friends:
     view: no
     entities:
-      - device_tracker.lady_iphone_old
       - device_tracker.lady_iphone
+      # - device_tracker.lady_iphone_old
   date_and_time:
     view: no
     name: Date and Time
@@ -182,14 +187,16 @@
     name: Environment Inside
     control: hidden
     entities:
-      - input_select.house_presence
-      - input_boolean.friend_visiting
+      - input_select.presence_house
+      - input_boolean.friends_visiting
       - input_boolean.kids_in_the_house
       - input_boolean.vacation_mode
       - climate.house_heating
-      - input_number.target_temp
-      - input_number.rest_temp
-      - input_number.away_temp
+      - input_number.temp_target
+      - input_number.temp_daytime
+      - input_number.temp_morning
+      - input_number.temp_night
+      - input_number.temp_away
   travel_things:
     view: no
     name: Travel Things
@@ -209,6 +216,35 @@
       - sensor.pws_feelslike_c
       - sensor.pws_relative_humidity
       - sensor.pws_uv
+  google_homes:
+    view: no
+    name: Google Homes
+    entities:
+      - input_number.google_home_volume_livingroom_player
+      - input_number.google_home_volume_livingroom_speaker
+      - input_number.google_home_volume_mobile_speaker
+      - input_number.google_home_volume_gameroom_speaker
+      - input_number.google_home_volume_bedroom_speaker
+  media_things:
+    view: no
+    name: Media Things
+    entities:
+      - media_player.the_whole_house
+      - media_player.upstairs
+      - media_player.downstairs
+      - media_player.chromecast_tv_1
+      - media_player.chromecast_tv_2
+      - media_player.chromecast_tv_3
+      - media_player.chromecast_audio_1
+      - media_player.livingroom_speaker
+      - media_player.bedroom_speaker
+      - media_player.gameroom_speaker
+      - media_player.mobile_speaker
+      - media_player.plex_chromecast
+      - media_player.plex_chromecast_2
+      - media_player.plex_galaxy_s6
+      - media_player.plex_web_chrome
+      - media_player.plex_plex_web_chrome
   xiaomi_things:
     view: no
     name: Xiaomi Things
@@ -364,26 +400,6 @@
       - sensor.sab_daily_total
       - sensor.sab_weekly_total
       - sensor.sab_monthly_total
-
-  media_things:
-    view: no
-    name: media Things
-    entities:
-      - media_player.chromecast1
-      - media_player.chromecast2
-      - media_player.chromecast3
-      - media_player.livingroom_speaker
-      - media_player.bedroom_speaker
-      - media_player.gameroom_speaker
-      - media_player.mobile_speaker
-      - media_player.the_whole_house
-      - media_player.upstairs
-      - media_player.downstairs
-      - media_player.plex_chromecast
-      - media_player.plex_chromecast_2
-      - media_player.plex_galaxy_s6
-      - media_player.plex_web_chrome
-      - media_player.plex_plex_web_chrome
   switch_things:
     view: no
     name: Switch Things
@@ -423,6 +439,36 @@
     name: Test Automations Scripts
     control: hidden
     entities:
+      - automation.child_alarm_bedroom
+      - automation.child_alarm_gameroom
+      - automation.child_alarm_upstairs
+      - automation.detect_children_leaving
+      - automation.detect_children_present
+      - automation.detect_friends
+      - automation.detect_friends_leaving
+      - automation.detect_guests_home_alone
+      - automation.detect_guests_leaving
+      - automation.detect_home_alone
+      - automation.detect_home_with_friends
+      - automation.detect_leaving
+      - automation.detect_nobody_home
+      - automation.detect_vacation_mode
+      - automation.detect_vacation_mode_deactivated
+      - automation.google_home_bedroom_speaker_slider_moved
+      - automation.google_home_gameroom_speaker_slider_moved
+      - automation.google_home_livingroom_player_slider_moved
+      - automation.google_home_livingroom_speaker_slider_moved
+      - automation.google_home_mobile_speaker_slider_moved
+      - automation.google_notify_guests_of_heating_cooling
+      - automation.google_set_volumes_daytime
+      - automation.google_set_volumes_evening
+      - automation.google_set_volumes_low
+      - automation.google_set_volumes_test
+      - automation.google_welcome_home_automation_ready
+      - automation.google_welcome_home_message_bedroom
+      - automation.google_welcome_home_message_gameroom
+      - automation.google_welcome_home_message_livingroom
+      - automation.google_welcome_home_timeout
       - automation.ha_notification_new_nmap_device
       - automation.ha_notification_shutdown
       - automation.ha_notification_startup
@@ -433,18 +479,20 @@
       - automation.ha_notification_update_available
       - automation.ha_purge_recorder
       - automation.heating_detect_kareems_arrived
-      - automation.heating_detect_kareems_home_day
-      - automation.heating_detect_kareems_home_wakeup
-      - automation.heating_detect_kareems_leaving
-      - automation.heating_schedule_night
+      - automation.heating_detect_home_daytime
+      - automation.heating_detect_home_morning
+      - automation.heating_detect_away
+      - automation.heating_detect_home_night
       - automation.heating_slider_moved
-      - automation.kareems_home_alone
-      - automation.kareems_home_alone_detect_after_startup
-      - automation.kareems_leaving
-      - automation.guests_home_alone
-      - automation.nobody_home
+      - automation.kareems_coming_home
+      - automation.presence_detect_home_without_guests
+      - automation.presence_detect_home_without_guests_detect_after_startup
+      - automation.presence_detect_home_with_guests
+      - automation.presence_detect_leaving
+      - automation.presence_detect_nobody_home
       - automation.pi_door_strike_reset
       - automation.sw1_bedroom_things
+      - automation.sw1_gameroom_light
       - automation.sw1_gateway_nightlight
       - automation.sw1_lights_out
       - automation.sw2_disarm_alarm_system
@@ -452,6 +500,7 @@
       - automation.sw2_lock_doors
       - automation.sw3_activate_optimus
       - automation.sw3_deactivate_optimus
+      - automation.sw4_livingroom_spots
       - automation.sw4_livingroom_things
       - automation.turn_on_lights_when_there_is_movement_closet
       - automation.turn_on_lights_when_there_is_movement_closet_at_night
@@ -459,11 +508,13 @@
       - automation.turn_on_lights_when_there_is_movement_entrance
       - automation.turn_on_lights_when_there_is_movement_upstairs
       - automation.turn_on_lights_when_there_is_movement_upstairs_at_night
-      - automation.vacation_lights_at_sunset_when_vacation_mode_on
-      - automation.vacation_mode_off_when_home
-      - automation.vacation_mode_on_when_gone_24_hours
+      - automation.vacation_mode_lights_activate_at_sunset
+      - automation.vacation_mode_activate
+      - automation.vacation_mode_deactivate
       - automation.ziggo_router_reset
       - script.after_dark_select_sequence
+      - script.optimus_off
+      - script.optimus_on
       - script.timed_lamp_closet
       - script.timed_lamp_closet_night
       - script.timed_lamp_downstairs
@@ -476,7 +527,6 @@
       - script.timer_off_upstairs
       - script.vacation_lights_away_sequence
       - script.vacation_lights_init
-      # - script.turn_everything_off
   control_door:
     view: no
     name: Control Door
