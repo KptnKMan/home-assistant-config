@@ -1,0 +1,90 @@
+## Detect friends in House
+- id: presence_detect_friends
+  alias: Detect Friends
+  trigger:
+    - platform: state
+      entity_id: group.presence_friends
+      to: "home"
+    - platform: state
+      entity_id: input_boolean.friends_visiting
+      to: "on"
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: group.presence_friends
+      state: "home"
+    - condition: state
+      entity_id: input_boolean.friends_visiting
+      state: "on"
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "Guests Detected"
+        message: "Guests Detected!"
+
+## Detect friends Leaving House
+- id: presence_detect_friends_leaving
+  alias: Detect Friends Leaving
+  trigger:
+    - platform: state
+      entity_id: group.presence_friends
+      to: "not_home"
+    - platform: state
+      entity_id: input_boolean.friends_visiting
+      to: "off"
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: group.presence_friends
+      state: "not_home"
+    - condition: state
+      entity_id: input_boolean.friends_visiting
+      state: "off"
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "Guests Leaving"
+        message: "Guests Leaving!"
+
+## Notify Guests that house is cooling for the night
+- id: google_notify_guests_heating_cool
+  alias: Google Notify Guests of Heating Cooling
+  trigger:
+    - platform: time
+      at: "22:00:00"
+  condition:
+    condition: and # all are true
+    conditions:
+    # - condition: state
+    #   entity_id: group.presence_kareem
+    #   state: "not_home"
+    - condition: or # one of these is true
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+    - condition: or # one of these is true
+      conditions:
+      - condition: state
+        entity_id: group.presence_friends
+        state: "home"
+      - condition: state
+        entity_id: input_boolean.friends_visiting
+        state: "on"
+  action:
+    - service: tts.google_say
+      entity_id: media_player.the_whole_house
+      data:
+        message: 'Attention guests. This is an automated house message. In 1 hour the heating is cooling to 15 degrees until 6am.'
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "Guests Notified about heating"
+        message: "Guests Notified about heating!"

@@ -1,0 +1,220 @@
+## Automations for Managing Google Homes
+
+## TEST Volumes
+- id: google_set_volumes_test
+  alias: Google Set Volumes TEST
+  trigger:
+    - platform: homeassistant
+      event: start
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "00:00:00"
+      before: "00:01:00"
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.google_home_volume_gameroom_speaker
+        value: 0.1
+        # value: "{{ trigger.payload }}"
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "Speaker Volume slider TEST started!"
+        message: "Speaker Volume slider TEST started!"
+
+## Google Home Set Daytime Volumes
+- id: google_set_volumes_daytime
+  alias: Google Set Volumes Daytime
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: time
+      at: "06:00:00"
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "06:00:00"
+      before: "22:00:00"
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id:
+          - input_number.google_home_volume_livingroom_player
+          - input_number.google_home_volume_livingroom_speaker
+          - input_number.google_home_volume_mobile_speaker
+        value: 0.3
+    - service: input_number.set_value
+      data_template:
+        entity_id:
+          - input_number.google_home_volume_gameroom_speaker
+          - input_number.google_home_volume_bedroom_speaker
+        value: 0.4
+    # - service: media_player.volume_set
+    #   data_template:
+    #     volume_level: 0.3
+    #     entity_id:
+    #       - media_player.chromecast_audio_1
+    #       - media_player.livingroom_speaker
+    #       - media_player.mobile_speaker
+    # - service: media_player.volume_set
+    #   data_template:
+    #     volume_level: 0.4
+    #     entity_id:
+    #       - media_player.gameroom_speaker
+    #       - media_player.bedroom_speaker
+
+## Google Home Set Evening Volumes
+- id: google_set_volumes_evening
+  alias: Google Set Volumes Evening
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: time
+      at: "22:00:00"
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "22:00:00"
+      before: "06:00:00"
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id:
+          - input_number.google_home_volume_livingroom_player
+          - input_number.google_home_volume_livingroom_speaker
+          - input_number.google_home_volume_mobile_speaker
+        value: 0.2
+    - service: input_number.set_value
+      data_template:
+        entity_id:
+          - input_number.google_home_volume_gameroom_speaker
+          - input_number.google_home_volume_bedroom_speaker
+        value: 0.3
+    # - service: media_player.volume_set
+    #   data_template:
+    #     volume_level: 0.2
+    #     entity_id:
+    #       - media_player.chromecast_audio_1
+    #       - media_player.livingroom_speaker
+    #       - media_player.mobile_speaker
+    # - service: media_player.volume_set
+    #   data_template:
+    #     volume_level: 0.3
+    #     entity_id:
+    #       - media_player.gameroom_speaker
+    #       - media_player.bedroom_speaker
+
+## Google Home Set Low/Ambient/Night Volumes
+- id: google_set_volumes_low
+  alias: Google Set Volumes Low
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: time
+      at: "22:00:00"
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "22:00:00"
+      before: "06:00:00"
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id:
+          - input_number.google_home_volume_livingroom_player
+          - input_number.google_home_volume_livingroom_speaker
+          - input_number.google_home_volume_mobile_speaker
+        value: 0.1
+    - service: input_number.set_value
+      data_template:
+        entity_id:
+          - input_number.google_home_volume_gameroom_speaker
+          - input_number.google_home_volume_bedroom_speaker
+        value: 0.15
+    # - service: media_player.volume_set
+    #   data_template:
+    #     volume_level: 0.1
+    #     entity_id:
+    #       - media_player.chromecast_audio_1
+    #       - media_player.livingroom_speaker
+    #       - media_player.mobile_speaker
+    # - service: media_player.volume_set
+    #   data_template:
+    #     volume_level: 0.15
+    #     entity_id:
+    #       - media_player.gameroom_speaker
+    #       - media_player.bedroom_speaker
+
+## Manual Volume control via slider - Livingroom Player
+- id: google_home_livingroom_player_slider_moved
+  alias: Google Home Livingroom Player slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.google_home_volume_livingroom_player
+  action:
+    - service: media_player.volume_set
+      data_template:
+        volume_level: "{{ states('input_number.google_home_volume_livingroom_player') }}"
+        entity_id: media_player.chromecast_audio_1
+
+## Manual Volume control via slider - Livingroom Speaker
+- id: google_home_livingroom_speaker_slider_moved
+  alias: Google Home Livingroom Speaker slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.google_home_volume_livingroom_speaker
+  action:
+    - service: media_player.volume_set
+      data_template:
+        volume_level: "{{ states('input_number.google_home_volume_livingroom_speaker') }}"
+        entity_id: media_player.livingroom_speaker
+
+## Manual Volume control via slider - Mobile Speaker
+- id: google_home_mobile_speaker_slider_moved
+  alias: Google Home Mobile Speaker slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.google_home_volume_mobile_speaker
+  action:
+    - service: media_player.volume_set
+      data_template:
+        volume_level: "{{ states('input_number.google_home_volume_mobile_speaker') }}"
+        entity_id: media_player.mobile_speaker
+
+## Manual Volume control via slider - Gameroom Speaker
+- id: google_home_gameroom_speaker_slider_moved
+  alias: Google Home Gameroom Speaker slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.google_home_volume_gameroom_speaker
+  action:
+    - service: media_player.volume_set
+      data_template:
+        volume_level: "{{ states('input_number.google_home_volume_gameroom_speaker') }}"
+        entity_id: media_player.gameroom_speaker
+    # - service: notify.pushbullet
+    #   data:
+    #     target: !secret email_target_pushbullet
+    #     title: "Gameroom Speaker Volume slider moved!"
+    #     message: "Gameroom Speaker Volume slider moved!"
+
+## Manual Volume control via slider - Bedroom Speaker
+- id: google_home_bedroom_speaker_slider_moved
+  alias: Google Home Bedroom Speaker slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.google_home_volume_bedroom_speaker
+  action:
+    - service: media_player.volume_set
+      data_template:
+        volume_level: "{{ states('input_number.google_home_volume_bedroom_speaker') }}"
+        entity_id: media_player.bedroom_speaker
+
+## Play Music when Home
+
+## Music Off When Not Home

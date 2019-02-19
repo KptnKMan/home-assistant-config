@@ -9,47 +9,93 @@
 # https://github.com/geekofweek/homeassistant
 
 # Turn vacation mode on automatically
-- id: vacation_mode_on_when_gone_24_hours
-  alias: Vacation mode on when gone 24 hours
+- id: vacation_mode_activate
+  alias: Activate Vacation mode on when Away for long time
   trigger:
     - platform: state
-      entity_id: group.kareem_status
-      from: 'home'
-      to: 'away'
+      entity_id: input_select.presence_house
+      to: Away
       for:
-        hours: 24
-        minutes: 0
-        seconds: 0
+        hours: 12
+  condition:
+    - condition: state
+      entity_id: input_boolean.vacation_mode
+      state: "off"
   action:
     - service: homeassistant.turn_on
       entity_id: input_boolean.vacation_mode
 
 # Turn on lights when vacation mode active
-- id: vacation_lights_at_sunset_when_vacation_mode_on
+- id: vacation_mode_lights_activate_at_sunset
   alias: Vacation lights at sunset when vacation mode on
   trigger:
     - platform: state
       entity_id: sun.sun
-      from: 'above_horizon'
-      to: 'below_horizon'
+      from: "above_horizon"
+      to: "below_horizon"
   condition:
     - condition: state
       entity_id: input_boolean.vacation_mode
-      state: 'on'
+      state: "on"
   action:
     - service: script.vacation_lights_init
 
 # Turn vacation mode off automatically
-- id: vacation_mode_off_when_home
+- id: vacation_mode_deactivate
   alias: Vacation mode off when home
   trigger:
     - platform: state
-      entity_id: group.kareem_status
-      from: 'away'
-      to: 'home'
+      entity_id: input_select.presence_house
+      to: Home
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Home Guests
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Away Guests
   action:
     - service: homeassistant.turn_off
       entity_id:
         - input_boolean.vacation_mode
         - script.vacation_lights_away_sequence
         - script.vacation_lights_init
+
+## Detect Vacation Mode Activations
+- id: presence_detect_notify_vacation_mode_active
+  alias: Detect Vacation Mode
+  trigger:
+    - platform: state
+      entity_id: input_boolean.vacation_mode
+      to: "on"
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.vacation_mode
+      state: "on"
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "Vacation Mode active!"
+        message: "Vacation Mode active!"
+
+## Detect Vacation Mode Deactivations
+- id: presence_detect_notify_vacation_mode_deactivated
+  alias: Detect Vacation Mode Deactivated
+  trigger:
+    - platform: state
+      entity_id: input_boolean.vacation_mode
+      to: "off"
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.vacation_mode
+      state: "off"
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "Vacation Mode deactivated!"
+        message: "Vacation Mode deactivated!"

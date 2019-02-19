@@ -1,0 +1,147 @@
+## Automations for Welcome Home Messages
+
+# Coming HOME/Startup! Trigger Welcome Home Timer Switch
+- id: google_welcome_home_automation_ready
+  alias: Google Welcome Home Automation Ready
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: group.presence_kareem
+      to: "home"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: group.presence_kareem
+      state: "home"
+    - condition: time
+      after: "06:00:00"
+      before: "22:00:00"
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.welcome_home
+
+## Deactivate Welcome Home after Timeout, if not triggered
+- id: google_welcome_home_timeout
+  alias: Google Welcome Home Timeout
+  trigger:
+    - platform: state
+      entity_id: input_boolean.welcome_home
+      to: "on"
+      for:
+        seconds: 300 # 5 mins
+  action:
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.welcome_home
+
+## Google Home Voice TTS Welcome Home Bedroom
+- id: google_welcome_home_message_bedroom
+  alias: Google Welcome Home Message bedroom
+  trigger:
+    - platform: state
+      entity_id: !secret coolcam_motion_sensor_4
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: group.presence_kareem
+      state: "home"
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Home
+    - condition: state
+      entity_id: input_boolean.welcome_home
+      state: 'on'
+  action:
+    # - service: input_number.set_value
+    #   data_template:
+    #     entity_id: input_number.google_home_volume_bedroom_speaker
+    #     value: 0.3
+    # - service: media_player.volume_set
+    #   data_template:
+    #     entity_id: media_player.bedroom_speaker
+    #     volume_level: 0.3
+    - service: tts.google_say
+      entity_id: media_player.bedroom_speaker
+      data:
+        message: 'Welcome Home. Time to rest and relax?'
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.welcome_home
+
+## Google Home Voice TTS Welcome Home Gameroom
+- id: google_welcome_home_message_gameroom
+  alias: Google Welcome Home Message Gameroom
+  trigger:
+    - platform: state
+      entity_id: !secret coolcam_motion_sensor_3
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: group.presence_kareem
+      state: "home"
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Home
+    - condition: state
+      entity_id: input_boolean.welcome_home
+      state: 'on'
+  action:
+    # - service: input_number.set_value
+    #   data_template:
+    #     entity_id: input_number.google_home_volume_gameroom_speaker
+    #     value: 0.3
+    # - service: media_player.volume_set
+    #   data_template:
+    #     entity_id: media_player.gameroom_speaker
+    #     volume_level: 0.3
+    - service: tts.google_say
+      entity_id: media_player.gameroom_speaker
+      data:
+        message: 'Welcome Home! Time to do some work.'
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.welcome_home
+
+## Google Home Voice TTS Welcome Home Livingroom
+- id: google_welcome_home_message_livingroom
+  alias: Google Welcome Home Message Livingroom
+  trigger:
+    - platform: state
+      entity_id: !secret 6in1_sensor_move_2
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.welcome_home
+      state: 'on'
+    - condition: state
+      entity_id: group.presence_kareem
+      state: "home"
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Home
+  action:
+    # - delay:
+    #     seconds: 5
+    # - service: input_number.set_value
+    #   data_template:
+    #     entity_id: input_number.google_home_volume_livingroom_speaker
+    #     value: 0.3
+    # - service: media_player.volume_set
+    #   data_template:
+    #     entity_id: media_player.livingroom_speaker
+    #     volume_level: 0.3
+    - service: tts.google_say
+      entity_id: media_player.livingroom_speaker
+      data:
+        message: 'Welcome Home! Warming up the house.'
+        # message: 'Motion Detected At The Front Door'
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.welcome_home

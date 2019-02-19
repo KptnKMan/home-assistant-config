@@ -1,193 +1,185 @@
-##########################
-#### HEATING PRESENCE ####
-##########################
+## HEATING PRESENCE
 
-## Heating When Waking up, check ever 5 minutes
-- id: heating_detect_kareems_home_wakeup
-  alias: Heating DETECT Kareems HOME Wakeup
+## Heating when Home Daytime, check ever 5 minutes
+- id: heating_detect_home_daytime
+  alias: Heating DETECT Daytime
   trigger:
-    - platform: time
-      at: '06:00:00'
-    - platform: time_pattern
-      # You can also match on interval. This will match every x minutes
-      minutes: '/5'
-      # seconds: 00
     - platform: state
-      entity_id: input_select.house_presence
-      to: 'Home'
+      entity_id: input_number.temp_daytime # manual slider move
+    - platform: homeassistant
+      event: start # HA startup
+    - platform: time
+      at: "09:00:00" # at 9am
+    - platform: time_pattern
+      minutes: '/5' # every 5mins 24/7/365
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Home # when home alone
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Home Guests # when home with guests
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Away Guests # when guests home alone
   condition:
     condition: and
     conditions:
     - condition: time
-      after: '06:00:00'
-      before: '09:00:00'
+      after: "09:00:00"
+      before: "23:00:00"
     - condition: or
       conditions:
       - condition: state
-        entity_id: input_select.house_presence
-        state: 'Home'
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
   action:
-    - service: climate.set_temperature
-      entity_id: climate.house_heating
+    # - service: climate.set_temperature
+    #   entity_id: climate.house_heating
+    #   data_template:
+    #     temperature: "{{ states('input_number.temp_target') }}"
+    - service: input_number.set_value
       data_template:
-        temperature: "{{ states('input_number.rest_temp') }}"
-#    - service: climate.set_temperature
-#      data:
-#        entity_id: climate.house_heating
-#        temperature: 18
-#        operation_mode: Heat
-#    - service: notify.pushbullet
-#      data: 
-#        target: !secret email_target_pushbullet
-#        title: 'Heating Waking up'
-#        message: "House waking up!"
+        entity_id: input_number.temp_target
+        value: "{{ states('input_number.temp_daytime') }}"
+    # - service: notify.pushbullet
+    #   data: 
+    #     target: !secret email_target_pushbullet
+    #     title: "House heating up"
+    #     message: "House heating up!"
 
-## Heating AT HOME
-- id: heating_detect_kareems_arrived
-  alias: Heating DETECT Kareems ARRIVED
+## Heating when Home Morning, check ever 5 minutes
+- id: heating_detect_home_morning
+  alias: Heating DETECT Morning
   trigger:
-    - platform: time
-      at: '09:00:00'
     - platform: state
-      entity_id: input_select.house_presence
-      to: 'Home'
+      entity_id: input_number.temp_morning
+    - platform: homeassistant
+      event: start
+    - platform: time
+      at: "06:00:00"
+    - platform: time_pattern
+      minutes: '/5'
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Home
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Home Guests
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Away Guests
   condition:
     condition: and
     conditions:
     - condition: time
-      after: '09:00:00'
-      before: '23:00:00'
-    - condition: state
-      entity_id: input_select.house_presence
-      state: 'Home'
+      after: "06:00:00"
+      before: "09:00:00"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
   action:
-    - service: climate.set_temperature
-      entity_id: climate.house_heating
+    - service: input_number.set_value
       data_template:
-        temperature: "{{ states('input_number.target_temp') }}"
-#    - service: climate.set_temperature
-#      data:
-#        entity_id: climate.house_heating
-#        temperature: 20
-#        operation_mode: Heat
-#    - service: notify.pushbullet
-#      data: 
-#        target: !secret email_target_pushbullet
-#        title: 'Heating ON'
-#        message: "House warming for you!"
+        entity_id: input_number.temp_target
+        value: "{{ states('input_number.temp_morning') }}"
+    # - service: climate.set_temperature
+    #   entity_id: climate.house_heating
+    #   data_template:
+    #     temperature: "{{ states('input_number.temp_morning') }}"
 
-## Heating When AT HOME, check ever 5 minutes
-- id: heating_detect_kareems_home_day
-  alias: Heating DETECT Kareems HOME Day
+## Heating when Home Night, check every 5 minutes
+- id: heating_detect_home_night
+  alias: Heating DETECT Night
   trigger:
-    - platform: time
-      at: '09:00:00'
-    - platform: time_pattern
-      # You can also match on interval. This will match every x minutes
-      minutes: '/5'
-      # seconds: 00
     - platform: state
-      entity_id: input_select.house_presence
-      to: 'Home'
+      entity_id: input_number.temp_night
+    - platform: homeassistant
+      event: start
+    - platform: time
+      at: "23:00:00"
+    - platform: time_pattern
+      minutes: '/5'
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Home
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Home Guests
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Away Guests
   condition:
     condition: and
     conditions:
     - condition: time
-      after: '09:00:00'
-      before: '23:00:00'
-    - condition: state
-      entity_id: input_select.house_presence
-      state: 'Home'
+      after: "23:00:00"
+      before: "06:00:00"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
   action:
-    - service: climate.set_temperature
-      entity_id: climate.house_heating
+    - service: input_number.set_value
       data_template:
-        temperature: "{{ states('input_number.target_temp') }}"
+        entity_id: input_number.temp_target
+        value: "{{ states('input_number.temp_night') }}"
 #    - service: climate.set_temperature
-#      data:
-#        entity_id: climate.house_heating
-#        temperature: 20
-#        operation_mode: Heat
+#      entity_id: climate.house_heating
+#      data_template:
+#        temperature: "{{ states('input_number.temp_night') }}"
 #    - service: notify.pushbullet
 #      data: 
 #        target: !secret email_target_pushbullet
-#        title: 'Heating STILL ON'
-#        message: "House toasty!"
-
-## Heating When Away
-- id: heating_detect_kareems_leaving
-  alias: Heating DETECT Kareems LEAVING
-  trigger:
-    - platform: state
-      entity_id: input_select.house_presence
-      to: 'Away'
-    - platform: time_pattern
-      minutes: '/5'
-      # seconds: 00
-  condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: input_select.house_presence
-      state: 'Away'
-  action:
-    - service: climate.set_temperature
-      entity_id: climate.house_heating
-      data_template:
-        temperature: "{{ states('input_number.away_temp') }}"
-#    - service: climate.set_temperature
-#      data:
-#        entity_id: climate.house_heating
-#        temperature: 14
-#        operation_mode: Heat
-#    - service: notify.pushbullet
-#      data: 
-#        target: !secret email_target_pushbullet
-#        title: 'Heating OFF'
+#        title: "Heating Night Mode"
 #        message: "House cooling!"
 
-##########################
-#### HEATING SCHEDULE ####
-##########################
-
-## Night Heating
-- id: heating_schedule_night
-  alias: Heating SCHEDULE Night
+## Daytime/Nighttime Heating when Leaving/Away
+- id: heating_detect_away
+  alias: Heating DETECT Away
   trigger:
-    - platform: time
-      at: '23:00:00'
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Away
+    - platform: time_pattern
+      minutes: '/5'
   condition:
     condition: and
     conditions:
-    - condition: time
-      after: '23:00:00'
-      before: '06:00:00'
-    # - condition: state
-    #   entity_id: input_select.house_presence
-    #   state: 'Home'
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Away
   action:
-    - service: climate.set_temperature
-      entity_id: climate.house_heating
+    - service: input_number.set_value
       data_template:
-        temperature: "{{ states('input_number.away_temp') }}"
+        entity_id: input_number.temp_target
+        value: "{{ states('input_number.temp_away') }}"
 #    - service: climate.set_temperature
-#      data:
-#        entity_id: climate.house_heating
-#        temperature: 14
-#        operation_mode: Heat
-
-################################
-#### HEATING MANUAL CONTROL ####
-################################
-
-## manual control of heating via slider
-- id: heating_slider_moved
-  alias: Heating slider moved
-  trigger:
-    - platform: state
-      entity_id: input_number.target_temp
-  action:
-    - service: climate.set_temperature
-      entity_id: climate.house_heating
-      data_template:
-        temperature: "{{ states('input_number.target_temp') }}"
+#      entity_id: climate.house_heating
+#      data_template:
+#        temperature: "{{ states('input_number.temp_away') }}"
+#    - service: notify.pushbullet
+#      data: 
+#        target: !secret email_target_pushbullet
+#        title: "Heating Away Mode"
+#        message: "House cooling!"

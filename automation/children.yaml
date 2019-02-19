@@ -1,0 +1,117 @@
+## Detect children in House
+- id: presence_detect_children
+  alias: Detect Children Present
+  trigger:
+    - platform: state
+      entity_id: input_boolean.kids_in_the_house
+      to: "on"
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.kids_in_the_house
+      state: "on"
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "Children Detected"
+        message: "Children Detected!"
+
+## Detect children Leaving House
+- id: presence_detect_children_leaving
+  alias: Detect Children Leaving
+  trigger:
+    - platform: state
+      entity_id: input_boolean.kids_in_the_house
+      to: "off"
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.kids_in_the_house
+      state: "off"
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "Children Leaving"
+        message: "Children Leaving!"
+
+# ## Notify when movement in attic
+# - id: child_alarm_attic
+#   alias: Child Alarm Attic
+#   trigger:
+#     - platform: state
+#       entity_id: !secret 6in1_sensor_move_1
+#       to: "on"
+#   condition:
+#     condition: and
+#     conditions:
+#     - condition: state
+#       entity_id: input_boolean.kids_in_the_house
+#       state: "on"
+#   action:
+#     - service: notify.pushbullet
+#       data:
+#         target: !secret email_target_pushbullet
+#         title: "Child Alarm Attic"
+#         message: "Child Alarm Attic!"
+
+## Notify when movement upstairs / bedroom / gameroom
+- id: child_alarm_upstairs
+  alias: Child Alarm Upstairs
+  trigger:
+    - platform: state
+      entity_id: !secret 6in1_sensor_move_1
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.kids_in_the_house
+      state: "on"
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "Child Alarm Upstairs"
+        message: "Child Alarm Upstairs!"
+
+- id: child_alarm_bedroom
+  alias: Child Alarm Bedroom
+  trigger:
+    - platform: state
+      entity_id: !secret coolcam_motion_sensor_4
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.kids_in_the_house
+      state: "on"
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "Child Alarm Bedroom"
+        message: "Child Alarm Bedroom!"
+
+- id: child_alarm_gameroom
+  alias: Child Alarm Gameroom
+  trigger:
+    - platform: state
+      entity_id: !secret coolcam_motion_sensor_3
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.kids_in_the_house
+      state: "on"
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "Child Alarm Gameroom"
+        message: "Child Alarm Gameroom!"

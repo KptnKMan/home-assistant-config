@@ -7,13 +7,12 @@
   alias: HA Notification Startup
   trigger:
     - platform: homeassistant
-      # Event can also be 'shutdown'
       event: start
   action:
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet
-        title: 'Home Assistant Started!'
+        title: "Home Assistant Started!"
         message: "Home Assistant started and available!"
 
 ## Tell me when Home Assistant Stopping/Shutdown
@@ -26,7 +25,7 @@
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet
-        title: 'Home Assistant Stopping!'
+        title: "Home Assistant Stopping!"
         message: "Home Assistant shutting down!"
 
 ## Tell me when Home Assistant update available
@@ -38,9 +37,8 @@
   action:
     - service: notify.pushbullet
       data: 
-        #target: 'YOUR_TARGET_HERE' #See Pushbullet component for usage
         target: !secret email_target_pushbullet
-        title: 'New Home Assistant Release'
+        title: "New Home Assistant Release"
         message: "Home Assistant  {{ states.updater.updater.state }}  is now available."
 
 ## Tell me when new devices detected on network
@@ -53,7 +51,7 @@
     - service: notify.pushbullet
       data:
         target: !secret email_target_pushbullet
-        title: 'New Device detected!'
+        title: "New Device detected!"
         message: "New unknown NMAP device detected!"
 #        message: "New unknown NMAP device detected! > {{ states.updater.updater.state }}"
 
@@ -63,19 +61,19 @@
   trigger:
     - platform: state
       entity_id: !secret coolcam_motion_sensor_1
-      from: 'off'
-      to: 'on'
+      from: "off"
+      to: "on"
   condition:
     condition: and
     conditions:
     - condition: state
-      entity_id: input_select.house_presence
-      state: 'Away'
+      entity_id: input_select.presence_house
+      state: Away
   action:
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet
-        title: 'ALERT! Movement at Home!'
+        title: "ALERT! Movement at Home!"
         message: "Movement has been detected at ENTRANCE!"
 
 ## Tell me there is an intruder ## downstairs
@@ -84,19 +82,19 @@
   trigger:
     - platform: state
       entity_id: !secret coolcam_motion_sensor_2
-      from: 'off'
-      to: 'on'
+      from: "off"
+      to: "on"
   condition:
     condition: and
     conditions:
     - condition: state
-      entity_id: input_select.house_presence
-      state: 'Away'
+      entity_id: input_select.presence_house
+      state: Away
   action:
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet
-        title: 'ALERT! Movement at Home!'
+        title: "ALERT! Movement at Home!"
         message: "Movement has been detected DOWNSTAIRS!"
 
 ## Tell me there is an intruder ## upstairs
@@ -105,19 +103,19 @@
   trigger:
     - platform: state
       entity_id: !secret 6in1_sensor_move_1
-      from: 'off'
-      to: 'on'
+      from: "off"
+      to: "on"
   condition:
     condition: and
     conditions:
     - condition: state
-      entity_id: input_select.house_presence
-      state: 'Away'
+      entity_id: input_select.presence_house
+      state: Away
   action:
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet
-        title: 'ALERT! Movement at Home!'
+        title: "ALERT! Movement at Home!"
         message: "Movement has been detected UPSTAIRS!"
 
 ## Tell me there is an intruder ## living room
@@ -126,19 +124,19 @@
   trigger:
     - platform: state
       entity_id: !secret 6in1_sensor_move_2
-      from: 'off'
-      to: 'on'
+      from: "off"
+      to: "on"
   condition:
     condition: and
     conditions:
     - condition: state
-      entity_id: input_select.house_presence
-      state: 'Away'
+      entity_id: input_select.presence_house
+      state: Away
   action:
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet
-        title: 'ALERT! Movement at Home!'
+        title: "ALERT! Movement at Home!"
         message: "Movement has been detected at LIVINGROOM!"
 
 ## Tell me there is an emergency

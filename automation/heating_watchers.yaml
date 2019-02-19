@@ -1,0 +1,282 @@
+## Whenever these slider move, set the heating to same
+## This should be the only entity to change heating
+
+## MASTER Heating control via slider
+- id: heating_slider_moved_temp_target
+  alias: Heating Target slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.temp_target
+  action:
+    - service: climate.set_temperature
+      entity_id: climate.house_heating
+      data_template:
+        temperature: "{{ states('input_number.temp_target') }}"
+
+## Manual Heating control via slider, needs fixing
+- id: heating_climate_slider_moved_temp_daytime
+  alias: Heating Climate changed
+  trigger:
+    # - platform: state
+    #   entity_id: input_number.temp_target
+    - platform: template
+      value_template: "{{ states.climate.house_heating.attributes.current_temperature }} != {{ states('input_number.temp_target') }}"
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "09:00:00"
+      before: "23:00:00"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.temp_target
+        value: "{{ states('climate.house_heating.attributes.current_temperature') }}"
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "Climate changed"
+        message: "Climate changed, adjusted temp_target"
+
+## Manual Heating control via slider
+- id: heating_climate_set_changed_daytime
+  alias: Heating Daytime slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.temp_target
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "09:00:00"
+      before: "23:00:00"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.temp_daytime
+        value: "{{ states('input_number.temp_target') }}"
+    # - service: climate.set_temperature
+    #   entity_id: climate.house_heating
+    #   data_template:
+    #     temperature: "{{ states('input_number.temp_daytime') }}"
+
+## Manual Heating control via slider
+- id: heating_climate_set_changed_morning
+  alias: Heating Morning slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.temp_target
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "06:00:00"
+      before: "09:00:00"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.temp_morning
+        value: "{{ states('input_number.temp_target') }}"
+
+## Manual Heating control via slider
+- id: heating_climate_set_changed_night
+  alias: Heating Night slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.temp_target
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "23:00:00"
+      before: "06:00:00"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.temp_night
+        value: "{{ states('input_number.temp_target') }}"
+
+## Manual Heating control via slider
+- id: heating_climate_set_changed_away
+  alias: Heating Away slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.temp_target
+  condition:
+    condition: and
+    conditions:
+    # - condition: time
+    #   after: "06:00:00"
+    #   before: "09:00:00"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.temp_away
+        value: "{{ states('input_number.temp_target') }}"
+
+# ## Manual Heating control via slider
+# - id: heating_slider_moved_temp_daytime
+#   alias: Heating Daytime slider moved
+#   trigger:
+#     - platform: state
+#       entity_id: input_number.temp_daytime
+#   condition:
+#     condition: and
+#     conditions:
+#     - condition: time
+#       after: "09:00:00"
+#       before: "23:00:00"
+#     - condition: state
+#       entity_id: input_select.presence_house
+#       state: Home
+#     - condition: state
+#       entity_id: input_select.presence_house
+#       state: Home Guests
+#     - condition: state
+#       entity_id: input_select.presence_house
+#       state: Away Guests
+#   action:
+#     - service: input_number.set_value
+#       data_template:
+#         entity_id: input_number.temp_target
+#         value: "{{ states('input_number.temp_daytime') }}"
+#     # - service: climate.set_temperature
+#     #   entity_id: climate.house_heating
+#     #   data_template:
+#     #     temperature: "{{ states('input_number.temp_daytime') }}"
+
+# ## Manual Heating control via slider
+# - id: heating_slider_moved_temp_morning
+#   alias: Heating Rest slider moved
+#   trigger:
+#     - platform: state
+#       entity_id: input_number.temp_morning
+#   condition:
+#     condition: and
+#     conditions:
+#     - condition: time
+#       after: "06:00:00"
+#       before: "09:00:00"
+#     - condition: state
+#       entity_id: input_select.presence_house
+#       state: Home
+#     - condition: state
+#       entity_id: input_select.presence_house
+#       state: Home Guests
+#     - condition: state
+#       entity_id: input_select.presence_house
+#       state: Away Guests
+#   action:
+#     - service: input_number.set_value
+#       data_template:
+#         entity_id: input_number.temp_target
+#         value: "{{ states('input_number.temp_morning') }}"
+#     # - service: climate.set_temperature
+#     #   entity_id: climate.house_heating
+#     #   data_template:
+#     #     temperature: "{{ states('input_number.temp_morning') }}"
+
+# ## Manual Heating control via slider
+# - id: heating_slider_moved_temp_night
+#   alias: Heating Night slider moved
+#   trigger:
+#     - platform: state
+#       entity_id: input_number.temp_night
+#   condition:
+#     condition: and
+#     conditions:
+#     - condition: time
+#       after: "23:00:00"
+#       before: "06:00:00"
+#     - condition: state
+#       entity_id: input_select.presence_house
+#       state: Home
+#     - condition: state
+#       entity_id: input_select.presence_house
+#       state: Home Guests
+#     - condition: state
+#       entity_id: input_select.presence_house
+#       state: Away Guests
+#   action:
+#     - service: input_number.set_value
+#       data_template:
+#         entity_id: input_number.temp_target
+#         value: "{{ states('input_number.temp_night') }}"
+#     # - service: climate.set_temperature
+#     #   entity_id: climate.house_heating
+#     #   data_template:
+#     #     temperature: "{{ states('input_number.temp_night') }}"
+
+# ## Manual Heating control via slider
+# - id: heating_slider_moved_temp_away
+#   alias: Heating Away slider moved
+#   trigger:
+#     - platform: state
+#       entity_id: input_number.temp_away
+#   condition:
+#     condition: and
+#     conditions:
+#     - condition: time
+#       after: "23:00:00"
+#       before: "06:00:00"
+#     - condition: state
+#       entity_id: input_select.presence_house
+#       state: Away
+#   action:
+#     - service: input_number.set_value
+#       data_template:
+#         entity_id: input_number.temp_target
+#         value: "{{ states('input_number.temp_away') }}"
+#     # - service: climate.set_temperature
+#     #   entity_id: climate.house_heating
+#     #   data_template:
+#     #     temperature: "{{ states('input_number.temp_away') }}"

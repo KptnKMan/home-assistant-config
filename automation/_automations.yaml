@@ -7,9 +7,7 @@
   alias: HA Purge Recorder
   trigger:
     - platform: time
-      at: '04:00:00'
-#    - platform: time
-#      at: '16:00:00'
+      at: "04:00:00"
   action:
     service: recorder.purge
     data:
@@ -21,7 +19,7 @@
   trigger:
     - platform: state
       entity_id: switch.pi_door_strike
-      to: 'on'
+      to: "on"
       for:
         seconds: 4
   action:
@@ -31,7 +29,7 @@
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet
-        title: 'Door Strike deactivated!'
+        title: "Door Strike deactivated!"
         message: "Door Strike deactivated!"
 
 ## Ziggo Router reset after 5 seconds
@@ -40,7 +38,7 @@
   trigger:
     - platform: state
       entity_id: !secret plug_4
-      to: 'off'
+      to: "off"
       for:
         seconds: 5
   action:

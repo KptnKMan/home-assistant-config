@@ -1,0 +1,135 @@
+## Turn on light when movement upstairs at night
+- id: turn_on_lights_when_there_is_movement_upstairs_at_night
+  alias: Turn on lights when there is movement upstairs at night
+  trigger:
+    - platform: state
+      entity_id: !secret 6in1_sensor_move_1
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: sun.sun
+      state: "below_horizon"
+    - condition: time
+      after: "01:00:00"
+      before: "06:00:00"
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Home
+  action:
+    service: homeassistant.turn_on
+    entity_id: script.timed_lamp_upstairs_night
+
+## Turn on light when movement upstairs
+- id: turn_on_lights_when_there_is_movement_upstairs
+  alias: Turn on lights when there is movement upstairs
+  trigger:
+    - platform: state
+      entity_id: !secret 6in1_sensor_move_1
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: sun.sun
+      state: "below_horizon"
+    - condition: time
+      after: "06:00:00"
+      before: "01:00:00"
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Home
+  action:
+    service: homeassistant.turn_on
+    entity_id: script.timed_lamp_upstairs
+
+## Turn on light when movement downstairs
+- id: turn_on_lights_when_there_is_movement_downstairs
+  alias: Turn on lights when there is movement downstairs
+  trigger:
+    - platform: state
+      entity_id: !secret coolcam_motion_sensor_2
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: sun.sun
+      state: "below_horizon"
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Home
+  action:
+    service: homeassistant.turn_on
+    entity_id: script.timed_lamp_downstairs
+
+## Turn on light when movement Entrance
+- id: turn_on_lights_when_there_is_movement_entrance
+  alias: Turn on lights when there is movement Entrance
+  trigger:
+    - platform: state
+      entity_id: !secret coolcam_motion_sensor_1
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Home
+  action:
+    service: homeassistant.turn_on
+    entity_id: script.timed_lamp_entrance
+
+## Turn on light when movement closet at night
+- id: turn_on_lights_when_there_is_movement_closet_at_night
+  alias: Turn on lights when there is movement closet at night
+  trigger:
+    - platform: state
+      entity_id: !secret coolcam_motion_sensor_5
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: sun.sun
+      state: "below_horizon"
+    - condition: time
+      after: "01:30:00"
+      before: "17:00:00"
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Home
+  action:
+    service: homeassistant.turn_on
+    entity_id: script.timed_lamp_closet_night
+
+## Turn on light when movement closet
+- id: turn_on_lights_when_there_is_movement_closet
+  alias: Turn on lights when there is movement closet
+  trigger:
+    - platform: state
+      entity_id: !secret coolcam_motion_sensor_5
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: sun.sun
+      state: "below_horizon"
+    - condition: time
+      after: "17:00:00"
+      before: "01:30:00"
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Home
+  action:
+    service: homeassistant.turn_on
+    entity_id: script.timed_lamp_closet
+

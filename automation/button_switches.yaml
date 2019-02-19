@@ -83,7 +83,7 @@
     - delay: 0:59
     - service: input_select.select_option
       data:
-        entity_id: input_select.house_presence
+        entity_id: input_select.presence_house
         option: 'Away'
     ## placeholder for door locks
     # - service: notify.pushbullet
@@ -109,7 +109,7 @@
   action:
     - service: input_select.select_option
       data:
-        entity_id: input_select.house_presence
+        entity_id: input_select.presence_house
         option: 'Home'
     - service: notify.pushbullet
       data: 
