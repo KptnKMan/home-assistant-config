@@ -1,11 +1,11 @@
 
 vacation_mode:
-  name: "On Vacation"
+  name: "Vacation Mode"
   initial: off
   icon: mdi:airplane
 
-friend_visiting:
-  name: "Friend Visiting"
+friends_visiting:
+  name: "Friends Visiting"
   initial: off
   icon: mdi:human-greeting
 
@@ -13,3 +13,8 @@ kids_in_the_house:
   name: "Kids in the House"
   initial: off
   icon: mdi:human-child
+
+welcome_home:
+  name: "Welcome Home Timer Switch"
+  initial: off
+  icon: mdi:timer

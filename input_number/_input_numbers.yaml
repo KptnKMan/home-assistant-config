@@ -1,23 +1,5 @@
-target_temp:
+temp_target:
   name: Target Temp
-  initial: 20
-  min: 14
-  max: 25
-  step: 1
-  mode: slider
-  unit_of_measurement: °C  
-  icon: mdi:thermometer-lines
-rest_temp:
-  name: Rest Temp
-  initial: 17
-  min: 14
-  max: 25
-  step: 1
-  mode: slider
-  unit_of_measurement: °C  
-  icon: mdi:thermometer-lines
-away_temp:
-  name: Away Temp
   initial: 14
   min: 14
   max: 25
@@ -25,3 +7,93 @@ away_temp:
   mode: slider
   unit_of_measurement: °C  
   icon: mdi:thermometer-lines
+
+temp_daytime:
+  name: Temp Daytime
+  initial: 21
+  min: 14
+  max: 25
+  step: 1
+  mode: slider
+  unit_of_measurement: °C  
+  icon: mdi:thermometer-lines
+
+temp_morning:
+  name: Temp Morning
+  initial: 18
+  min: 14
+  max: 25
+  step: 1
+  mode: slider
+  unit_of_measurement: °C  
+  icon: mdi:thermometer-lines
+
+temp_night:
+  name: Temp Night
+  initial: 15
+  min: 14
+  max: 25
+  step: 1
+  mode: slider
+  unit_of_measurement: °C  
+  icon: mdi:thermometer-lines
+
+temp_away:
+  name: Temp Away
+  initial: 14
+  min: 14
+  max: 25
+  step: 1
+  mode: slider
+  unit_of_measurement: °C  
+  icon: mdi:thermometer-lines
+
+google_home_volume_livingroom_player:
+  name: Livingroom Player
+  initial: 0.2
+  min: 0
+  max: 1
+  step: 0.05
+  mode: slider
+  unit_of_measurement: louds
+  icon: mdi:speaker
+
+google_home_volume_livingroom_speaker:
+  name: Livingroom Speaker
+  initial: 0.2
+  min: 0
+  max: 1
+  step: 0.05
+  mode: slider
+  unit_of_measurement: louds
+  icon: mdi:google-home
+
+google_home_volume_mobile_speaker:
+  name: Mobile Speaker
+  initial: 0.2
+  min: 0
+  max: 1
+  step: 0.05
+  mode: slider
+  unit_of_measurement: louds
+  icon: mdi:google-home
+
+google_home_volume_gameroom_speaker:
+  name: Gameroom Speaker
+  initial: 0.4
+  min: 0
+  max: 1
+  step: 0.05
+  mode: slider
+  unit_of_measurement: louds
+  icon: mdi:google-home
+
+google_home_volume_bedroom_speaker:
+  name: Bedroom Speaker
+  initial: 0.4
+  min: 0
+  max: 1
+  step: 0.05
+  mode: slider
+  unit_of_measurement: louds
+  icon: mdi:google-home
