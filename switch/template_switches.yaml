@@ -1,0 +1,12 @@
+# - platform: template
+#   switches:
+
+#     # switch to turn on Google TTS Welcome Message
+#     welcome_home:
+#       value_template: "{{ is_state('automation.work_alarm','on') }}" #You had wrong entity_id above
+#       turn_on:
+#         - service: homeassistant.turn_on
+#           entity_id: automation.work_alarm
+#       turn_of:
+#         - service: homeassistant.turn_off
+#           entity_id: automation.work_alarm
