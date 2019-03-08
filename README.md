@@ -1,4 +1,8 @@
+![Home Assistant Logo](www/hass.png "Home Assistant Logo")
+
 # Kareems home-assistant-config
+
+Configuration for [Kareem's](https://twitter.com/plonka2000) [HomeAssistant](https://home-assistant.io).
 
 ## Introduction
 
@@ -77,17 +81,28 @@ When enbarking on this, I made sure to make clear a set of taks that I wanted to
 - [x] lights by motion
   - I should be able to walk through the house without activating lights myself
   - The lights should switch themselves off
-- [x] heating & presence
+- [x] heating presence detection
   - The house should be warm when I am home
-  - The house should automatically adjust the heating down when I'm away (Or nobody is home)
+  - The house should automatically adjust the heating down when nobody is home
   - Heating should adjust down when its night time
-  - If a designated girlfriend is in the house, the heating should auto-adjust itself 1 or 2 degrees higher
-    - And return to "normal" when I am alone
+  - If a designated "friend group" is in the house, the heating should auto-adjust itself 1 or 2 degrees higher
+    - And return to my own "normal" when I am alone
+- [x] heating control
+  - Fine-grained and simple control of heating at anytime
+  - Heating will auto-adjust during the day/night, when a valid presence in the house
+  - Temperatures will auto-set based on periods of day:
+    - Daytime - 9am to 11pm
+    - Morning - 6am to 9am
+    - Night - 11pm to 6am
+    - Away - anytime when nobody is home
 - [x] secure keyless entry
   - I should be able to buzz my door when without using a key
+- [x] security of entry
   - I should be able to see who is at the door
+  - I should be able to remotely lock the door(s)
 - [x] voice control
   - I want to be able to control, using my voice:
+    - heating
     - lights
     - automations
 - [ ] plant watering
