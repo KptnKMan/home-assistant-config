@@ -2,6 +2,36 @@
 #### HOUSE PRESENCE ####
 ########################
 
+## Arriving HOME! Turn on entrance light
+- id: presence_detect_home_entrance_light
+  alias: Detect Home Entrance Light On
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: group.presence_kareem
+      to: "home"
+    - platform: state
+      entity_id: group.presence_friends
+      to: "home"
+    - platform: event
+      event_type: timer.started
+      event_data:
+        entity_id: timer.light_entrance
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: group.presence_kareem
+      state: "home"
+    - condition: state
+      entity_id: group.presence_friends
+      state: "home"
+  action:
+    - service: homeassistant.turn_on
+      entity_id: 
+        - script.timed_lamp_entrance
+
 ## Arriving HOME/Home Alone/Startup! set presence to "Home"
 - id: presence_detect_home_alone
   alias: Detect Home Alone
@@ -25,14 +55,6 @@
       data:
         entity_id: input_select.presence_house
         option: Home
-    - service: homeassistant.turn_on
-      entity_id: 
-        - script.timed_lamp_entrance
-    # - service: notify.pushbullet
-    #   data:
-    #     target: !secret email_target_pushbullet
-    #     title: "Home alone"
-    #     message: "Home alone!"
 
 ## Home with guests! set presence to "Home Guests".
 - id: presence_detect_home_with_guests

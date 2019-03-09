@@ -145,3 +145,38 @@
         # message: 'Motion Detected At The Front Door'
     - service: homeassistant.turn_off
       entity_id: input_boolean.welcome_home
+
+## Google Home Voice TTS Welcome Home Guests
+- id: google_welcome_home_message_for_guests
+  alias: Google Welcome Home Message for Guests
+  trigger:
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Away Guests
+  condition:
+    condition: and # all are true
+    conditions:
+    - condition: state
+      entity_id: group.presence_kareem
+      state: "not_home"
+    - condition: or # one of these is true
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+    - condition: or # one of these is true
+      conditions:
+      - condition: state
+        entity_id: group.presence_friends
+        state: "home"
+      - condition: state
+        entity_id: input_boolean.friends_visiting
+        state: "on"
+  action:
+    - service: tts.google_say
+      entity_id: media_player.the_whole_house
+      data:
+        message: "Welcome Guests. This is an automated house message. If you need anything I'm here. Just Say Hey Google or Ok Google to get my attention"
