@@ -1,0 +1,14 @@
+## hardware RPi GPIO switches
+- platform: rpi_gpio
+  invert_logic: true
+  ports:
+    2: Pi Boiler Switch # heating
+    3: Pi Door Strike   # door strike
+    4: Pi Switch 3 (4)     # 
+    17: Pi Switch 4 (17)   # 
+    # 18: Pi Light Hall Upstairs    # light hallway upstairs
+    # 27: Pi Light Hall Downstairs  # light hallway downstairs
+    # 22: Pi Light Livigroom Center # light livingroom center
+    # 23: Pi Light Coatroom         # light coat room
+    # 24 rf tx
+    # 12 rf rx

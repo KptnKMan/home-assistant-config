@@ -55,68 +55,68 @@ after_dark_select_sequence:
 ## Sequence of on/off TV and lights
 vacation_lights_away_sequence:
   sequence:
-      ## Notify
+    ## Notify
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet
         title: 'Vacation sequence begin'
         message: "Vacation away sequence has activated at home!"
-      ## trigger entrance light
+    ## trigger entrance light
     - service: homeassistant.turn_on
       data:
         entity_id: script.timed_lamp_entrance
-      ## trigger downstairs light
+    ## trigger downstairs light
     - service: homeassistant.turn_on
       data:
         entity_id: script.timed_lamp_downstairs
-      ## trigger upstairs light
+    ## trigger upstairs light
     - service: homeassistant.turn_on
       data:
         entity_id: script.timed_lamp_upstairs
-      ## turn on downstairs TV
+    ## turn on downstairs TV
     - service: homeassistant.turn_on
       data: 
         entity_id: group.livingroom_things
-      ## wait X mins
+    ## wait X mins
     - delay:
         minutes: 43
-      ## turn off downstairs TV
+    ## turn off downstairs TV
     - service: homeassistant.turn_off
       data: 
         entity_id: group.livingroom_things
-      ## trigger downstairs light
+    ## trigger downstairs light
     - service: homeassistant.turn_on
       data:
         entity_id: script.timed_lamp_downstairs
-      ## wait X mins
+    ## wait X mins
     - delay:
         minutes: 2
-      ## trigger upstairs light
+    ## trigger upstairs light
     - service: homeassistant.turn_on
       data:
         entity_id: script.timed_lamp_upstairs
-      ## wait X mins
+    ## wait X mins
     - delay:
         minutes: 2
-      ## turn on bedroom lamp
+    ## turn on bedroom lamp
     - service: homeassistant.turn_on
       data: 
         entity_id: !secret plug_2
-      ## wait X mins
+    ## wait X mins
     - delay:
         minutes: 4
-      ## turn on bedroom TV
+    ## turn on bedroom TV
     - service: homeassistant.turn_on
       data:
         entity_id: !secret plug_3
-      ## wait X mins
+    ## wait X mins
     - delay:
         minutes: 111
-      ## turn off bedroom TV
+    ## turn off bedroom TV
     - service: homeassistant.turn_off
       data: 
         entity_id: !secret plug_3
-      ## Notify
+    ## Notify
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet

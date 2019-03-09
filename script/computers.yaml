@@ -1,0 +1,21 @@
+optimus_on:
+  alias: "OPTIMUS on"
+  sequence:
+    ## Turn on monitors
+    - service: homeassistant.turn_on
+      data:
+        entity_id: !secret plug_1
+    ## Turn on OPTIMUS
+    - service: homeassistant.turn_on
+      data:
+        entity_id: switch.optimus
+
+optimus_off:
+  alias: "OPTIMUS off"
+  sequence:
+    ## Turn off OPTIMUS
+    - service: shell_command.sleep_optimus
+    ## Turn off monitors
+    - service: homeassistant.turn_off
+      data:
+        entity_id: !secret plug_1

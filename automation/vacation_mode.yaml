@@ -1,10 +1,5 @@
-#####################
-### VACATION MODE ###
-#####################
-
-## https://github.com/ronmarco/home-assistant-config/blob/master/yaml_automation/status-vacation.yaml
-
 ## Vacation Mode
+## https://github.com/ronmarco/home-assistant-config/blob/master/yaml_automation/status-vacation.yaml
 # Inspired by geek of week
 # https://github.com/geekofweek/homeassistant
 

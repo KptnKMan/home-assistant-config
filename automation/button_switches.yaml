@@ -153,7 +153,7 @@
     - delay: 00:00:05
       ## Turn on OPTIMUS
     - service: homeassistant.turn_on
-      entity_id: switch.computer_optimus
+      entity_id: switch.optimus
 
 ## Turn off OPTIMUS double click
 - id: sw3_deactivate_optimus
@@ -167,7 +167,7 @@
   action:
       ## Turn off OPTIMUS
     - service: homeassistant.turn_off
-      entity_id: switch.computer_optimus
+      entity_id: switch.optimus
       ## wait x seconds
     - delay: 00:00:05
       ## Turn off Triple Monitors

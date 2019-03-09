@@ -45,18 +45,24 @@ discovery:
 sun:
 
 ## Checks for available updates
+## https://www.home-assistant.io/components/updater
 updater:
 
 ## System Health Component
+## https://www.home-assistant.io/components/system_health
 system_health:
 
+## HTTP Core Component
+## https://www.home-assistant.io/components/http/
 http:
   ## Uncomment this to add a password (recommended!)
-  api_password: !secret api_password
+  api_password: !secret http_api_password
+  base_url: !secret http_base_url
   # ssl_certificate: /ssl/fullchain.pem
   # ssl_key: /ssl/privkey.pem
 
 ## Enables support for tracking
+## https://www.home-assistant.io/components/recorder
 recorder:
   purge_interval: 1  ## (days) Enable scheduled purge of older events and states
   purge_keep_days: 7  ## (days) Specify number of history days to keep in recorder database after purge
@@ -77,7 +83,8 @@ recorder:
   #     - sensor.date
   #     - sensor.time
 
-# # Setup tracking using InfluxDB
+## Setup tracking using InfluxDB
+## https://www.home-assistant.io/components/influxdb
 # influxdb:
 #   host: !secret dburl_influxdb
 #   port: !secret dburl_influxdb_port
@@ -92,12 +99,15 @@ recorder:
 #    instance: prod
 #    source: hass
 
-# # Open Z-Wave configuration!
+## Open Z-Wave configuration!
+## https://www.home-assistant.io/components/zwave
 # zwave:
 #   usb_path: /dev/ttyACM0
 #   network_key: !secret zwave_networkkey
 #   config_path: /srv/hass/src/python-openzwave/openzwave/config
 
+## Integrated MQTT Server
+## https://www.home-assistant.io/components/mqtt
 mqtt:
 #  broker: 127.0.0.1
   broker: 192.168.178.130
@@ -120,15 +130,18 @@ mqtt:
     retain: true
 
 ## Ring.com doorbell
+## https://www.home-assistant.io/components/ring
 ring:
   username: !secret ring_username
   password: !secret ring_password
 
 ## Vera gateway for Z-Wave & Zigbee
+## https://www.home-assistant.io/components/vera
 vera:
   vera_controller_url: http://192.168.178.22:3480/
 
 ## Xiaomi component for Zigbee temp sensors and buttons
+## https://www.home-assistant.io/components/xiaomi_aqara
 xiaomi_aqara:
   discovery_retry: 10
   gateways:
@@ -137,8 +150,10 @@ xiaomi_aqara:
      host: '192.168.178.23'
      disable: false
 
-## Pushbullet Token/API setup (Disabled in January)
+## notify service for sending notifications
 notify:
+  ## Pushbullet Setup
+  ## https://www.home-assistant.io/components/notify.pushbullet/
   - name: pushbullet
     platform: pushbullet
     api_key: !secret apikey_pushbullet
@@ -189,11 +204,14 @@ google_assistant:
   #       - server
   #       - the tape deck
 
-## Enable Text-To-Speech for Google Assistant
+## Enable Text-To-Speech
 tts:
+  ## TTS for Google Assistant
+  ## https://www.home-assistant.io/components/tts.google
   - platform: google
 
 ## Sabnzbd download manager
+## https://www.home-assistant.io/components/sabnzbd
 sabnzbd:
   api_key: !secret apikey_sabnzbd
   host: 192.168.178.103
@@ -213,7 +231,10 @@ sabnzbd:
     - month_size
     - total_size
 
+## Setup Thermostats and climate controllers
 climate:
+  ## Custom Thermostat
+  ## https://www.home-assistant.io/components/climate.generic_thermostat
   - platform: generic_thermostat
     name: House Heating
     heater: switch.pi_boiler_switch
@@ -223,17 +244,19 @@ climate:
     target_temp: 21 # don't forget to also set input_number.temp_target
     cold_tolerance: 0.3
     hot_tolerance: 0
-    icon: mdi:guage
     min_cycle_duration:
       minutes: 1
 
+## Digital return value (0 or 1) sensors
 binary_sensor:
+  ## Ring binary sensor
+  ## https://www.home-assistant.io/components/ring/#binary-sensor
   - platform: ring
     monitored_conditions:
       - ding
       - motion
 
-# Front Page Input States and Options, used for Automation
+## Front Page Input States and Options, used for Automation
 input_select:
   presence_house:
     name: Who's Home?
@@ -259,7 +282,7 @@ input_select:
 #     url: http://192.168.178.130:3218
 
 ## Media Player (Plex, Spotify, etc)
-media_player: !include_dir_merge_named media_player
+media_player: !include_dir_merge_list media_player
 
 ## Setup lights (Yeelight, MiLight, etc)
 light: !include_dir_merge_list light

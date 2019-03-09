@@ -81,8 +81,8 @@
   action:
     - service: tts.google_say
       entity_id: media_player.the_whole_house
-      data:
-        message: 'Attention guests. This is an automated house message. In 1 hour the heating is cooling to 15 degrees until 6am.'
+      data_template:
+        message: "Attention guests. This is an automated house message. In 1 hour the heating is cooling to {{ states('input_number.temp_night') }} degrees until 6am."
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet

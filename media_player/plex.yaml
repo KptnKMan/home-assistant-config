@@ -1,4 +1,6 @@
+## Enable Chromecast
 # - platform: cast
+## Enable Plex Media Server Integration
 - platform: plex
   entity_namespace: 'plex'
   include_non_clients: true

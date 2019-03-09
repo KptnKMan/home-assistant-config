@@ -31,9 +31,9 @@
       friendly_name: Door Strike
       icon: mdi:key
 ## Wake on LAN
-    switch.computer_optimus:
+    switch.optimus:
       icon: mdi:lan-connect
-    switch.computer_soundwave:
+    switch.soundwave:
       icon: mdi:lan-connect
 
 ## Xiaomi Things
@@ -179,10 +179,10 @@
       friendly_name: Bedroom TV
       icon: mdi:television
     !secret plug_4:
-      friendly_name: Router Reset
+      friendly_name: Reset Router
       icon: mdi:router-wireless
     !secret plug_5:
-      friendly_name: Soundwave
+      friendly_name: Reset Server
       icon: mdi:server-network
     !secret plug_6:
       friendly_name: Livingroom TV
@@ -197,7 +197,7 @@
       friendly_name: Pantry Light
       icon: mdi:star
     !secret plug_10:
-      friendly_name: HA Hard Reset
+      friendly_name: Reset HA
       icon: mdi:star
 
 ## Light switches

@@ -48,8 +48,7 @@
       - device_tracker.optimus
       - device_tracker.soundwave
       - device_tracker.lj1320n
-      - group.optimus
-      - group.soundwave
+      - group.computers
       - group.sharing_things
   media:
     view: yes
@@ -58,6 +57,7 @@
     entities:
       - group.google_homes
       # - group.media_things
+      - media_player.spotify
       - media_player.chromecast_tv_1
       - media_player.chromecast_tv_2
       - media_player.chromecast_tv_3
@@ -92,8 +92,6 @@
       - group.ring_things
       - group.unused_things
       - group.switch_things
-      - group.test_automations_scripts
-      - group.test_thermostat
       - group.control_door
       - group.motion_sensors
       - group.motion_sensor_1
@@ -106,6 +104,9 @@
       - group.environment_outside_weatherunderground
       - group.environment_outside_yr
       - group.zwave_things
+      - group.test_automations
+      - group.test_scripts
+      # - group.test_thermostat
 
 ##############################################
 ### GROUPS OF ENTITIES # FOR REFERENCE USE ###
@@ -137,6 +138,7 @@
 #      - sensor.time_utc
 #      - sensor.internet_time
   pi_monitor:
+    view: no
     name: Pi Monitor
     entities:
       - sensor.last_boot
@@ -371,20 +373,16 @@
     entities:
       - !secret plug_2
       - !secret plug_3
-  optimus:
+  computers:
     view: no
-    name: Optimus
+    name: Computers
     entities:
       - !secret plug_1
-      - switch.computer_optimus
+      - switch.optimus
       - script.optimus_on
       - script.optimus_off
-  soundwave:
-    view: no
-    name: Soundwave
-    entities:
       - !secret plug_5
-      - switch.computer_soundwave
+      - switch.soundwave
   sharing_things:
     view: no
     name: Sharing Things
@@ -400,133 +398,6 @@
       - sensor.sab_daily_total
       - sensor.sab_weekly_total
       - sensor.sab_monthly_total
-  switch_things:
-    view: no
-    name: Switch Things
-    control: hidden
-    entities:
-      - !secret light_upstairs
-      - !secret light_downstairs
-      - !secret light_entrance
-      - !secret light_closet
-      - switch.computer_optimus
-      - switch.computer_soundwave
-      - !secret light_spots_1
-      - !secret light_table_1
-      - !secret light_bedroom_1
-      - !secret light_bedroom_2
-      - !secret light_gameroom_1
-      - !secret light_gameroom_2
-      - !secret plug_1
-      - !secret plug_2
-      - !secret plug_3
-      - !secret plug_4
-      - !secret plug_5
-      - !secret plug_6
-      - !secret plug_7
-      - !secret plug_8
-      - !secret plug_9
-      - !secret plug_10
-      - switch.pi_boiler_switch
-      - switch.pi_door_strike
-      - switch.pi_switch_3_4
-      - switch.pi_switch_4_17
-      - switch.rf_light_test1
-      - switch.rf_light_test2
-      - switch.rf_light_test3
-  test_automations_scripts:
-    view: no
-    name: Test Automations Scripts
-    control: hidden
-    entities:
-      - automation.child_alarm_bedroom
-      - automation.child_alarm_gameroom
-      - automation.child_alarm_upstairs
-      - automation.detect_children_leaving
-      - automation.detect_children_present
-      - automation.detect_friends
-      - automation.detect_friends_leaving
-      - automation.detect_guests_home_alone
-      - automation.detect_guests_leaving
-      - automation.detect_home_alone
-      - automation.detect_home_with_friends
-      - automation.detect_leaving
-      - automation.detect_nobody_home
-      - automation.detect_vacation_mode
-      - automation.detect_vacation_mode_deactivated
-      - automation.google_home_bedroom_speaker_slider_moved
-      - automation.google_home_gameroom_speaker_slider_moved
-      - automation.google_home_livingroom_player_slider_moved
-      - automation.google_home_livingroom_speaker_slider_moved
-      - automation.google_home_mobile_speaker_slider_moved
-      - automation.google_notify_guests_of_heating_cooling
-      - automation.google_set_volumes_daytime
-      - automation.google_set_volumes_evening
-      - automation.google_set_volumes_low
-      - automation.google_set_volumes_test
-      - automation.google_welcome_home_automation_ready
-      - automation.google_welcome_home_message_bedroom
-      - automation.google_welcome_home_message_gameroom
-      - automation.google_welcome_home_message_livingroom
-      - automation.google_welcome_home_timeout
-      - automation.ha_notification_new_nmap_device
-      - automation.ha_notification_shutdown
-      - automation.ha_notification_startup
-      - automation.ha_notification_there_is_an_intruder_downstairs
-      - automation.ha_notification_there_is_an_intruder_entrance
-      - automation.ha_notification_there_is_an_intruder_livingroom
-      - automation.ha_notification_there_is_an_intruder_upstairs
-      - automation.ha_notification_update_available
-      - automation.ha_purge_recorder
-      - automation.heating_detect_kareems_arrived
-      - automation.heating_detect_home_daytime
-      - automation.heating_detect_home_morning
-      - automation.heating_detect_away
-      - automation.heating_detect_home_night
-      - automation.heating_slider_moved
-      - automation.kareems_coming_home
-      - automation.presence_detect_home_without_guests
-      - automation.presence_detect_home_without_guests_detect_after_startup
-      - automation.presence_detect_home_with_guests
-      - automation.presence_detect_leaving
-      - automation.presence_detect_nobody_home
-      - automation.pi_door_strike_reset
-      - automation.sw1_bedroom_things
-      - automation.sw1_gameroom_light
-      - automation.sw1_gateway_nightlight
-      - automation.sw1_lights_out
-      - automation.sw2_disarm_alarm_system
-      - automation.sw2_door_strike
-      - automation.sw2_lock_doors
-      - automation.sw3_activate_optimus
-      - automation.sw3_deactivate_optimus
-      - automation.sw4_livingroom_spots
-      - automation.sw4_livingroom_things
-      - automation.turn_on_lights_when_there_is_movement_closet
-      - automation.turn_on_lights_when_there_is_movement_closet_at_night
-      - automation.turn_on_lights_when_there_is_movement_downstairs
-      - automation.turn_on_lights_when_there_is_movement_entrance
-      - automation.turn_on_lights_when_there_is_movement_upstairs
-      - automation.turn_on_lights_when_there_is_movement_upstairs_at_night
-      - automation.vacation_mode_lights_activate_at_sunset
-      - automation.vacation_mode_activate
-      - automation.vacation_mode_deactivate
-      - automation.ziggo_router_reset
-      - script.after_dark_select_sequence
-      - script.optimus_off
-      - script.optimus_on
-      - script.timed_lamp_closet
-      - script.timed_lamp_closet_night
-      - script.timed_lamp_downstairs
-      - script.timed_lamp_entrance
-      - script.timed_lamp_upstairs
-      - script.timed_lamp_upstairs_night
-      - script.timer_off_closet
-      - script.timer_off_downstairs
-      - script.timer_off_entrance
-      - script.timer_off_upstairs
-      - script.vacation_lights_away_sequence
-      - script.vacation_lights_init
   control_door:
     view: no
     name: Control Door
@@ -691,3 +562,138 @@
       - sensor.yr_low_clouds
       - sensor.yr_medium_clouds
       - sensor.yr_high_clouds
+  switch_things:
+    view: no
+    name: Switch Things
+    control: hidden
+    entities:
+      - switch.optimus
+      - switch.soundwave
+      - !secret light_upstairs
+      - !secret light_downstairs
+      - !secret light_entrance
+      - !secret light_closet
+      - !secret light_spots_1
+      - !secret light_table_1
+      - !secret light_bedroom_1
+      - !secret light_bedroom_2
+      - !secret light_gameroom_1
+      - !secret light_gameroom_2
+      - !secret plug_1
+      - !secret plug_2
+      - !secret plug_3
+      - !secret plug_4
+      - !secret plug_5
+      - !secret plug_6
+      - !secret plug_7
+      - !secret plug_8
+      - !secret plug_9
+      - !secret plug_10
+      - switch.pi_boiler_switch
+      - switch.pi_door_strike
+      - switch.pi_switch_3_4
+      - switch.pi_switch_4_17
+      - switch.rf_light_test1
+      - switch.rf_light_test2
+      - switch.rf_light_test3
+  test_automations:
+    view: no
+    name: Test Automations
+    control: hidden
+    entities:
+      - automation.restart_ha
+      - automation.activate_vacation_mode_on_when_away_for_long_time
+      - automation.child_alarm_bedroom
+      - automation.child_alarm_gameroom
+      - automation.child_alarm_upstairs
+      - automation.detect_children_leaving
+      - automation.detect_children_present
+      - automation.detect_friends
+      - automation.detect_friends_leaving
+      - automation.detect_guests_home_alone
+      - automation.detect_guests_leaving
+      - automation.detect_home_alone
+      - automation.detect_home_entrance_light_on
+      - automation.detect_home_with_friends
+      - automation.detect_leaving
+      - automation.detect_nobody_home
+      - automation.detect_vacation_mode
+      - automation.detect_vacation_mode_deactivated
+      - automation.google_home_bedroom_speaker_slider_moved
+      - automation.google_home_gameroom_speaker_slider_moved
+      - automation.google_home_livingroom_player_slider_moved
+      - automation.google_home_livingroom_speaker_slider_moved
+      - automation.google_home_mobile_speaker_slider_moved
+      - automation.google_notify_guests_kareem_is_outside
+      - automation.google_notify_guests_of_heating_cooling
+      - automation.google_set_volumes_daytime
+      - automation.google_set_volumes_evening
+      - automation.google_set_volumes_low
+      - automation.google_set_volumes_test
+      - automation.google_welcome_home_automation_ready
+      - automation.google_welcome_home_message_bedroom
+      - automation.google_welcome_home_message_for_guests
+      - automation.google_welcome_home_message_gameroom
+      - automation.google_welcome_home_message_livingroom
+      - automation.google_welcome_home_timeout
+      - automation.ha_notification_new_nmap_device
+      - automation.ha_notification_shutdown
+      - automation.ha_notification_startup
+      - automation.ha_notification_there_is_an_intruder_downstairs
+      - automation.ha_notification_there_is_an_intruder_entrance
+      - automation.ha_notification_there_is_an_intruder_livingroom
+      - automation.ha_notification_there_is_an_intruder_upstairs
+      - automation.ha_notification_update_available
+      - automation.ha_purge_recorder
+      - automation.heating_away_slider_moved
+      # - automation.heating_climate_changed
+      - automation.heating_climate_slider_moved_anytime
+      - automation.heating_daytime_slider_moved
+      - automation.heating_detect_away
+      - automation.heating_detect_daytime
+      - automation.heating_detect_morning
+      - automation.heating_detect_night
+      - automation.heating_morning_slider_moved
+      - automation.heating_night_slider_moved
+      - automation.heating_temp_target_slider_moved
+      - automation.pi_door_strike_reset
+      - automation.sw1_bedroom_things
+      - automation.sw1_gameroom_light
+      - automation.sw1_gateway_nightlight
+      - automation.sw1_lights_out
+      - automation.sw2_disarm_alarm_system
+      - automation.sw2_door_strike
+      - automation.sw2_lock_doors
+      - automation.sw3_activate_optimus
+      - automation.sw3_deactivate_optimus
+      - automation.sw4_livingroom_spots
+      - automation.sw4_livingroom_things
+      - automation.turn_on_lights_when_there_is_movement_closet
+      - automation.turn_on_lights_when_there_is_movement_closet_at_night
+      - automation.turn_on_lights_when_there_is_movement_downstairs
+      - automation.turn_on_lights_when_there_is_movement_entrance
+      - automation.turn_on_lights_when_there_is_movement_upstairs
+      - automation.turn_on_lights_when_there_is_movement_upstairs_at_night
+      - automation.vacation_lights_at_sunset_when_vacation_mode_on
+      - automation.vacation_mode_off_when_home
+      - automation.ziggo_router_reset
+  test_scripts:
+    view: no
+    name: Test Scripts
+    control: hidden
+    entities:
+      - script.after_dark_select_sequence
+      - script.optimus_off
+      - script.optimus_on
+      - script.timed_lamp_closet
+      - script.timed_lamp_closet_night
+      - script.timed_lamp_downstairs
+      - script.timed_lamp_entrance
+      - script.timed_lamp_upstairs
+      - script.timed_lamp_upstairs_night
+      - script.timer_off_closet
+      - script.timer_off_downstairs
+      - script.timer_off_entrance
+      - script.timer_off_upstairs
+      - script.vacation_lights_away_sequence
+      - script.vacation_lights_init

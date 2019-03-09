@@ -1,3 +1,5 @@
+## Enable Wifi Yeelights
+## https://www.home-assistant.io/components/light.yeelight/
 - platform: yeelight
   devices:
     192.168.178.151:

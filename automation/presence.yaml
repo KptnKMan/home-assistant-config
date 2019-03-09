@@ -11,8 +11,6 @@
     - platform: state
       entity_id: group.presence_kareem
       to: "home"
-    - platform: time_pattern
-      minutes: '/5'
   condition:
   - condition: and
     conditions:
@@ -40,6 +38,8 @@
 - id: presence_detect_home_with_guests
   alias: Detect Home with Friends
   trigger:
+    - platform: homeassistant
+      event: start
     - platform: state
       entity_id: group.presence_kareem
       to: "home"
@@ -60,9 +60,6 @@
       data:
         entity_id: input_select.presence_house
         option: Home Guests
-    - service: homeassistant.turn_on
-      entity_id:
-        - script.timed_lamp_entrance
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet
@@ -73,6 +70,8 @@
 - id: presence_detect_home_without_guests
   alias: Detect Guests Leaving
   trigger:
+    - platform: homeassistant
+      event: start
     - platform: state
       entity_id: group.presence_friends
       to: "not_home"
@@ -100,6 +99,8 @@
 - id: presence_detect_guests_home_alone
   alias: Detect Guests Home Alone
   trigger:
+    - platform: homeassistant
+      event: start
     - platform: state
       entity_id: group.presence_kareem
       to: "not_home"
@@ -130,6 +131,8 @@
 - id: presence_detect_leaving
   alias: Detect Leaving
   trigger:
+    - platform: homeassistant
+      event: start
     - platform: state
       entity_id: group.presence_kareem
       to: "not_home"
