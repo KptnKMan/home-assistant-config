@@ -37,6 +37,8 @@
       icon: mdi:lan-connect
 
 ## Xiaomi Things
+    fan.xiaomi_miio_device:
+      friendly_name: Air Purifier 2S
     !secret light_xiaomi_gateway:
       friendly_name: Night light
     sensor.illumination_34ce008bee96:

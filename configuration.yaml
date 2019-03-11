@@ -150,6 +150,14 @@ xiaomi_aqara:
      host: '192.168.178.23'
      disable: false
 
+## Enable fans/air filters
+fan:
+  ## Xiaomi Air Purifier 2S setup
+  ## https://www.home-assistant.io/components/fan.xiaomi_miio/
+  - platform: xiaomi_miio
+    host: 192.168.178.175
+    token: !secret xiaomi_access_token_europe
+
 ## notify service for sending notifications
 notify:
   ## Pushbullet Setup

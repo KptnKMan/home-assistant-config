@@ -107,6 +107,7 @@
       - group.test_automations
       - group.test_scripts
       # - group.test_thermostat
+      - group.all_fans
 
 ##############################################
 ### GROUPS OF ENTITIES # FOR REFERENCE USE ###
@@ -193,6 +194,7 @@
       - input_boolean.friends_visiting
       - input_boolean.kids_in_the_house
       - input_boolean.vacation_mode
+      - fan.xiaomi_miio_device
       - climate.house_heating
       - input_number.temp_target
       - input_number.temp_daytime
