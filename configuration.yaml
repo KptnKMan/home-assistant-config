@@ -1,3 +1,7 @@
+################################
+## HOME ASSISTANT CORE
+## Core config for Home Assistant
+
 homeassistant:
   ## Name of the location where Home Assistant is running
   name: Home
@@ -14,52 +18,87 @@ homeassistant:
   time_zone: !secret home_timezone
   ## Device Customised names, icons, etc
   customize: !include_dir_merge_named customize
-  ## Packages?
-  # packages: !include_dir_named packages
+  ## This adds custom externalised packages, like NotoriousBDG's 'Battery Alert'.
+  ## Battery Alert from: https://github.com/notoriousbdg/Home-AssistantConfig/blob/master/packages/battery_alert.yaml
+  packages: !include_dir_named packages
 
-## Show links to resources in log and frontend
-#introduction:
-
-## Enables the frontend
-frontend:
-
-## Allows you to issue voice commands from the frontend in enabled browsers
-conversation:
-
-## View all events in a logbook
-logbook:
-
-## Enables support for tracking state changes over time.
-history:
+################################
+## CORE PACKAGES
+## Packages configured standard in Home Assistant
 
 ## Enable configure panel
 config:
 
-## Show map on UI
-map:
+## Allows you to issue voice commands from the frontend in enabled browsers
+# conversation:
 
 ## Discover some devices automatically
 discovery:
 
-## Track the sun
-sun:
+## Enables the frontend
+frontend:
 
-## Checks for available updates
-## https://www.home-assistant.io/components/updater
-updater:
+## Enables support for tracking state changes over time.
+history:
 
-## System Health Component
-## https://www.home-assistant.io/components/system_health
-system_health:
+## Display a graph similar to the graphs in more-info popups and the history panel.
+## https://www.home-assistant.io/components/history_graph
+history_graph:
+  air_quality:
+    name: Air Quality
+    entities:
+      - sensor.attribute_fan_aqi
+      - sensor.attribute_fan_favorite_level
+      - sensor.attribute_fan_temperature
+    hours_to_show: 168 # 168 = 7 days / 1 week, 240 = 10 days
+    refresh: 60
+  # battery_levels:
+  #   name: Air Quality
+  #   entities:
+  #     - sensor.attribute_fan_aqi
+  #     - sensor.attribute_fan_favorite_level
+  #     - sensor.attribute_fan_temperature
+  #   hours_to_show: 240 # 168 = 7 days / 1 week, 240 = 10 days
+  #   refresh: 60
 
 ## HTTP Core Component
 ## https://www.home-assistant.io/components/http/
 http:
-  ## Uncomment this to add a password (recommended!)
-  api_password: !secret http_api_password
   base_url: !secret http_base_url
   # ssl_certificate: /ssl/fullchain.pem
   # ssl_key: /ssl/privkey.pem
+  # ssl_certificate: /ssl/letsencrypt/live/straker-me/fullchain.pem
+  # ssl_key: /ssl/letsencrypt/live/straker-me/privkey.pem
+
+## Authentication Providers
+## https://www.home-assistant.io/docs/authentication/providers/
+# auth_providers:
+#   - type: legacy_api_password
+#     ## Uncomment this to add a password (recommended!)
+#     api_password: !secret http_api_password
+
+## View all events in a logbook
+logbook:
+
+## Setup logging for debugging
+logger:
+  default: warning
+  logs:
+    limitlessled: debug
+
+## Show map on UI
+map:
+
+## Iframes for local services
+# panel_iframe:
+#   router:
+#     title: zRouter
+#     icon: mdi:wrench
+#     url: https://192.168.178.1
+#   configurator:
+#     title: zConfigurator
+#     icon: mdi:wrench
+#     url: http://192.168.178.130:3218
 
 ## Enables support for tracking
 ## https://www.home-assistant.io/components/recorder
@@ -67,21 +106,29 @@ recorder:
   purge_interval: 1  ## (days) Enable scheduled purge of older events and states
   purge_keep_days: 7  ## (days) Specify number of history days to keep in recorder database after purge
   db_url: !secret dburl_mariadb_addon  ## The URL which point to your database
-  ## Specify domains of metrics to keep
-  # include:
-  #   domains:
-  #     - sensor
-  #     - switch
-  #     - light
-  #     - device_tracker
-  #     - climate
-  #   entities:
-  #     - sun.sun
-  #     - input_number.temp_target
-  # exclude:
-  #   entities:
-  #     - sensor.date
-  #     - sensor.time
+
+## Track the sun
+sun:
+
+## System Health Component
+## https://www.home-assistant.io/components/system_health
+system_health:
+
+## Checks for available updates
+## https://www.home-assistant.io/components/updater
+updater:
+
+################################
+## EXTERNALLY CONFIGURED PACKAGES
+## Not core to Home Assistant but configured here
+
+## Enable fans/air filters
+fan:
+  ## Xiaomi Air Purifier 2S setup
+  ## https://www.home-assistant.io/components/fan.xiaomi_miio/
+  - platform: xiaomi_miio
+    host: 192.168.178.175
+    token: !secret xiaomi_access_token_europe
 
 ## Setup tracking using InfluxDB
 ## https://www.home-assistant.io/components/influxdb
@@ -99,13 +146,6 @@ recorder:
 #    instance: prod
 #    source: hass
 
-## Open Z-Wave configuration!
-## https://www.home-assistant.io/components/zwave
-# zwave:
-#   usb_path: /dev/ttyACM0
-#   network_key: !secret zwave_networkkey
-#   config_path: /srv/hass/src/python-openzwave/openzwave/config
-
 ## Integrated MQTT Server
 ## https://www.home-assistant.io/components/mqtt
 mqtt:
@@ -116,6 +156,8 @@ mqtt:
   keepalive: 60
   username: !secret mqtt_username
   password: !secret mqtt_password
+  discovery: true
+  discovery_prefix: homeassistant
 #  certificate: /home/paulus/dev/addtrustexternalcaroot.crt
 #  protocol: 3.1
   birth_message:
@@ -129,35 +171,6 @@ mqtt:
     qos: 1
     retain: true
 
-## Ring.com doorbell
-## https://www.home-assistant.io/components/ring
-ring:
-  username: !secret ring_username
-  password: !secret ring_password
-
-## Vera gateway for Z-Wave & Zigbee
-## https://www.home-assistant.io/components/vera
-vera:
-  vera_controller_url: http://192.168.178.22:3480/
-
-## Xiaomi component for Zigbee temp sensors and buttons
-## https://www.home-assistant.io/components/xiaomi_aqara
-xiaomi_aqara:
-  discovery_retry: 10
-  gateways:
-   - mac: !secret xiaomi_mac_address
-     key: !secret xiaomi_password
-     host: '192.168.178.23'
-     disable: false
-
-## Enable fans/air filters
-fan:
-  ## Xiaomi Air Purifier 2S setup
-  ## https://www.home-assistant.io/components/fan.xiaomi_miio/
-  - platform: xiaomi_miio
-    host: 192.168.178.175
-    token: !secret xiaomi_access_token_europe
-
 ## notify service for sending notifications
 notify:
   ## Pushbullet Setup
@@ -166,15 +179,11 @@ notify:
     platform: pushbullet
     api_key: !secret apikey_pushbullet
 
-## Enable Google Assistant API
-## https://www.home-assistant.io/components/google_assistant
-google_assistant: !include_dir_merge_named google_assistant
-
-## Enable Text-To-Speech
-tts:
-  ## TTS for Google Assistant
-  ## https://www.home-assistant.io/components/tts.google
-  - platform: google
+## Ring.com doorbell
+## https://www.home-assistant.io/components/ring
+ring:
+  username: !secret ring_username
+  password: !secret ring_password
 
 ## Sabnzbd download manager
 ## https://www.home-assistant.io/components/sabnzbd
@@ -197,21 +206,48 @@ sabnzbd:
     - month_size
     - total_size
 
-## Setup Thermostats and climate controllers
-climate:
-  ## Custom Thermostat
-  ## https://www.home-assistant.io/components/climate.generic_thermostat
-  - platform: generic_thermostat
-    name: House Heating
-    heater: switch.pi_boiler_switch
-    target_sensor: !secret xiaomi_temp_2
-    min_temp: 10
-    max_temp: 25
-    target_temp: 21 # don't forget to also set input_number.temp_target
-    cold_tolerance: 0.3
-    hot_tolerance: 0
-    min_cycle_duration:
-      minutes: 1
+## Enable Text-To-Speech, used by Google Assistant
+tts:
+  ## TTS for Google Assistant
+  ## https://www.home-assistant.io/components/google_translate/
+  - platform: google_translate
+    language: 'en'
+    cache: true
+    cache_dir: /config/tts
+    time_memory: 300
+    # base_url: http://192.168.178.10:8123
+    service_name: google_say # default google_translate_say
+
+## Vera gateway for Z-Wave & Zigbee
+## https://www.home-assistant.io/components/vera
+vera:
+  vera_controller_url: http://192.168.178.22:3480/
+
+## Xiaomi component for Zigbee temp sensors and buttons
+## https://www.home-assistant.io/components/xiaomi_aqara
+xiaomi_aqara:
+  discovery_retry: 10
+  gateways:
+   - mac: !secret xiaomi_mac_address
+     key: !secret xiaomi_password
+     host: '192.168.178.23'
+     disable: false
+
+## Open Z-Wave configuration!
+## https://www.home-assistant.io/components/zwave
+# zwave:
+#   usb_path: /dev/ttyACM0
+#   network_key: !secret zwave_networkkey
+#   config_path: /srv/hass/src/python-openzwave/openzwave/config
+
+################################
+## EXTERNALISED PACKAGES
+## Packages that are in sub_dirs of the main configuration
+## Mixed core components and external components
+
+## Automation programs
+automation: !include automations.yaml
+automation old: !include_dir_merge_list automation
 
 ## Digital return value (0 or 1) sensors
 binary_sensor:
@@ -222,43 +258,28 @@ binary_sensor:
       - ding
       - motion
 
-## Front Page Input States and Options, used for Automation
-input_select:
-  presence_house:
-    name: Who's Home?
-    options:
-      - Home
-      - Away
-      - Home Guests
-      - Away Guests
-      # - Night
-      # - Vacation
-    initial: Away
-    icon: mdi:home-map-marker
-
-# ## Iframes for local services
-# panel_iframe:
-#   router:
-#     title: zRouter
-#     icon: mdi:wrench
-#     url: https://192.168.178.1
-#   configurator:
-#     title: zConfigurator
-#     icon: mdi:wrench
-#     url: http://192.168.178.130:3218
-
-## Media Player (Plex, Spotify, etc)
-media_player: !include_dir_merge_list media_player
-
-## Setup lights (Yeelight, MiLight, etc)
-light: !include_dir_merge_list light
-
-## Automation programs
-automation: !include automations.yaml
-automation old: !include_dir_merge_list automation
+## Setup Thermostats and climate controllers
+climate:
+  ## Custom Thermostat
+  ## https://www.home-assistant.io/components/climate.generic_thermostat
+  - platform: generic_thermostat
+    name: House Heating
+    heater: switch.pi_boiler_switch
+    target_sensor: !secret xiaomi_temp_2
+    min_temp: 10
+    max_temp: 25
+    target_temp: 20 # don't forget to also set input_number.temp_target
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    min_cycle_duration:
+      minutes: 1
 
 ## Device Tracker module
 device_tracker: !include_dir_merge_list device_tracker
+
+## Enable Google Assistant API
+## https://www.home-assistant.io/components/google_assistant
+google_assistant: !include_dir_merge_named google_assistant
 
 ## Views (Tabs) and Groups
 group: !include_dir_merge_named group
@@ -268,6 +289,15 @@ input_boolean: !include_dir_merge_named input_boolean
 
 ## Virtual input number sliders
 input_number: !include_dir_merge_named input_number
+
+## Front Page Input States and Options, used for Automation
+input_select: !include_dir_merge_named input_select
+
+## Setup lights (Yeelight, MiLight, etc)
+light: !include_dir_merge_list light
+
+## Media Player (Plex, Spotify, etc)
+media_player: !include_dir_merge_list media_player
 
 ## Scene setups
 # scene: !include_dir_merge_list scene
@@ -283,6 +313,28 @@ shell_command: !include_dir_merge_named shell_command
 
 ## Switches physical (eg: GPIO) and virtual
 switch: !include_dir_merge_list switch
+
+## Timers for automations: heating, lights, etc
+## https://www.home-assistant.io/components/timer
+timer:
+  temperature_boost:
+    duration: '02:00:00'
+  light_entrance:
+    duration: '00:03:00'
+  light_downstairs:
+    duration: '00:03:00'
+  light_livingroom_spots:
+    duration: '00:03:00'
+  light_livingroom_table:
+    duration: '00:03:00'
+  light_upstairs_night:
+    duration: '00:03:00'
+  light_upstairs:
+    duration: '00:03:00'
+  light_closet_night:
+    duration: '00:03:00'
+  light_closet:
+    duration: '00:03:00'
 
 ## Zones using GPS
 zone: !include_dir_merge_list zone
