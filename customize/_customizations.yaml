@@ -95,7 +95,7 @@
       friendly_name: Upstairs Light
       icon: mdi:weather-sunny
     !secret 6in1_sensor_humid_1:
-      friendly_name: upstairs Humidity
+      friendly_name: Upstairs Humidity
       icon: mdi:water-percent
     !secret 6in1_sensor_uv_alarm_1:
       friendly_name: Upstairs UV Alarm
@@ -143,14 +143,14 @@
     !secret coolcam_motion_sensor_2:
       friendly_name: Downstairs Motion
     !secret coolcam_sensor_3:
-      friendly_name: Game Room Sensor
+      friendly_name: Gameroom Sensor
     !secret coolcam_light_sensor_3:
-      friendly_name: Game Room Light Sensor
+      friendly_name: Gameroom Light Sensor
     !secret coolcam_motion_sensor_alarm_3:
-      friendly_name: Game Room Motion Sensor Alarm
+      friendly_name: Gameroom Motion Sensor Alarm
       icon: mdi:alarm-bell
     !secret coolcam_motion_sensor_3:
-      friendly_name: Game Room Motion
+      friendly_name: Gameroom Motion
     !secret coolcam_sensor_4:
       friendly_name: Bedroom Sensor
     !secret coolcam_light_sensor_4:
@@ -216,10 +216,10 @@
       friendly_name: Bedroom Light 2
       icon: mdi:lightbulb
     !secret light_gameroom_1:
-      friendly_name: Game Room Light
+      friendly_name: Gameroom Light
       icon: mdi:lightbulb
     !secret light_gameroom_2:
-      friendly_name: Game Room Light 2
+      friendly_name: Gameroom Light 2
       icon: mdi:lightbulb
 
 ## Yeelight Color Bulbs
@@ -260,16 +260,16 @@
       friendly_name: Outside Clouds (Medium)
     sensor.yr_high_clouds:
       friendly_name: Outside Clouds (High)
-    sensor.pws_temp_c:
-      friendly_name: Outside Temp
-    sensor.pws_feelslike_c:
-      friendly_name: Outside Feels Like
-      icon: mdi:thermometer-lines
-    sensor.pws_relative_humidity:
-      friendly_name: Outside Humidity
-      icon: mdi:water-percent
-    sensor.pws_weather:
-      friendly_name: Outside Weather
-    sensor.pws_uv:
-      friendly_name: Outside UV
-      icon: mdi:weather-sunny
+    # sensor.pws_temp_c:
+    #   friendly_name: Outside Temp
+    # sensor.pws_feelslike_c:
+    #   friendly_name: Outside Feels Like
+    #   icon: mdi:thermometer-lines
+    # sensor.pws_relative_humidity:
+    #   friendly_name: Outside Humidity
+    #   icon: mdi:water-percent
+    # sensor.pws_weather:
+    #   friendly_name: Outside Weather
+    # sensor.pws_uv:
+    #   friendly_name: Outside UV
+    #   icon: mdi:weather-sunny
