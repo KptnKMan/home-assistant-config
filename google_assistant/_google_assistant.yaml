@@ -1,10 +1,12 @@
 project_id: !secret google_assistant_project_id
+secure_devices_pin: google_assistant_secure_devices_pin
 api_key: !secret google_assistant_api_key
 allow_unlock: true
 exposed_domains:
+  - camera # (streaming, requires compatible camera)
   # - group # (on/off)
   # - input_boolean # (on/off)
-  # - scene # (on)
+  - scene # (on)
   - script # (on)
   - switch # (on/off)
   - fan # (on/off/speed)
@@ -53,7 +55,7 @@ entity_config:
     expose: true
     name: Bedroom Light
     room: Bedroom
-  !secret light_gameroom_1: # Game Room Light
+  !secret light_gameroom_1: # Gameroom Light
     expose: true
     name: Gameroom Light
     room: Gameroom
@@ -115,7 +117,7 @@ entity_config:
     expose: false
   !secret light_bedroom_2: # Bedroom Light 2
     expose: false
-  !secret light_gameroom_2: # Game Room Light 2
+  !secret light_gameroom_2: # Gameroom Light 2
     expose: false
   !secret coolcam_sensor_1: # Entrance Sensor
     expose: false
@@ -125,9 +127,9 @@ entity_config:
     expose: false
   !secret coolcam_light_sensor_2: # Downstairs Light Sensor
     expose: false
-  !secret coolcam_sensor_3: # Game Room Sensor
+  !secret coolcam_sensor_3: # Gameroom Sensor
     expose: false
-  !secret coolcam_light_sensor_3: # Game Room Light Sensor
+  !secret coolcam_light_sensor_3: # Gameroom Light Sensor
     expose: false
   !secret coolcam_sensor_4: # Bedroom Sensor
     expose: false
