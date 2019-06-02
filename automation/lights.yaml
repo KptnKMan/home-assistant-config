@@ -1,135 +1,62 @@
-## Turn on light when movement upstairs at night
-- id: turn_on_lights_when_there_is_movement_upstairs_at_night
-  alias: Turn on lights when there is movement upstairs at night
+## Old light logic
+# sensor.x on -> Start script.timed_lamp_x
+# script -> turn_off script.timed_lamp_x
+#        -> turn_on light.x
+#        -> turn_on script.timer_off_x
+# script -> delay 5 mins
+#        -> turn_off light.x
+
+## New Light logic -> each config moved to a respective file!
+# sensor.x on -> cancel timer.light_x
+#             -> start timer.light_x
+# timer.x started -> turn_on light.x
+# timer.x finished -> cancel timer.light_x
+#                  -> turn_off light.x
+
+## Detect lights to be kept on without automated off
+- id: detect_automate_lights_disabled
+  alias: Detect Automate Lights Disabled
   trigger:
     - platform: state
-      entity_id: !secret 6in1_sensor_move_1
+      entity_id: input_boolean.keep_lights_on
       from: "off"
       to: "on"
   condition:
-    condition: and
+  - condition: or
     conditions:
     - condition: state
-      entity_id: sun.sun
-      state: "below_horizon"
-    - condition: time
-      after: "01:00:00"
-      before: "06:00:00"
-    - condition: state
-      entity_id: input_select.presence_house
-      state: Home
+      entity_id: input_boolean.keep_lights_on
+      state: "on"
   action:
-    service: homeassistant.turn_on
-    entity_id: script.timed_lamp_upstairs_night
+  - service: homeassistant.turn_on
+    entity_id:
+    - script.lights_cancel_all_timers
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      title: "Lights automation disabled"
+      message: "Lights will not automate!"
 
-## Turn on light when movement upstairs
-- id: turn_on_lights_when_there_is_movement_upstairs
-  alias: Turn on lights when there is movement upstairs
+## Detect lights should be automated in House
+- id: detect_automate_lights_enabled
+  alias: Detect Automate Lights Enabled
   trigger:
     - platform: state
-      entity_id: !secret 6in1_sensor_move_1
-      from: "off"
-      to: "on"
+      entity_id: input_boolean.keep_lights_on
+      from: "on"
+      to: "off"
   condition:
-    condition: and
+  - condition: or
     conditions:
     - condition: state
-      entity_id: sun.sun
-      state: "below_horizon"
-    - condition: time
-      after: "06:00:00"
-      before: "01:00:00"
-    - condition: state
-      entity_id: input_select.presence_house
-      state: Home
+      entity_id: input_boolean.keep_lights_on
+      state: "off"
   action:
-    service: homeassistant.turn_on
-    entity_id: script.timed_lamp_upstairs
-
-## Turn on light when movement downstairs
-- id: turn_on_lights_when_there_is_movement_downstairs
-  alias: Turn on lights when there is movement downstairs
-  trigger:
-    - platform: state
-      entity_id: !secret coolcam_motion_sensor_2
-      from: "off"
-      to: "on"
-  condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: sun.sun
-      state: "below_horizon"
-    - condition: state
-      entity_id: input_select.presence_house
-      state: Home
-  action:
-    service: homeassistant.turn_on
-    entity_id: script.timed_lamp_downstairs
-
-## Turn on light when movement Entrance
-- id: turn_on_lights_when_there_is_movement_entrance
-  alias: Turn on lights when there is movement Entrance
-  trigger:
-    - platform: state
-      entity_id: !secret coolcam_motion_sensor_1
-      from: "off"
-      to: "on"
-  condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: input_select.presence_house
-      state: Home
-  action:
-    service: homeassistant.turn_on
-    entity_id: script.timed_lamp_entrance
-
-## Turn on light when movement closet at night
-- id: turn_on_lights_when_there_is_movement_closet_at_night
-  alias: Turn on lights when there is movement closet at night
-  trigger:
-    - platform: state
-      entity_id: !secret coolcam_motion_sensor_5
-      from: "off"
-      to: "on"
-  condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: sun.sun
-      state: "below_horizon"
-    - condition: time
-      after: "01:30:00"
-      before: "17:00:00"
-    - condition: state
-      entity_id: input_select.presence_house
-      state: Home
-  action:
-    service: homeassistant.turn_on
-    entity_id: script.timed_lamp_closet_night
-
-## Turn on light when movement closet
-- id: turn_on_lights_when_there_is_movement_closet
-  alias: Turn on lights when there is movement closet
-  trigger:
-    - platform: state
-      entity_id: !secret coolcam_motion_sensor_5
-      from: "off"
-      to: "on"
-  condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: sun.sun
-      state: "below_horizon"
-    - condition: time
-      after: "17:00:00"
-      before: "01:30:00"
-    - condition: state
-      entity_id: input_select.presence_house
-      state: Home
-  action:
-    service: homeassistant.turn_on
-    entity_id: script.timed_lamp_closet
-
+  - service: homeassistant.turn_on
+    entity_id:
+    - script.lights_cancel_all_timers
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      title: "Lights automated"
+      message: "Lights will automatically automate!"

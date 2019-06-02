@@ -1,6 +1,4 @@
-########################
-#### HOUSE PRESENCE ####
-########################
+## HOUSE PRESENCE
 
 ## Arriving HOME! Turn on entrance light
 - id: presence_detect_home_entrance_light
@@ -14,10 +12,6 @@
     - platform: state
       entity_id: group.presence_friends
       to: "home"
-    - platform: event
-      event_type: timer.started
-      event_data:
-        entity_id: timer.light_entrance
   condition:
   - condition: or
     conditions:
@@ -28,9 +22,10 @@
       entity_id: group.presence_friends
       state: "home"
   action:
-    - service: homeassistant.turn_on
-      entity_id: 
-        - script.timed_lamp_entrance
+  - service: timer.cancel
+    entity_id: timer.light_entrance
+  - service: timer.start
+    entity_id: timer.light_entrance
 
 ## Arriving HOME/Home Alone/Startup! set presence to "Home"
 - id: presence_detect_home_alone
@@ -191,25 +186,9 @@
       for:
         minutes: 30
   action:
-    - service: homeassistant.turn_off
+    - service: homeassistant.turn_on
       entity_id:
-        ## Turn off OPTIMUS Triple Screens
-        - !secret plug_1
-        ## Turn off bedside Lamp
-        - !secret plug_2
-        ## Turn off Bedroom TV + Chromecast
-        - !secret plug_3
-        ## Turn off Livingroom TV + Chromecast
-        - !secret plug_6
-        # Turn off lights
-        - !secret light_upstairs
-        - !secret light_downstairs
-        - !secret light_entrance
-        - !secret light_spots_1
-        - !secret light_table_1
-        - !secret light_bedroom_1
-        - !secret light_closet
-        - !secret light_gameroom_1
+        - script.lights_off_at_home
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet

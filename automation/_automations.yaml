@@ -2,6 +2,27 @@
 #### GENERAL AUTOMATIONS ####
 #############################
 
+## Restart HA, every day, at 2am
+- alias: Restart HA
+  trigger:
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Fake State # will never be triggered, state does not exist
+  #   - platform: time
+  #     at: "02:00:00"
+  condition:
+    condition: time
+    weekday:
+    - sun
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+  action:
+    - service: homeassistant.restart
+
 ## Purge Recorder DB history daily
 - id: ha_purge_recorder
   alias: HA Purge Recorder
@@ -12,25 +33,6 @@
     service: recorder.purge
     data:
       keep_days: 3
-
-## Pi Door Strike reset after 4 seconds
-- id: pi_door_strike
-  alias: Pi Door Strike reset
-  trigger:
-    - platform: state
-      entity_id: switch.pi_door_strike
-      to: "on"
-      for:
-        seconds: 4
-  action:
-    - service: homeassistant.turn_off
-      entity_id:
-        - switch.pi_door_strike
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: "Door Strike deactivated!"
-        message: "Door Strike deactivated!"
 
 ## Ziggo Router reset after 5 seconds
 - id: ziggo_router_reset

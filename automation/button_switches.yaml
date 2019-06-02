@@ -38,32 +38,15 @@
         entity_id: binary_sensor.switch_158d000186dbec
         click_type: long_click_press
   action:
-    - service: homeassistant.turn_off
+    - service: homeassistant.turn_on
       entity_id:
-      - !secret light_upstairs
-      - !secret light_downstairs
-      - !secret light_entrance
-      - !secret light_closet
-      - !secret light_spots_1
-      - !secret light_table_1
-      - !secret light_bedroom_1
-      - !secret light_bedroom_2
-      - !secret light_gameroom_1
-      - !secret light_gameroom_2
+      - script.lights_off_at_home
     - service: light.turn_on
       data:
         entity_id: !secret light_xiaomi_gateway
         brightness: 40
         transition: 2
         color_name: red
-    # - service: homeassistant.turn_on
-    #   entity_id:
-    #   - !secret light_xiaomi_gateway
-    # - service: notify.pushbullet
-    #   data: 
-    #     target: !secret email_target_pushbullet
-    #     title: 'Lights out!'
-    #     message: "All lights off!"
 
 ## Lock doors
 - id: sw2_lock_doors
@@ -76,11 +59,11 @@
         click_type: single
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: '1 min to Arming Home!'
-        message: "1 min to Arming Home!"
-    - delay: 0:59
+        title: '2 min to Arming Home!'
+        message: "2 mins to Arming Home!"
+    - delay: 1:59
     - service: input_select.select_option
       data:
         entity_id: input_select.presence_house

@@ -1,0 +1,69 @@
+## Start timer when movement detected closet
+- alias: movement closet start timer
+  id: movement_closet_start_timer
+  trigger:
+  - platform: state
+    entity_id: !secret coolcam_motion_sensor_5
+    to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "06:00:00"
+      before: "01:00:00"
+    - condition: state
+      entity_id: sun.sun
+      state: "below_horizon"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+  action:
+  - service: timer.cancel
+    entity_id: timer.light_closet
+  - service: timer.start
+    entity_id: timer.light_closet
+
+# When timer is started, turn on light
+- alias: Timer started light_closet
+  id: 'timer_started_light_closet'
+  trigger:
+  - platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.light_closet
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: !secret light_closet
+      transition: 2
+      brightness: 255
+      kelvin: 3000
+
+# When timer is finished, turn off light
+- alias: Timer finished light_closet
+  id: 'timer_finished_light_closet'
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_closet
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.keep_lights_on
+      state: "off"
+  action:
+  - service: timer.cancel
+    entity_id: timer.light_closet
+  - service: light.turn_off
+    data:
+      entity_id: !secret light_closet

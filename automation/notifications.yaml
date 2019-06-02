@@ -139,5 +139,52 @@
         title: "ALERT! Movement at Home!"
         message: "Movement has been detected at LIVINGROOM!"
 
+## Notify Door Strike reset activated
+- id: ha_notification_door_strike_active
+  alias: HA Notification Door Strike active
+  trigger:
+    - platform: state
+      entity_id: switch.pi_door_strike
+      to: "on"
+    - platform: state
+      entity_id: lock.poppdoorswitch_1_6
+      to: "unlocked"
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        message: "Door Strike activated!"
+
+## Door Strike reset after 4 seconds
+- id: ha_notification_rl_door_strike_reset
+  alias: HA Notification RL Door Strike reset
+  trigger:
+    - platform: state
+      entity_id: switch.pi_door_strike
+      to: "on"
+      for:
+        seconds: 4
+  action:
+    - service: homeassistant.turn_off
+      entity_id:
+        - switch.pi_door_strike
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        message: "RL Door Strike reset!"
+
+## Door Strike reset after 4 seconds
+- id: ha_notification_zw_door_strike_reset
+  alias: HA Notification ZW Door Strike reset
+  trigger:
+    - platform: state
+      entity_id: lock.poppdoorswitch_1_6
+      to: "locked"
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        message: "ZW Door Strike reset!"
+
 ## Tell me there is an emergency
 #tbc
