@@ -16,8 +16,8 @@
   radius: 500
   icon: mdi:briefcase
 
-- name: Lady
-  latitude: !secret zone_lady_latitude
-  longitude: !secret zone_lady_longitude
-  radius: 500
-  icon: mdi:cat
+# - name: Lady
+#   latitude: !secret zone_lady_latitude
+#   longitude: !secret zone_lady_longitude
+#   radius: 500
+#   icon: mdi:cat

@@ -1,3 +1,9 @@
+# ## Recording number for heating boost automation
+# prev_temperature:
+#   name: Previous target temperature
+#   min: -100
+#   max: 200
+
 temp_target:
   name: Target Temp
   initial: 14
@@ -10,7 +16,7 @@ temp_target:
 
 temp_daytime:
   name: Temp Daytime
-  initial: 21
+  initial: 20
   min: 14
   max: 25
   step: 1
@@ -97,3 +103,13 @@ google_home_volume_bedroom_speaker:
   mode: slider
   unit_of_measurement: louds
   icon: mdi:google-home
+
+purifier_fave_level:
+  name: Air Purifier 2S Level
+  initial: 5
+  min: 0
+  max: 14
+  step: 1
+  mode: slider
+  unit_of_measurement: level
+  icon: mdi:air-filter
