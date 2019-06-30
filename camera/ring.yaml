@@ -1,0 +1,3 @@
+## Ring Camera
+## https://www.home-assistant.io/components/ring/#camera
+- platform: ring
