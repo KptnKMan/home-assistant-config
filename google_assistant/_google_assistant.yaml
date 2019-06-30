@@ -1,7 +1,6 @@
 project_id: !secret google_assistant_project_id
 secure_devices_pin: google_assistant_secure_devices_pin
 api_key: !secret google_assistant_api_key
-allow_unlock: true
 exposed_domains:
   - camera # (streaming, requires compatible camera)
   # - group # (on/off)
@@ -39,23 +38,23 @@ entity_config:
     expose: true
     name: Night Light
     room: Bedroom
-  !secret light_upstairs: # upstairs light (yeelight)
+  !secret light_upstairs:
     expose: true
     room: All House
-  !secret light_downstairs: # downstairs light (yeelight)
+  !secret light_downstairs:
     expose: true
     room: All House
-  !secret light_entrance: # entrance light (yeelight)
+  !secret light_entrance:
     expose: true
     room: All House
-  !secret light_closet: # closet light (yeelight)
+  !secret light_closet:
     expose: true
     room: All House
-  !secret light_bedroom_1: # Bedroom Light
+  !secret light_bedroom_1:
     expose: true
     name: Bedroom Light
     room: Bedroom
-  !secret light_gameroom_1: # Gameroom Light
+  !secret light_gameroom_1:
     expose: true
     name: Gameroom Light
     room: Gameroom
@@ -67,6 +66,7 @@ entity_config:
     expose: true
     name: Livingroom Table Lights
     room: Livingroom
+  
   !secret plug_1: # workstation/optimus monitors
     expose: true
     name: Monitors
@@ -80,11 +80,11 @@ entity_config:
     name: Bedroom TV
     room: Bedroom
   !secret plug_4: # router reset
-    expose: true
+    expose: false
     name: Reset Router
     room: All House
   !secret plug_5: # server/soundwave
-    expose: true
+    expose: false
     name: Reset Server
     room: All House
   !secret plug_6: # livingroom tv and chromecast/steamlink
@@ -104,17 +104,27 @@ entity_config:
     name: Pantry Light
     room: All House
   !secret plug_10: # Reset HA
+    expose: false
+    name: Reset HA
+    room: All House
+  
+  !secret sonoff_1: # Reset HA
     expose: true
     name: Reset HA
     room: All House
-  light.yeelight_rgb_34ce008ce3ed: # upstairs light (yeelight)
-    expose: false
-  light.yeelight_rgb_34ce008e7211: # downstairs light (yeelight)
-    expose: false
-  light.yeelight_rgb_34ce008d1994: # entrance light (yeelight)
-    expose: false
-  light.yeelight_rgb_286c07f11df8: # closet light (yeelight)
-    expose: false
+  !secret sonoff_2: # router reset
+    expose: true
+    name: Reset Router
+    room: All House
+  !secret sonoff_3: # server/soundwave
+    expose: true
+    name: Reset Server
+    room: All House
+  !secret sonoff_4: # Gameroom desk lamp
+    expose: true
+    name: Gameroom Desk Lamp
+    room: Gameroom
+  
   !secret light_bedroom_2: # Bedroom Light 2
     expose: false
   !secret light_gameroom_2: # Gameroom Light 2
