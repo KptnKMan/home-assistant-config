@@ -35,6 +35,11 @@ config:
 ## Discover some devices automatically
 discovery:
 
+## Downloader to download files
+## https://www.home-assistant.io/components/downloader
+downloader:
+  download_dir: downloads
+
 ## Enables the frontend
 frontend:
 
@@ -122,29 +127,13 @@ updater:
 ## EXTERNALLY CONFIGURED PACKAGES
 ## Not core to Home Assistant but configured here
 
-## Enable fans/air filters
-fan:
-  ## Xiaomi Air Purifier 2S setup
-  ## https://www.home-assistant.io/components/fan.xiaomi_miio/
-  - platform: xiaomi_miio
-    host: 192.168.178.175
-    token: !secret xiaomi_access_token_europe
-
-## Setup tracking using InfluxDB
-## https://www.home-assistant.io/components/influxdb
-# influxdb:
-#   host: !secret dburl_influxdb
-#   port: !secret dburl_influxdb_port
-#   database: !secret dburl_influxdb_name
-#   username: !secret dburl_influxdb_username
-#   password: !secret dburl_influxdb_password
-#   ssl: true
-#   verify_ssl: true
-#   max_retries: 3
-#   default_measurement: state
-#   tags:
-#    instance: prod
-#    source: hass
+## notify service for sending notifications
+notify:
+  ## Pushbullet Setup
+  ## https://www.home-assistant.io/components/notify.pushbullet/
+  - name: pushbullet
+    platform: pushbullet
+    api_key: !secret apikey_pushbullet
 
 ## Integrated MQTT Server
 ## https://www.home-assistant.io/components/mqtt
@@ -171,19 +160,91 @@ mqtt:
     qos: 1
     retain: true
 
-## notify service for sending notifications
-notify:
-  ## Pushbullet Setup
-  ## https://www.home-assistant.io/components/notify.pushbullet/
-  - name: pushbullet
-    platform: pushbullet
-    api_key: !secret apikey_pushbullet
+## Owntracks via MQTT for mobile tracking
+## https://www.home-assistant.io/components/owntracks/
+owntracks:
+  max_gps_accuracy: 200
+  waypoints: true
+  mqtt_topic: "owntracks/#"
+  events_only: false
+#   track_new_devices: yes
+#   interval_seconds: 240
+#   consider_home: 600 ## was 900
+#   waypoint_whitelist:
+#     - kareem
+#     - magnus4
+#   region_mapping:
+#     cabin: home
+#     office: work
+
+## Open Z-Wave configuration!
+## https://www.home-assistant.io/components/zwave
+# zwave:
+#   usb_path: /dev/ttyACM0
+#   network_key: !secret zwave_networkkey
+#   config_path: /srv/hass/src/python-openzwave/openzwave/config
+
+## Vera gateway for Z-Wave & Zigbee
+## https://www.home-assistant.io/components/vera
+vera:
+  vera_controller_url: http://192.168.178.22:3480/
+
+## IKEA Tradfri for Zigbee
+## https://www.home-assistant.io/components/tradfri/
+tradfri:
+  host: 192.168.178.27
+
+## Xiaomi component for Zigbee temp sensors and buttons
+## https://www.home-assistant.io/components/xiaomi_aqara
+xiaomi_aqara:
+  discovery_retry: 10
+  gateways:
+   - mac: !secret xiaomi_mac_address
+     key: !secret xiaomi_password
+     host: '192.168.178.23'
+     disable: false
+
+## Enable Text-To-Speech, used by Google Assistant
+tts:
+  ## TTS for Google Assistant
+  ## https://www.home-assistant.io/components/google_translate/
+  - platform: google_translate
+    language: 'en'
+    cache: true
+    cache_dir: /config/tts
+    time_memory: 300
+    # base_url: http://192.168.178.10:8123
+    service_name: google_say # default google_translate_say
 
 ## Ring.com doorbell
 ## https://www.home-assistant.io/components/ring
 ring:
   username: !secret ring_username
   password: !secret ring_password
+
+## Enable fans/air filters
+fan:
+  ## Xiaomi Air Purifier 2S setup
+  ## https://www.home-assistant.io/components/fan.xiaomi_miio/
+  - platform: xiaomi_miio
+    host: 192.168.178.175
+    token: !secret xiaomi_access_token_europe
+
+## Setup tracking using InfluxDB
+## https://www.home-assistant.io/components/influxdb
+# influxdb:
+#   host: !secret dburl_influxdb
+#   port: !secret dburl_influxdb_port
+#   database: !secret dburl_influxdb_name
+#   username: !secret dburl_influxdb_username
+#   password: !secret dburl_influxdb_password
+#   ssl: true
+#   verify_ssl: true
+#   max_retries: 3
+#   default_measurement: state
+#   tags:
+#    instance: prod
+#    source: hass
 
 ## Sabnzbd download manager
 ## https://www.home-assistant.io/components/sabnzbd
@@ -206,40 +267,6 @@ sabnzbd:
     - month_size
     - total_size
 
-## Enable Text-To-Speech, used by Google Assistant
-tts:
-  ## TTS for Google Assistant
-  ## https://www.home-assistant.io/components/google_translate/
-  - platform: google_translate
-    language: 'en'
-    cache: true
-    cache_dir: /config/tts
-    time_memory: 300
-    # base_url: http://192.168.178.10:8123
-    service_name: google_say # default google_translate_say
-
-## Vera gateway for Z-Wave & Zigbee
-## https://www.home-assistant.io/components/vera
-vera:
-  vera_controller_url: http://192.168.178.22:3480/
-
-## Xiaomi component for Zigbee temp sensors and buttons
-## https://www.home-assistant.io/components/xiaomi_aqara
-xiaomi_aqara:
-  discovery_retry: 10
-  gateways:
-   - mac: !secret xiaomi_mac_address
-     key: !secret xiaomi_password
-     host: '192.168.178.23'
-     disable: false
-
-## Open Z-Wave configuration!
-## https://www.home-assistant.io/components/zwave
-# zwave:
-#   usb_path: /dev/ttyACM0
-#   network_key: !secret zwave_networkkey
-#   config_path: /srv/hass/src/python-openzwave/openzwave/config
-
 ################################
 ## EXTERNALISED PACKAGES
 ## Packages that are in sub_dirs of the main configuration
@@ -250,13 +277,10 @@ automation: !include automations.yaml
 automation old: !include_dir_merge_list automation
 
 ## Digital return value (0 or 1) sensors
-binary_sensor:
-  ## Ring binary sensor
-  ## https://www.home-assistant.io/components/ring/#binary-sensor
-  - platform: ring
-    monitored_conditions:
-      - ding
-      - motion
+binary_sensor: !include_dir_merge_list binary_sensor
+
+## Cameras
+camera: !include_dir_merge_list camera
 
 ## Setup Thermostats and climate controllers
 climate:
@@ -264,7 +288,7 @@ climate:
   ## https://www.home-assistant.io/components/climate.generic_thermostat
   - platform: generic_thermostat
     name: House Heating
-    heater: switch.pi_boiler_switch
+    heater: switch.pi_switch_1_17
     target_sensor: !secret xiaomi_temp_2
     min_temp: 10
     max_temp: 25
@@ -293,7 +317,7 @@ input_number: !include_dir_merge_named input_number
 ## Front Page Input States and Options, used for Automation
 input_select: !include_dir_merge_named input_select
 
-## Setup lights (Yeelight, MiLight, etc)
+## Setup lights (MiLight, etc)
 light: !include_dir_merge_list light
 
 ## Media Player (Plex, Spotify, etc)

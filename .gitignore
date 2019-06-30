@@ -9,6 +9,7 @@
 .smbdeleteAAA1be9
 .spotify-token-cache
 .uuid
+downloads/*
 gactions/*
 www/*
 secrets/*
