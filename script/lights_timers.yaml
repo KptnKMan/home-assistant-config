@@ -8,25 +8,18 @@ everything_off_at_home:
   ## Lights off
   - service: homeassistant.turn_off
     entity_id:
-      ## Turn off OPTIMUS Triple Screens
-      - !secret plug_1
-      ## Turn off bedside Lamp
-      - !secret plug_2
-      ## Turn off Bedroom TV + Chromecast
-      - !secret plug_3
-      ## Turn off Livingroom TV + Chromecast
-      - !secret plug_6
-      # Turn off lights
-      - !secret light_upstairs
-      - !secret light_downstairs
-      - !secret light_entrance
-      - !secret light_closet
-      - !secret light_spots_1
-      - !secret light_table_1
-      - !secret light_bedroom_1
-      - !secret light_bedroom_2
-      - !secret light_gameroom_1
-      - !secret light_gameroom_2
+    ## Turn off OPTIMUS Triple Screens
+    - !secret plug_1
+    ## Turn off bedside Lamp
+    - !secret plug_2
+    ## Turn off Bedroom TV + Chromecast
+    - !secret plug_3
+    ## Turn off Livingroom TV + Chromecast
+    - !secret plug_6
+  # Turn off lights
+  - service: script.lights_off_at_home
+  # Reset counters for lights
+  - service: script.lights_cancel_all_timers
 
 lights_off_at_home:
   alias: "Lights off at home"
@@ -34,16 +27,21 @@ lights_off_at_home:
   ## Lights off
   - service: homeassistant.turn_off
     entity_id:
-      - !secret light_upstairs
-      - !secret light_downstairs
-      - !secret light_entrance
-      - !secret light_closet
-      - !secret light_spots_1
-      - !secret light_table_1
-      - !secret light_bedroom_1
-      - !secret light_bedroom_2
-      - !secret light_gameroom_1
-      - !secret light_gameroom_2
+    - group.lights_all_downstairs
+    - group.lights_all_upstairs
+    - group.lights_entrance
+    - group.lights_downstairs
+    - group.lights_livingroom
+    - group.lights_kitchen
+    - group.lights_toilet
+    - group.lights_pantry
+    - group.lights_woodroom
+    - group.lights_upstairs
+    - group.lights_gameroom
+    - group.lights_bedroom
+    - group.lights_closet
+    - group.lights_bathroom
+    - group.lights_attic
 
 lights_cancel_all_timers:
   alias: "Lights cancel all timers"
@@ -52,7 +50,10 @@ lights_cancel_all_timers:
     entity_id:
     - timer.light_closet
     - timer.light_closet_night
-    - timer.light_upstairs
     - timer.light_downstairs
     - timer.light_entrance
-    - timer.light_closet
+    - timer.light_livingroom_spots
+    - timer.light_livingroom_table
+    - timer.light_upstairs
+    - timer.light_upstairs_night
+    - timer.temperature_boost
