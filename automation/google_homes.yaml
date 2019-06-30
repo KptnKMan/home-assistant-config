@@ -150,6 +150,33 @@
     #       - media_player.gameroom_speaker
     #       - media_player.bedroom_speaker
 
+## Google Home Set Working Volumes, to avoid noise elsewhere without stopping playback
+- id: google_set_volumes_working
+  alias: Google Set Volumes Working
+  trigger:
+    - platform: homeassistant
+      event: start
+  condition:
+    condition: and
+    conditions:
+    - condition: time # unlikely condition, restarting HA between 5:57am and 5:58am
+      after: "05:57:00"
+      before: "05:58:00"
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id:
+          - input_number.google_home_volume_livingroom_player
+          - input_number.google_home_volume_livingroom_speaker
+          - input_number.google_home_volume_mobile_speaker
+          - input_number.google_home_volume_bedroom_speaker
+        value: 0
+    - service: input_number.set_value
+      data_template:
+        entity_id:
+          - input_number.google_home_volume_gameroom_speaker
+        value: 0.3
+
 ## Manual Volume control via slider - Livingroom Player
 - id: google_home_livingroom_player_slider_moved
   alias: Google Home Livingroom Player slider moved

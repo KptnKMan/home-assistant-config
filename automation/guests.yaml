@@ -1,6 +1,6 @@
 ## Detect friends in House
-- id: presence_detect_friends
-  alias: Detect Friends
+- id: notification_presence_detect_friends
+  alias: Notification Detect Friends
   trigger:
     - platform: state
       entity_id: group.presence_friends
@@ -25,8 +25,8 @@
         message: "Guests Detected!"
 
 ## Detect friends Leaving House
-- id: presence_detect_friends_leaving
-  alias: Detect Friends Leaving
+- id: notification_presence_detect_friends_leaving
+  alias: Notification Detect Friends Leaving
   trigger:
     - platform: state
       entity_id: group.presence_friends
@@ -51,8 +51,8 @@
         message: "Guests Leaving!"
 
 ## Notify Guests that house is cooling for the night
-- id: google_notify_guests_heating_cool
-  alias: Google Notify Guests of Heating Cooling
+- id: notification_google_notify_guests_heating_cool
+  alias: Notification Google Notify Guests of Heating Cooling
   trigger:
     - platform: time
       at: "22:00:00"

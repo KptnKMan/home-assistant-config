@@ -1,0 +1,59 @@
+## Start timer when movement detected toilet
+- alias: movement toilet start timer
+  id: movement_toilet_start_timer
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_sensor_158d00031b00fc
+    to: "on"
+  condition:
+    condition: and
+    conditions:
+    # - condition: time
+    #   after: "06:00:00"
+    #   before: "01:00:00"
+    - condition: state
+      entity_id: sun.sun
+      state: "below_horizon"
+    - condition: state
+      entity_id: !secret light_toilet
+      state: "off"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: !secret light_toilet
+      transition: 2
+      brightness: 255
+      kelvin: 3000
+
+# When timer is finished, turn off light
+- alias: Timer finished light_toilet
+  id: 'timer_finished_light_toilet'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.motion_sensor_158d00031b00fc
+    to: "off"
+    for:
+      minutes: 10
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.keep_lights_on
+      state: "off"
+  action:
+  - service: timer.cancel
+    entity_id: timer.light_toilet
+  - service: light.turn_off
+    data:
+      entity_id: !secret light_toilet

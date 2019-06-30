@@ -1,8 +1,8 @@
 ## Automations for Welcome Home Messages
 
 # Coming HOME/Startup! Trigger Welcome Home Timer Switch
-- id: google_welcome_home_automation_ready
-  alias: Google Welcome Home Automation Ready
+- id: notification_google_ready_welcome_home_automation
+  alias: Notification Ready Google Welcome Home Automation
   trigger:
     - platform: homeassistant
       event: start
@@ -23,8 +23,8 @@
       entity_id: input_boolean.welcome_home
 
 ## Deactivate Welcome Home after Timeout, if not triggered
-- id: google_welcome_home_timeout
-  alias: Google Welcome Home Timeout
+- id: notification_google_welcome_home_timeout
+  alias: Notification Google Welcome Home Timeout
   trigger:
     - platform: state
       entity_id: input_boolean.welcome_home
@@ -36,8 +36,8 @@
       entity_id: input_boolean.welcome_home
 
 ## Google Home Voice TTS Welcome Home Bedroom
-- id: google_welcome_home_message_bedroom
-  alias: Google Welcome Home Message bedroom
+- id: notification_google_welcome_home_message_bedroom
+  alias: Notification Google Welcome Home Message bedroom
   trigger:
     - platform: state
       entity_id: !secret coolcam_motion_sensor_4
@@ -72,8 +72,8 @@
       entity_id: input_boolean.welcome_home
 
 ## Google Home Voice TTS Welcome Home Gameroom
-- id: google_welcome_home_message_gameroom
-  alias: Google Welcome Home Message Gameroom
+- id: notification_google_welcome_home_message_gameroom
+  alias: Notification Google Welcome Home Message Gameroom
   trigger:
     - platform: state
       entity_id: !secret coolcam_motion_sensor_3
@@ -108,8 +108,8 @@
       entity_id: input_boolean.welcome_home
 
 ## Google Home Voice TTS Welcome Home Livingroom
-- id: google_welcome_home_message_livingroom
-  alias: Google Welcome Home Message Livingroom
+- id: notification_google_welcome_home_message_livingroom
+  alias: Notification Google Welcome Home Message Livingroom
   trigger:
     - platform: state
       entity_id: !secret 6in1_sensor_move_2
@@ -147,8 +147,8 @@
       entity_id: input_boolean.welcome_home
 
 ## Google Home Voice TTS Welcome Home Guests
-- id: google_welcome_home_message_for_guests
-  alias: Google Welcome Home Message for Guests
+- id: notification_google_welcome_home_message_for_guests
+  alias: Notification Google Welcome Home Message for Guests
   trigger:
     - platform: state
       entity_id: input_select.presence_house

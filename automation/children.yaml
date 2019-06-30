@@ -1,6 +1,6 @@
 ## Detect children in House
-- id: presence_detect_children
-  alias: Detect Children Present
+- id: notification_presence_detect_children
+  alias: Notification Detect Children Present
   trigger:
     - platform: state
       entity_id: input_boolean.kids_in_the_house
@@ -19,8 +19,8 @@
         message: "Children Detected!"
 
 ## Detect children Leaving House
-- id: presence_detect_children_leaving
-  alias: Detect Children Leaving
+- id: notification_presence_detect_children_leaving
+  alias: Notification Detect Children Leaving
   trigger:
     - platform: state
       entity_id: input_boolean.kids_in_the_house
@@ -38,29 +38,29 @@
         title: "Children Leaving"
         message: "Children Leaving!"
 
-# ## Notify when movement in attic
-# - id: child_alarm_attic
-#   alias: Child Alarm Attic
-#   trigger:
-#     - platform: state
-#       entity_id: !secret 6in1_sensor_move_1
-#       to: "on"
-#   condition:
-#     condition: and
-#     conditions:
-#     - condition: state
-#       entity_id: input_boolean.kids_in_the_house
-#       state: "on"
-#   action:
-#     - service: notify.pushbullet
-#       data:
-#         target: !secret email_target_pushbullet
-#         title: "Child Alarm Attic"
-#         message: "Child Alarm Attic!"
+## Notify when movement in attic
+- id: notification_child_alarm_attic
+  alias: Notification Child Alarm Attic
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0003138cca
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.kids_in_the_house
+      state: "on"
+  action:
+    - service: notify.pushbullet
+      data:
+        target: !secret email_target_pushbullet
+        title: "Child Alarm Attic"
+        message: "Child Alarm Attic!"
 
 ## Notify when movement upstairs / bedroom / gameroom
-- id: child_alarm_upstairs
-  alias: Child Alarm Upstairs
+- id: notification_child_alarm_upstairs
+  alias: Notification Child Alarm Upstairs
   trigger:
     - platform: state
       entity_id: !secret 6in1_sensor_move_1
@@ -78,8 +78,8 @@
         title: "Child Alarm Upstairs"
         message: "Child Alarm Upstairs!"
 
-- id: child_alarm_bedroom
-  alias: Child Alarm Bedroom
+- id: notification_child_alarm_bedroom
+  alias: Notification Child Alarm Bedroom
   trigger:
     - platform: state
       entity_id: !secret coolcam_motion_sensor_4
@@ -97,8 +97,8 @@
         title: "Child Alarm Bedroom"
         message: "Child Alarm Bedroom!"
 
-- id: child_alarm_gameroom
-  alias: Child Alarm Gameroom
+- id: notification_child_alarm_gameroom
+  alias: Notification Child Alarm Gameroom
   trigger:
     - platform: state
       entity_id: !secret coolcam_motion_sensor_3

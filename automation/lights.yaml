@@ -14,8 +14,8 @@
 #                  -> turn_off light.x
 
 ## Detect lights to be kept on without automated off
-- id: detect_automate_lights_disabled
-  alias: Detect Automate Lights Disabled
+- id: notification_detect_automate_lights_disabled
+  alias: Notification Detect Automate Lights Disabled
   trigger:
     - platform: state
       entity_id: input_boolean.keep_lights_on
@@ -38,8 +38,8 @@
       message: "Lights will not automate!"
 
 ## Detect lights should be automated in House
-- id: detect_automate_lights_enabled
-  alias: Detect Automate Lights Enabled
+- id: notification_detect_automate_lights_enabled
+  alias: Notification Detect Automate Lights Enabled
   trigger:
     - platform: state
       entity_id: input_boolean.keep_lights_on

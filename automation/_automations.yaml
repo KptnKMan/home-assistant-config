@@ -39,11 +39,11 @@
   alias: Ziggo Router Reset
   trigger:
     - platform: state
-      entity_id: !secret plug_4
+      entity_id: !secret sonoff_2
       to: "off"
       for:
         seconds: 5
   action:
     - service: homeassistant.turn_on
       entity_id:
-        - !secret plug_4
+        - !secret sonoff_2

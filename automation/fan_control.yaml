@@ -1,6 +1,6 @@
 ## Manual Fan control via slider
-- id: fan_control_via_slider
-  alias: Fan Control via slider
+- id: notification_fan_control_via_slider
+  alias: Notification Fan Control via slider
   trigger:
   - platform: state
     entity_id: input_number.purifier_fave_level

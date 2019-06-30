@@ -56,8 +56,8 @@
         - script.vacation_lights_init
 
 ## Detect Vacation Mode Activations
-- id: presence_detect_notify_vacation_mode_active
-  alias: Detect Vacation Mode
+- id: notification_presence_detect_notify_vacation_mode_active
+  alias: Notification Detect Vacation Mode
   trigger:
     - platform: state
       entity_id: input_boolean.vacation_mode
@@ -76,8 +76,8 @@
         message: "Vacation Mode active!"
 
 ## Detect Vacation Mode Deactivations
-- id: presence_detect_notify_vacation_mode_deactivated
-  alias: Detect Vacation Mode Deactivated
+- id: notification_presence_detect_notify_vacation_mode_deactivated
+  alias: Notification Detect Vacation Mode Deactivated
   trigger:
     - platform: state
       entity_id: input_boolean.vacation_mode

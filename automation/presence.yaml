@@ -4,14 +4,14 @@
 - id: presence_detect_home_entrance_light
   alias: Detect Home Entrance Light On
   trigger:
-    - platform: homeassistant
-      event: start
-    - platform: state
-      entity_id: group.presence_kareem
-      to: "home"
-    - platform: state
-      entity_id: group.presence_friends
-      to: "home"
+  - platform: homeassistant
+    event: start
+  - platform: state
+    entity_id: group.presence_kareem
+    to: "home"
+  - platform: state
+    entity_id: group.presence_friends
+    to: "home"
   condition:
   - condition: or
     conditions:
@@ -26,6 +26,9 @@
     entity_id: timer.light_entrance
   - service: timer.start
     entity_id: timer.light_entrance
+  - service: homeassistant.turn_off
+    entity_id:
+      - group.alarm_things
 
 ## Arriving HOME/Home Alone/Startup! set presence to "Home"
 - id: presence_detect_home_alone
@@ -188,7 +191,10 @@
   action:
     - service: homeassistant.turn_on
       entity_id:
-        - script.lights_off_at_home
+        - group.alarm_things
+    - service: homeassistant.turn_on
+      entity_id:
+        - script.everything_off_at_home
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet
