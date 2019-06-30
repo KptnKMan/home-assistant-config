@@ -1,0 +1,8 @@
+## Remote RPi GPIO switches
+- platform: remote_rpi_gpio
+  host: 192.168.178.138
+  ports:
+    17: Pi Switch 1 (17) # heating
+    18: Pi Switch 2 (18) # door strike
+    22: Pi Switch 3 (22) # unused
+    23: Pi Switch 4 (23) # unused

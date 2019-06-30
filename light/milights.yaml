@@ -1,17 +1,38 @@
-# - platform: limitlessled
-#   bridges:
-#     - host: 192.168.1.24
-#       groups:
-#       - number: 1
-#         type: rgbw
-#         name: Cabinet 1
-#       - number: 2
-#         type: rgbw
-#         name: Cabinet 2
-#       - number: 3
-#         type: rgbw
-#         name: Kitchen
-#         fade: true
-#       - number: 4
-#         type: rgbw
-#         name: Livingroom
+## Enable LED functionality for Mi-Lights
+## https://www.home-assistant.io/components/light.limitlessled/
+- platform: limitlessled
+  bridges:
+    - host: 192.168.178.24
+      version: 6
+      port: 5987
+      groups:
+      - number: 1
+        type: white
+        name: strip 1 white
+      - number: 1
+        type: bridge-led
+        name: strip 1 bridge
+      - number: 1 #LED Cabinet 1
+        type: rgbw
+        name: strip 1 rgbw
+        fade: true
+      - number: 1
+        type: rgbww
+        name: strip 1 rgbww
+        fade: true
+      - number: 2 #LED Cabinet 2
+        type: rgbw
+        name: strip 2 rgbw
+        fade: true
+      - number: 2
+        type: rgbww
+        name: strip 2 rgbww
+        fade: true
+      - number: 3 #LED Kitchen
+        type: rgbw
+        name: strip 3 rgbw
+        fade: true
+      - number: 3
+        type: rgbww
+        name: strip 3 rgbww
+        fade: true
