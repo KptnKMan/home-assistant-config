@@ -33,6 +33,9 @@
 #     entity_id: timer.light_livingroom_spots
 #   - service: timer.start
 #     entity_id: timer.light_livingroom_spots
+#     data_template:
+#       duration: >
+#         {{ states('input_number.light_duration')|int|multiply(60)|timestamp_custom('%X',false) }}
 
 # # When timer is started, turn on light
 # - alias: Timer started light_livingroom_spots
@@ -49,7 +52,33 @@
 #       transition: 2
 #       brightness: 120
 
-# # When timer is finished, turn off light
+# # When timer is finished, if sensor is "on", reset timer
+# - alias: Timer reset light_livingroom_spots
+#   id: 'timer_reset_light_livingroom_spots'
+#   trigger:
+#   - platform: event
+#     event_type: timer.finished
+#     event_data:
+#       entity_id: timer.light_livingroom_spots
+#   condition:
+#   - condition: and
+#     conditions:
+#     - condition: state
+#       entity_id: input_boolean.keep_lights_on
+#       state: "off"
+#     - condition: state
+#       entity_id: !secret 6in1_sensor_move_2
+#       state: "on"
+#   action:
+#   - service: timer.cancel
+#     entity_id: timer.light_livingroom_spots
+#   - service: timer.start
+#     entity_id: timer.light_livingroom_spots
+#     data_template:
+#       duration: >
+#         {{ states('input_number.light_duration')|int|multiply(60)|timestamp_custom('%X',false) }}
+
+# # When timer is finished, if sensor is "off", turn off light
 # - alias: Timer finished light_livingroom_spots
 #   id: 'timer_finished_light_livingroom_spots'
 #   trigger:
@@ -62,6 +91,9 @@
 #     conditions:
 #     - condition: state
 #       entity_id: input_boolean.keep_lights_on
+#       state: "off"
+#     - condition: state
+#       entity_id: !secret 6in1_sensor_move_2
 #       state: "off"
 #   action:
 #   - service: timer.cancel

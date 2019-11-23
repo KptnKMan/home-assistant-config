@@ -10,8 +10,10 @@
 # sensor.x on -> cancel timer.light_x
 #             -> start timer.light_x
 # timer.x started -> turn_on light.x
-# timer.x finished -> cancel timer.light_x
-#                  -> turn_off light.x
+# timer.x finished, sensor on  -> cancel timer.light_x
+#                              -> start timer.light_x
+# timer.x finished, sensor off -> cancel timer.light_x
+#                              -> turn_off light.x
 
 ## Detect lights to be kept on without automated off
 - id: notification_detect_automate_lights_disabled
