@@ -95,15 +95,52 @@ logger:
 map:
 
 ## Iframes for local services
+## https://www.home-assistant.io/components/panel_iframe/
 # panel_iframe:
-#   router:
-#     title: zRouter
-#     icon: mdi:wrench
-#     url: https://192.168.178.1
 #   configurator:
-#     title: zConfigurator
+#     title: 'zConfigurator'
+#     url: 'http://192.168.178.130:3218'
 #     icon: mdi:wrench
-#     url: http://192.168.178.130:3218
+#   fang1:
+#     title: 'zZfang1'
+#     url: 'https://192.168.178.171'
+#     icon: mdi:camera-wireless
+#   fang2:
+#     title: 'zZfang2'
+#     url: 'https://192.168.178.172'
+#     icon: mdi:camera-wireless
+#   fang3:
+#     title: 'zZfang3'
+#     url: 'https://192.168.178.173'
+#     icon: mdi:camera-wireless
+#   fang4:
+#     title: 'zZfang4'
+#     url: 'https://192.168.178.174'
+#     icon: mdi:camera-wireless
+#   router:
+#     title: 'zRouter'
+#     url: 'https://192.168.178.1'
+#     icon: mdi:wrench
+#   sonoff1:
+#     title: 'zSonoff1'
+#     url: 'http://192.168.178.31'
+#     icon: mdi:electric-switch
+#   sonoff2:
+#     title: 'zSonoff2'
+#     url: 'http://192.168.178.32'
+#     icon: mdi:electric-switch
+#   sonoff3:
+#     title: 'zSonoff3'
+#     url: 'http://192.168.178.33'
+#     icon: mdi:electric-switch
+#   sonoff4:
+#     title: 'zSonoff4'
+#     url: 'http://192.168.178.34'
+#     icon: mdi:electric-switch
+#   tasmoadmin:
+#     title: 'zSonWEB'
+#     url: 'http://192.168.178.130:9541'
+#     icon: mdi:lightbulb-on
 
 ## Enables support for tracking
 ## https://www.home-assistant.io/components/recorder
@@ -250,7 +287,7 @@ fan:
 ## https://www.home-assistant.io/components/sabnzbd
 sabnzbd:
   api_key: !secret apikey_sabnzbd
-  host: 192.168.178.103
+  host: 192.168.178.11
   name: sab
   port: 8080
   ssl: false
@@ -358,6 +395,12 @@ timer:
   light_closet_night:
     duration: '00:03:00'
   light_closet:
+    duration: '00:03:00'
+  light_toilet:
+    duration: '00:03:00'
+  light_kitchen:
+    duration: '00:03:00'
+  light_bathroom:
     duration: '00:03:00'
 
 ## Zones using GPS

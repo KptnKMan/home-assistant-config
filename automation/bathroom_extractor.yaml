@@ -1,0 +1,39 @@
+## Start extractor when humidity is high
+- alias: Bathroom Extractor Start High humidity
+  id: bathroom_extractor_start_high_humidity
+  trigger:
+  - platform: homeassistant
+    event: start
+  - platform: numeric_state
+    entity_id: sensor.humidity_158d0002c8e95f
+    above: 70
+  condition:
+    condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: 'sensor.humidity_158d0002c8e95f'
+      above: 70
+  action:
+    ## Turn on extractor
+    - service: switch.turn_on
+      entity_id: !secret sonoff_4
+
+## Stop extractor when humidity is low
+- alias: Bathroom Extractor Stop Low humidity
+  id: bathroom_extractor_stop_low_humidity
+  trigger:
+  - platform: homeassistant
+    event: start
+  - platform: numeric_state
+    entity_id: sensor.humidity_158d0002c8e95f
+    below: 70
+  condition:
+    condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: 'sensor.humidity_158d0002c8e95f'
+      below: 70
+  action:
+    ## Turn on extractor
+    - service: switch.turn_off
+      entity_id: !secret sonoff_4
