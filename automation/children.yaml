@@ -63,7 +63,7 @@
   alias: Notification Child Alarm Upstairs
   trigger:
     - platform: state
-      entity_id: !secret 6in1_sensor_move_1
+      entity_id: binary_sensor.6in1multisensor_1_31
       to: "on"
   condition:
     condition: and

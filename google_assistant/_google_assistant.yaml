@@ -38,7 +38,7 @@ entity_config:
     expose: true
     name: Night Light
     room: Bedroom
-  !secret light_upstairs:
+  light.tradfri_bulb_3:
     expose: true
     room: All House
   !secret light_downstairs:
@@ -120,15 +120,11 @@ entity_config:
     expose: true
     name: Reset Server
     room: All House
-  !secret sonoff_4: # Gameroom desk lamp
+  !secret sonoff_4: # Bathroom Extractor
     expose: true
-    name: Gameroom Desk Lamp
-    room: Gameroom
-  
-  !secret light_bedroom_2: # Bedroom Light 2
-    expose: false
-  !secret light_gameroom_2: # Gameroom Light 2
-    expose: false
+    name: Bathroom Extractor
+    room: Bathroom
+
   !secret coolcam_sensor_1: # Entrance Sensor
     expose: false
   !secret coolcam_light_sensor_1: # Entrance Light Sensor

@@ -57,3 +57,4 @@ lights_cancel_all_timers:
     - timer.light_upstairs
     - timer.light_upstairs_night
     - timer.temperature_boost
+    - timer.light_toilet

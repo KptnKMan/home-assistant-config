@@ -1,6 +1,6 @@
 ## Remote RPi GPIO sensors
 - platform: remote_rpi_gpio
-  host: 192.168.178.138
+  host: !secret ip_pi10_remote_gpio
   ports:
     17: Pi Switch 1 (17) # heating
     18: Pi Switch 2 (18) # door strike

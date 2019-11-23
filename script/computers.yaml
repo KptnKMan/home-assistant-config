@@ -5,10 +5,10 @@ workiva_time:
     - service: switch.turn_on
       data:
         entity_id: !secret plug_1
-    ## Turn on desk lamp
-    - service: switch.turn_on
-      data:
-        entity_id: !secret sonoff_4
+    # ## Turn on desk lamp
+    # - service: switch.turn_on
+    #   data:
+    #     entity_id: !secret sonoff_4
 
 optimus_on:
   alias: "OPTIMUS on"
@@ -17,10 +17,10 @@ optimus_on:
     - service: switch.turn_on
       data:
         entity_id: !secret plug_1
-    ## Turn on desk lamp
-    - service: switch.turn_on
-      data:
-        entity_id: !secret sonoff_4
+    # ## Turn on desk lamp
+    # - service: switch.turn_on
+    #   data:
+    #     entity_id: !secret sonoff_4
     ## Turn on OPTIMUS
     - service: switch.turn_on
       data:
@@ -34,10 +34,10 @@ optimus_off:
       data:
         entity_id: switch.optimus
     - service: shell_command.sleep_optimus
-    ## Turn off desk lamp
-    - service: switch.turn_off
-      data:
-        entity_id: !secret sonoff_4
+    # ## Turn off desk lamp
+    # - service: switch.turn_off
+    #   data:
+    #     entity_id: !secret sonoff_4
     ## Turn off monitors
     - service: switch.turn_off
       data:

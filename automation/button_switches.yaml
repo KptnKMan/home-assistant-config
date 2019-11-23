@@ -129,9 +129,9 @@
         entity_id: binary_sensor.switch_158d0001870a09
         click_type: single
   action:
-    ## Turn on desk lamp
-    - service: switch.turn_on
-      entity_id: !secret sonoff_4
+    # ## Turn on desk lamp
+    # - service: switch.turn_on
+    #   entity_id: !secret sonoff_4
       ## Turn on Triple Monitors
     - service: homeassistant.turn_on
       entity_id: !secret plug_1
@@ -159,9 +159,9 @@
       ## Turn off Triple Monitors
     - service: homeassistant.turn_off
       entity_id: !secret plug_1
-    ## Turn off desk lamp
-    - service: switch.turn_off
-      entity_id: !secret sonoff_4
+    # ## Turn off desk lamp
+    # - service: switch.turn_off
+    #   entity_id: !secret sonoff_4
 
 ## Toggle Gameroom Light with button long press
 - id: sw3_gameroom_light
@@ -212,9 +212,9 @@
         entity_id: binary_sensor.switch_158d000186e64a
         click_type: single
   action:
-    ## Turn on desk lamp
-    - service: switch.turn_on
-      entity_id: !secret sonoff_4
+    # ## Turn on desk lamp
+    # - service: switch.turn_on
+    #   entity_id: !secret sonoff_4
       ## Turn on Triple Monitors
     - service: switch.turn_on
       entity_id: !secret plug_1
@@ -232,8 +232,30 @@
       ## Turn off Triple Monitors
     - service: switch.turn_off
       entity_id: !secret plug_1
-      ## wait x seconds
-    - delay: 00:00:10
-    ## Turn off desk lamp
-    - service: switch.turn_off
-      entity_id: !secret sonoff_4
+    #   ## wait x seconds
+    # - delay: 00:00:10
+    # ## Turn off desk lamp
+    # - service: switch.turn_off
+    #   entity_id: !secret sonoff_4
+
+## Fibaro button from Vera scene
+- alias: button_1_pressed
+  trigger:
+    platform: event
+    event_type: call_service
+    event_data:
+      service_data:
+        entity_id:
+          - scene.vera_button_1
+          - scene.vera_button_2
+          - scene.vera_button_3
+          - scene.vera_button_4
+          - scene.vera_button_5
+      domain: scene
+      service: turn_on
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: 'Button Pressed!'
+        message: "Button 1 pressed!"
