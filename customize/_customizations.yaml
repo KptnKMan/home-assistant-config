@@ -199,6 +199,8 @@
       friendly_name: Bathroom Spot 2
     !secret light_spot_bathroom_3: # Bulb 11
       friendly_name: Bathroom Spot 3
+    !secret light_pantry: # Bulb 12
+      friendly_name: Pantry Light
 
 ## Popp Door Strike
     !secret 012501_strike:

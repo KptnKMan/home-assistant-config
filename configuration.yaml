@@ -398,6 +398,8 @@ timer:
     duration: '00:03:00'
   light_toilet:
     duration: '00:03:00'
+  light_pantry:
+    duration: '00:03:00'
   light_kitchen:
     duration: '00:03:00'
   light_bathroom:

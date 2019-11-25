@@ -496,6 +496,7 @@
       - timer.light_closet_night
       - timer.light_closet
       - timer.light_toilet
+      - timer.light_pantry
       - timer.light_kitchen
       - timer.light_bathroom
       - timer.temperature_boost
@@ -614,7 +615,7 @@
       - !secret vision_sensor_2                     # downstairs door
       - !secret coolcam_motion_sensor_2             # downstairs
       - !secret 6in1_sensor_move_2                  # livingroom
-      - binary_sensor.6in1multisensor_1_31                  # upstairs
+      - binary_sensor.6in1multisensor_1_31          # upstairs
       - !secret coolcam_motion_sensor_3             # gameroom
       - !secret coolcam_motion_sensor_4             # bedroom
       - !secret coolcam_motion_sensor_5             # closet
@@ -850,13 +851,9 @@
       - !secret light_spot_center_1
       - !secret light_spot_center_2
       - !secret light_toilet
-      # - !secret light_pantry
+      - !secret light_pantry
       - !secret light_kitchen_1
       # - !secret light_kitchen_counter_1
-      # - !secret light_kitchen_counter_2
-      # - !secret light_kitchen_counter_3
-      # - !secret light_kitchen_counter_4
-      # - !secret light_kitchen_counter_5
   lights_all_upstairs:
     view: no
     name: Lights All Upstairs
@@ -896,10 +893,6 @@
     entities:
       - !secret light_kitchen_1
       # - !secret light_kitchen_counter_1
-      # - !secret light_kitchen_counter_2
-      # - !secret light_kitchen_counter_3
-      # - !secret light_kitchen_counter_4
-      # - !secret light_kitchen_counter_5
   lights_toilet:
     view: no
     name: Lights Toilet
@@ -909,7 +902,7 @@
     view: no
     name: Lights Pantry
     entities:
-      - !secret light_attic # temporary
+      - !secret light_pantry
   lights_woodroom:
     view: no
     name: Lights Woodroom
