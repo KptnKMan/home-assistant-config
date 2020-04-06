@@ -19,21 +19,21 @@
     ## Sensors for Xiaomi Air Purifier 2S
     attribute_fan_aqi:
       friendly_name: "Air Quality Rating"
-      value_template: "{{ states.fan.xiaomi_miio_device.attributes.aqi }}"
+      value_template: "{{ states.fan.air_purifier_2s.attributes.aqi }}"
       unit_of_measurement:  level
     attribute_fan_favorite_level:
       friendly_name: "Air Air Purifier 2S Fave Level"
-      value_template: "{{ states.fan.xiaomi_miio_device.attributes.favorite_level }}"
+      value_template: "{{ states.fan.air_purifier_2s.attributes.favorite_level }}"
       unit_of_measurement:  level
     attribute_fan_temperature:
       friendly_name: "Air Purifier 2S Temperature"
-      value_template: "{{ states.fan.xiaomi_miio_device.attributes.temperature }}"
+      value_template: "{{ states.fan.air_purifier_2s.attributes.temperature }}"
       unit_of_measurement:  level
     attribute_fan_filter_hours_used:
       friendly_name: "Air Purifier 2S Filter Hours Used"
-      value_template: "{{ states.fan.xiaomi_miio_device.attributes.filter_hours_used }}"
+      value_template: "{{ states.fan.air_purifier_2s.attributes.filter_hours_used }}"
       unit_of_measurement:  hrs
     attribute_fan_filter_life_remaining:
       friendly_name: "Air Purifier 2S Filter Life Remaining"
-      value_template: "{{ states.fan.xiaomi_miio_device.attributes.filter_life_remaining }}"
+      value_template: "{{ states.fan.air_purifier_2s.attributes.filter_life_remaining }}"
       unit_of_measurement:  life

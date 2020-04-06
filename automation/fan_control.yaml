@@ -5,9 +5,13 @@
   - platform: state
     entity_id: input_number.purifier_fave_level
   action:
-  - service: fan.xiaomi_miio_set_favorite_level
+  - service: fan.set_speed
     data_template:
-      entity_id: fan.xiaomi_miio_device
+      entity_id: fan.air_purifier_2s
+      speed: 'Favorite'
+  - service: xiaomi_miio.fan_set_favorite_level
+    data_template:
+      entity_id: fan.air_purifier_2s
       level: '{{ states.input_number.purifier_fave_level.state | int }}'
 #   - service: notify.pushbullet
 #     data: 

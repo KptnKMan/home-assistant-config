@@ -8,15 +8,17 @@
   condition:
     condition: and
     conditions:
-    - condition: state
-      entity_id: sun.sun
-      state: "below_horizon"
-    # - condition: sun
-    #   after: sunset
-    #   after_offset: "-01:00:00"
-    # - condition: sun
-    #   before: sunrise
-    #   before_offset: "+01:00:00"
+    - condition: or
+      conditions:
+      # - condition: state
+      #   entity_id: sun.sun
+      #   state: "below_horizon"
+      - condition: sun
+        after: sunset
+        after_offset: "-02:00:00"
+      - condition: sun
+        before: sunrise
+        before_offset: "+01:00:00"
     - condition: or
       conditions:
       - condition: state
@@ -49,7 +51,8 @@
   - service: light.turn_on
     data:
       entity_id:
-      - !secret light_kitchen_1
+      - light.yeelight_ceiling1_7c49ebb8f12e
+      - light.kitchen_led_driver
       transition: 2
       brightness: 255
       kelvin: 3000
@@ -103,4 +106,5 @@
   - service: light.turn_off
     data:
       entity_id:
-      - !secret light_kitchen_1
+      - light.yeelight_ceiling1_7c49ebb8f12e
+      - light.kitchen_led_driver

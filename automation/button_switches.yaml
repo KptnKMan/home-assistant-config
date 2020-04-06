@@ -26,7 +26,7 @@
         click_type: double
   action:
     - service: homeassistant.toggle
-      entity_id: !secret light_xiaomi_gateway
+      entity_id: light.gateway_light_34ce008bee96
 
 ## Turn off all lights on long press
 - id: sw1_lights_out
@@ -43,7 +43,7 @@
       - script.lights_off_at_home
     - service: light.turn_on
       data:
-        entity_id: !secret light_xiaomi_gateway
+        entity_id: light.gateway_light_34ce008bee96
         brightness: 40
         transition: 2
         color_name: red
@@ -174,7 +174,7 @@
         click_type: long_click_press
   action:
     - service: homeassistant.toggle
-      entity_id: !secret light_gameroom_1
+      entity_id: light.yeelight_ceiling3_04cf8c8f5e11
 
 ## Turn on Livingroom things with button
 - id: sw4_livingroom_things
@@ -200,7 +200,7 @@
         click_type: long_click_press
   action:
     - service: homeassistant.toggle
-      entity_id: !secret light_spots_1
+      entity_id: light.fibaro_dimmer_2_1_8
 
 ## Activate monitors+lamp on single click
 - id: sw5_workiva_time

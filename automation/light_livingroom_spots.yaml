@@ -8,14 +8,22 @@
 #   condition:
 #     condition: and
 #     conditions:
-#     - condition: state
-#       entity_id: sun.sun
-#       state: "below_horizon"
+    # - condition: or
+    #   conditions:
+    #   - condition: state
+    #     entity_id: sun.sun
+    #     state: "below_horizon"
+    #   - condition: sun
+    #     after: sunset
+    #     after_offset: "-02:00:00"
+    #   - condition: sun
+    #     before: sunrise
+    #     before_offset: "+01:00:00"
 #     - condition: state
 #       entity_id: !secret plug_6
 #       state: "off"
 #     - condition: state
-#       entity_id: !secret light_spots_1
+#       entity_id: light.fibaro_dimmer_2_1_8
 #       state: "off"
 #     - condition: or
 #       conditions:
@@ -48,7 +56,7 @@
 #   action:
 #   - service: light.turn_on
 #     data:
-#       entity_id: !secret light_spots_1
+#       entity_id: light.fibaro_dimmer_2_1_8
 #       transition: 2
 #       brightness: 120
 
@@ -100,4 +108,4 @@
 #     entity_id: timer.light_livingroom_spots
 #   - service: light.turn_off
 #     data:
-#       entity_id: !secret light_spots_1
+#       entity_id: light.fibaro_dimmer_2_1_8

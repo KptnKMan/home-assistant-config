@@ -8,23 +8,31 @@
   condition:
     condition: and
     conditions:
-    - condition: state
-      entity_id: sun.sun
-      state: "below_horizon"
+    - condition: or
+      conditions:
+      # - condition: state
+      #   entity_id: sun.sun
+      #   state: "below_horizon"
+      - condition: sun
+        after: sunset
+        after_offset: "-02:00:00"
+      - condition: sun
+        before: sunrise
+        before_offset: "+01:00:00"
     - condition: state
       entity_id: !secret plug_6
       state: "off"
     - condition: state
-      entity_id: !secret light_spot_center_1
+      entity_id: light.tradfri_bulb_5
       state: "off"
     - condition: state
-      entity_id: !secret light_spot_center_2
+      entity_id: light.tradfri_bulb_6
       state: "off"
     - condition: state
-      entity_id: !secret light_spots_1
+      entity_id: light.fibaro_dimmer_2_1_8
       state: "off"
     - condition: state
-      entity_id: !secret light_table_1
+      entity_id: light.fibaro_dimmer_2_2_11
       state: "off"
     - condition: or
       conditions:
@@ -58,10 +66,10 @@
   - service: light.turn_on
     data:
       entity_id:
-      - !secret light_spot_center_1
-      - !secret light_spot_center_2
-      - !secret light_spots_1
-      - !secret light_table_1
+      - light.tradfri_bulb_5
+      - light.tradfri_bulb_6
+      - light.fibaro_dimmer_2_1_8
+      - light.fibaro_dimmer_2_2_11
       transition: 2
       brightness: 255
       kelvin: 3000
@@ -115,7 +123,7 @@
   - service: light.turn_off
     data:
       entity_id:
-      - !secret light_spot_center_1
-      - !secret light_spot_center_2
-      - !secret light_spots_1
-      - !secret light_table_1
+      - light.tradfri_bulb_5
+      - light.tradfri_bulb_6
+      - light.fibaro_dimmer_2_1_8
+      - light.fibaro_dimmer_2_2_11

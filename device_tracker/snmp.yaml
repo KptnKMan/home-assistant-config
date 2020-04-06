@@ -1,0 +1,6 @@
+## SNMP tracking using pfSense router
+## https://www.home-assistant.io/integrations/snmp/
+# - platform: snmp
+#   host: 192.168.178.1
+#   community: !secret router_snmp_community
+#   baseoid: 1.3.6.1.2.1.4.22.1.2

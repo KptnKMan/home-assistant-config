@@ -8,3 +8,44 @@
 ## wait
 ## re-enable heating schedules
 ## announce heating boost off
+
+## Automation for Manual Heating Boost by +2 degrees
+## detect when climate temp changed directly?
+
+# ## Automation for detecting climate target_temp change, save previous value and start timer
+# - alias: Target temp changed
+#   trigger:
+#     platform: state
+#     entity_id: climate.house_heating
+#   condition:
+#     - condition: template
+#       value_template: >
+#         {{ trigger.to_state.attributes.temperature !=
+#             trigger.from_state.attributes.temperature }}
+#     - condition: state
+#       entity_id: timer.temperature
+#       state: idle
+#   action:
+#     - service: timer.start
+#       entity_id: timer.temperature
+#     - service: input_number.set_value
+#       entity_id: input_number.prev_temperature
+#       data_template:
+#         value: "{{ trigger.from_state.attributes.temperature }}"
+
+# ## Reset temperature back to default setting, defaulted 2 hours
+# - alias: Timer finished, restore target temp
+#   trigger:
+#     - platform: event
+#       event_type: timer.finished
+#       event_data:
+#         entity_id: timer.temperature
+#   action:
+#     # - service: climate.set_temperature
+#     #   entity_id: climate.house_heating
+#     #   data_template:
+#     #     temperature: "{{ states('input_number.prev_temperature') }}"
+#     - service: input_number.set_value
+#       data_template:
+#         entity_id: input_number.temp_target
+#         value: "{{ states('input_number.prev_temperature') }}"

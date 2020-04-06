@@ -8,15 +8,17 @@
   condition:
     condition: and
     conditions:
-    - condition: state
-      entity_id: sun.sun
-      state: "below_horizon"
-    # - condition: sun
-    #   after: sunset
-    #   after_offset: "-01:00:00"
-    # - condition: sun
-    #   before: sunrise
-    #   before_offset: "+01:00:00"
+    - condition: or
+      conditions:
+      # - condition: state
+      #   entity_id: sun.sun
+      #   state: "below_horizon"
+      - condition: sun
+        after: sunset
+        after_offset: "-02:00:00"
+      - condition: sun
+        before: sunrise
+        before_offset: "+01:00:00"
     - condition: or
       conditions:
       - condition: state
@@ -49,7 +51,7 @@
   - service: light.turn_on
     data:
       entity_id:
-      - !secret light_spot_bathroom_1
+      - light.tradfri_bulb_9
       transition: 2
       brightness: 255
       kelvin: 3000
@@ -58,7 +60,7 @@
   - service: light.turn_on
     data:
       entity_id:
-      - !secret light_spot_bathroom_2
+      - light.tradfri_bulb_10
       transition: 2
       brightness: 255
       kelvin: 3000
@@ -67,7 +69,7 @@
   - service: light.turn_on
     data:
       entity_id:
-      - !secret light_spot_bathroom_3
+      - light.tradfri_bulb_11
       transition: 2
       brightness: 255
       kelvin: 3000
@@ -76,7 +78,7 @@
   - service: light.turn_on
     data:
       entity_id:
-      - !secret light_bathroom_1
+      - light.yeelight_ceiling1_7c49eb1e4081
       transition: 2
       brightness: 255
       kelvin: 3000
@@ -130,7 +132,7 @@
   - service: light.turn_off
     data:
       entity_id:
-      - !secret light_spot_bathroom_1
-      - !secret light_spot_bathroom_2
-      - !secret light_spot_bathroom_3
-      - !secret light_bathroom_1
+      - light.tradfri_bulb_9
+      - light.tradfri_bulb_10
+      - light.tradfri_bulb_11
+      - light.yeelight_ceiling1_7c49eb1e4081

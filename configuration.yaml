@@ -10,14 +10,12 @@ homeassistant:
   longitude: !secret home_longitude
   ## Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: !secret home_elevation
-  ## C for Celcius, F for Fahrenheit
-  temperature_unit: C
   ## metric for Metric, imperial for Imperial
   unit_system: metric
   ## Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: !secret home_timezone
   ## Device Customised names, icons, etc
-  customize: !include_dir_merge_named customize
+  customize: !include customize.yaml
   ## This adds custom externalised packages, like NotoriousBDG's 'Battery Alert'.
   ## Battery Alert from: https://github.com/notoriousbdg/Home-AssistantConfig/blob/master/packages/battery_alert.yaml
   packages: !include_dir_named packages
@@ -48,23 +46,23 @@ history:
 
 ## Display a graph similar to the graphs in more-info popups and the history panel.
 ## https://www.home-assistant.io/components/history_graph
-history_graph:
-  air_quality:
-    name: Air Quality
-    entities:
-      - sensor.attribute_fan_aqi
-      - sensor.attribute_fan_favorite_level
-      - sensor.attribute_fan_temperature
-    hours_to_show: 168 # 168 = 7 days / 1 week, 240 = 10 days
-    refresh: 60
-  # battery_levels:
-  #   name: Air Quality
-  #   entities:
-  #     - sensor.attribute_fan_aqi
-  #     - sensor.attribute_fan_favorite_level
-  #     - sensor.attribute_fan_temperature
-  #   hours_to_show: 240 # 168 = 7 days / 1 week, 240 = 10 days
-  #   refresh: 60
+# history_graph:
+#   air_quality:
+#     name: Air Quality
+#     entities:
+#       - sensor.attribute_fan_aqi
+#       - sensor.attribute_fan_favorite_level
+#       - sensor.attribute_fan_temperature
+#     hours_to_show: 168 # 168 = 7 days / 1 week, 240 = 10 days
+#     refresh: 60
+#   battery_levels:
+#     name: Air Quality
+#     entities:
+#       - sensor.attribute_fan_aqi
+#       - sensor.attribute_fan_favorite_level
+#       - sensor.attribute_fan_temperature
+#     hours_to_show: 240 # 168 = 7 days / 1 week, 240 = 10 days
+#     refresh: 60
 
 ## HTTP Core Component
 ## https://www.home-assistant.io/components/http/
@@ -253,20 +251,6 @@ tts:
     # base_url: http://192.168.178.10:8123
     service_name: google_say # default google_translate_say
 
-## Ring.com doorbell
-## https://www.home-assistant.io/components/ring
-ring:
-  username: !secret ring_username
-  password: !secret ring_password
-
-## Enable fans/air filters
-fan:
-  ## Xiaomi Air Purifier 2S setup
-  ## https://www.home-assistant.io/components/fan.xiaomi_miio/
-  - platform: xiaomi_miio
-    host: 192.168.178.175
-    token: !secret xiaomi_access_token_europe
-
 ## Setup tracking using InfluxDB
 ## https://www.home-assistant.io/components/influxdb
 # influxdb:
@@ -285,24 +269,30 @@ fan:
 
 ## Sabnzbd download manager
 ## https://www.home-assistant.io/components/sabnzbd
-sabnzbd:
-  api_key: !secret apikey_sabnzbd
-  host: 192.168.178.11
-  name: sab
-  port: 8080
-  ssl: false
-  sensors:
-    - current_status
-    - speed
-    - queue_size
-    - queue_remaining
-    - disk_size
-    - disk_free
-    - queue_count
-    - day_size
-    - week_size
-    - month_size
-    - total_size
+# sabnzbd:
+#   api_key: !secret apikey_sabnzbd
+#   host: 192.168.178.11
+#   name: SABnzbd
+#   port: 8080
+#   ssl: false
+#   sensors:
+#     - current_status
+#     - speed
+#     - queue_size
+#     - queue_remaining
+#     - disk_size
+#     - disk_free
+#     - queue_count
+#     - day_size
+#     - week_size
+#     - month_size
+#     - total_size
+
+## Spotify Media Player
+## https://www.home-assistant.io/integrations/spotify/
+spotify:
+  client_id: !secret spotify_client_id
+  client_secret: !secret spotify_client_secret
 
 ################################
 ## EXTERNALISED PACKAGES
@@ -325,8 +315,8 @@ climate:
   ## https://www.home-assistant.io/components/climate.generic_thermostat
   - platform: generic_thermostat
     name: House Heating
-    heater: switch.pi_switch_1_17
-    target_sensor: !secret xiaomi_temp_2
+    heater: switch.pi_switch_1_17 # operate this switch for heating on/of
+    target_sensor: !secret xiaomi_temp_2 # sensor to monitor to determine switch
     min_temp: 10
     max_temp: 25
     target_temp: 20 # don't forget to also set input_number.temp_target
@@ -335,7 +325,8 @@ climate:
     min_cycle_duration:
       minutes: 1
 
-## Device Tracker module
+## Device Tracker module - Manage tracked devices
+## https://www.home-assistant.io/components/device_tracker/
 device_tracker: !include_dir_merge_list device_tracker
 
 ## Enable Google Assistant API
@@ -407,3 +398,5 @@ timer:
 
 ## Zones using GPS
 zone: !include_dir_merge_list zone
+
+websocket_api:

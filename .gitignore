@@ -26,5 +26,6 @@ plex.conf
 pyozw.sqlite
 sabnzbd.conf
 secrets.yaml
+*SERVICE_ACCOUNT.JSON*
 zwcfg_0xdb4ea92d.xml
 zwscene.xml

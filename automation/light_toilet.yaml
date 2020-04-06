@@ -11,15 +11,17 @@
     # - condition: time
     #   after: "06:00:00"
     #   before: "01:00:00"
-    - condition: state
-      entity_id: sun.sun
-      state: "below_horizon"
-    # - condition: sun
-    #   after: sunset
-    #   after_offset: "-01:00:00"
-    # - condition: sun
-    #   before: sunrise
-    #   before_offset: "+01:00:00"
+    - condition: or
+      conditions:
+      # - condition: state
+      #   entity_id: sun.sun
+      #   state: "below_horizon"
+      - condition: sun
+        after: sunset
+        after_offset: "-02:00:00"
+      - condition: sun
+        before: sunrise
+        before_offset: "+01:00:00"
     - condition: or
       conditions:
       - condition: state
@@ -51,7 +53,7 @@
   action:
   - service: light.turn_on
     data:
-      entity_id: !secret light_toilet
+      entity_id: light.tradfri_bulb_8
       transition: 2
       brightness: 255
       kelvin: 3000
@@ -104,7 +106,7 @@
     entity_id: timer.light_toilet
   - service: light.turn_off
     data:
-      entity_id: !secret light_toilet
+      entity_id: light.tradfri_bulb_8
 
 
 
@@ -127,7 +129,7 @@
 #       entity_id: sun.sun
 #       state: "below_horizon"
 #     - condition: state
-#       entity_id: !secret light_toilet
+#       entity_id: light.tradfri_bulb_8
 #       state: "off"
 #     - condition: or
 #       conditions:
@@ -143,7 +145,7 @@
 #   action:
 #   - service: light.turn_on
 #     data:
-#       entity_id: !secret light_toilet
+#       entity_id: light.tradfri_bulb_8
 #       transition: 2
 #       brightness: 255
 #       kelvin: 3000
@@ -166,4 +168,4 @@
 #   action:
 #   - service: light.turn_off
 #     data:
-#       entity_id: !secret light_toilet
+#       entity_id: light.tradfri_bulb_8

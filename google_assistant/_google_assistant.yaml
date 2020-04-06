@@ -1,6 +1,8 @@
 project_id: !secret google_assistant_project_id
 secure_devices_pin: google_assistant_secure_devices_pin
-api_key: !secret google_assistant_api_key
+#api_key: !secret google_assistant_api_key
+service_account: !include SERVICE_ACCOUNT.JSON
+report_state: true
 exposed_domains:
   - camera # (streaming, requires compatible camera)
   # - group # (on/off)
@@ -34,35 +36,35 @@ entity_config:
     name: Entrance Door
     expose: true
     room: All House
-  !secret light_xiaomi_gateway:
+  light.gateway_light_34ce008bee96:
     expose: true
     name: Night Light
     room: Bedroom
   light.tradfri_bulb_3:
     expose: true
     room: All House
-  !secret light_downstairs:
+  light.tradfri_bulb_2:
     expose: true
     room: All House
-  !secret light_entrance:
+  light.tradfri_bulb_1:
     expose: true
     room: All House
-  !secret light_closet:
+  light.tradfri_bulb_4:
     expose: true
     room: All House
-  !secret light_bedroom_1:
+  light.yeelight_ceiling3_04cf8c8f5a17:
     expose: true
     name: Bedroom Light
     room: Bedroom
-  !secret light_gameroom_1:
+  light.yeelight_ceiling3_04cf8c8f5e11:
     expose: true
     name: Gameroom Light
     room: Gameroom
-  !secret light_spots_1:
+  light.fibaro_dimmer_2_1_8:
     expose: true
     name: Livingroom Spots
     room: Livingroom
-  !secret light_table_1:
+  light.fibaro_dimmer_2_2_11:
     expose: true
     name: Livingroom Table Lights
     room: Livingroom

@@ -1,14 +1,14 @@
 ## activate/deactivate optimus10
 - platform: wake_on_lan
   name: OPTIMUS
-  mac_address: !secret mac_address_optimus
+  mac: !secret mac_address_optimus
   # host: 192.168.178.120
   turn_off:
     service: shell_command.sleep_optimus
 
 - platform: wake_on_lan
   name: SOUNDWAVE
-  mac_address: !secret mac_address_soundwave
+  mac: !secret mac_address_soundwave
   # host: 192.168.178.100
   # turn_off:
   #   service: shell_command.sleep_soundwave

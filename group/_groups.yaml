@@ -3,7 +3,6 @@
 ########################
 
   default_view:
-    view: yes
     name: Home
     icon: mdi:home
     entities:
@@ -16,14 +15,14 @@
       # - sensor.temperature_158d0002c76c6f # Sensor 5
       # - sensor.temperature_158d0002c8e95f # Sensor 6
       - device_tracker.kareem_magnus4_lan
-      # - device_tracker.kareem_magnus4
-      - device_tracker.kareem_magnus4_2
+      - device_tracker.kareem_magnus4
+      # - device_tracker.kyra_iphone
       # - device_tracker.sarah_iphone
       # - device_tracker.megan_iphone
       - group.date_and_time
+      - media_player.spotify
       - group.quick_things # shortcuts
   lighting:
-    view: yes
     name: Lighting
     icon: mdi:lightbulb-on-outline
     entities:
@@ -43,7 +42,6 @@
       - group.lights_bathroom
       - group.lights_attic
   climate:
-    view: yes
     name: Climate
     icon: mdi:weather-snowy-rainy
     entities:
@@ -56,18 +54,18 @@
       - group.monitor_outside
       - group.climate_inside
   gameroom:
-    view: yes
     name: Gameroom
     icon: mdi:floppy
     entities:
       - !secret coolcam_motion_sensor_3
+      - device_tracker.eject1
       - device_tracker.optimus
+      - device_tracker.blaster_1
       - device_tracker.soundwave
       - device_tracker.lj1320n
       - group.computers
       - group.sharing_things
   media:
-    view: yes
     name: Media
     icon: mdi:play-network
     entities:
@@ -95,7 +93,6 @@
       - media_player.plex_chrome_2
       - media_player.plex_chrome_3
   cameras:
-    view: yes
     name: Cameras
     icon: mdi:cctv
     entities:
@@ -106,7 +103,6 @@
       - group.xiaofang2
       - group.cam_controls
   metrics:
-    view: yes
     name: Metrics
     icon: mdi:chart-arc
     entities:
@@ -128,7 +124,6 @@
       - group.remote_gpio
       - group.motion_sensors
   testing:
-    view: yes
     name: Testing
     icon: mdi:test-tube
     entities:
@@ -149,23 +144,14 @@
       - group.motion_sensor_11
       - group.motion_sensor_12
       - group.motion_sensor_13
-      - group.all_fans
-      - group.all_covers
-      - group.all_locks
-      - group.all_lights
-      - group.all_switches
-      - group.all_devices
-      - group.all_scripts
-      - group.all_automations
+      - group.ir_controls
 
 ##############################################
 ### GROUPS OF ENTITIES # FOR REFERENCE USE ###
 ##############################################
 
   unused_things:
-    view: no
     name: Unused Things
-    control: hidden
     entities:
       - !secret plug_4
       - !secret plug_5
@@ -178,20 +164,18 @@
       - switch.fgs211_2_appliance_19 # bed room light appliance?
 
   presence_kareem:
-    view: no
     entities:
       - device_tracker.kareem_magnus4_lan
       - device_tracker.kareem_magnus4
-      - device_tracker.kareem_magnus4_2
   presence_friends:
-    view: no
     entities:
       - device_tracker.mom_iphone
+      - device_tracker.maren_iphone
       - device_tracker.akiel_android
+      - device_tracker.kyra_iphone
       # - device_tracker.sarah_iphone
       # - device_tracker.megan_iphone
   date_and_time:
-    view: no
     name: Date and Time
     entities:
       - sun.sun
@@ -203,9 +187,7 @@
 #      - sensor.time_utc
 #      - sensor.internet_time
   quick_things:
-    view: no
     name: Quick Things
-    control: hidden
     entities:
       - input_select.presence_house
       - input_number.temp_target
@@ -221,7 +203,6 @@
       - group.bedroom_things
       # - automation.sw1_lights_out
   pi_monitor:
-    view: no
     name: Pi Monitor
     entities:
       - sensor.last_boot
@@ -244,19 +225,15 @@
       - sensor.ipv4_address_eth0
       - sensor.ipv6_address_eth0
   air_quality:
-    view: no
     name: Air Quality
-    control: hidden
     entities:
-      - fan.xiaomi_miio_device
+      - fan.air_purifier_2s
       - input_number.purifier_fave_level
       - sensor.attribute_fan_filter_hours_used
       - sensor.attribute_fan_filter_life_remaining
       - history_graph.air_quality
   heating_controls:
-    view: no
     name: Heating Controls
-    control: hidden
     entities:
       - climate.house_heating
       - input_number.temp_target
@@ -265,7 +242,6 @@
       - input_number.temp_night
       - input_number.temp_away
   travel:
-    view: no
     name: Travel
     entities:
       - sensor.travel_time_to_home_drive
@@ -275,15 +251,12 @@
       - sensor.travel_home_to_work_public
       - sensor.travel_work_to_home_public
   deliveries:
-    view: no
     name: Deliveries
-    control: hidden
     entities:
       - sensor.postnl
       - automation.notification_packages_today
       - automation.notification_packages_delivered
   weather_outside:
-    view: no
     name: Weather Outside
     entities:
       - sensor.dark_sky_humidity
@@ -309,7 +282,6 @@
       - sensor.dark_sky_nearest_storm_distance
       - sensor.dark_sky_ozone
   google_homes:
-    view: no
     name: Google Homes
     entities:
       - input_number.google_home_volume_livingroom_player
@@ -322,7 +294,6 @@
       - automation.google_set_volumes_low
       - automation.google_set_volumes_working
   leds:
-    view: no
     name: LEDs
     entities:
       - light.strip_1_white
@@ -336,28 +307,24 @@
       - light.strip_4_rgbw
       - light.strip_4_rgbww
   sonoff_things:
-    view: no
     name: Sonoff
-    control: hidden
     entities:
       - !secret sonoff_1
       - !secret sonoff_2
       - !secret sonoff_3
       - !secret sonoff_4
   xiaomi_things:
-    view: no
     name: Xiaomi Things
-    control: hidden
     entities:
-      - !secret light_xiaomi_gateway
+      - light.gateway_light_34ce008bee96
       - sensor.illumination_34ce008bee96
       # - light.yeelight_ceiling1_7c49ebb8f12e
       # - binary_sensor.yeelight_ceiling1_7c49ebb8f12e_nightlight
-      - !secret light_kitchen_1
-      - !secret light_bathroom_1
-      - !secret light_gameroom_1
-      - !secret light_bedroom_1
-      - fan.xiaomi_miio_device
+      - light.yeelight_ceiling1_7c49ebb8f12e
+      - light.yeelight_ceiling1_7c49eb1e4081
+      - light.yeelight_ceiling3_04cf8c8f5e11
+      - light.yeelight_ceiling3_04cf8c8f5a17
+      - fan.air_purifier_2s
       - binary_sensor.cube_158d00029a7923
       - binary_sensor.switch_158d000186dbec
       - binary_sensor.switch_158d00018726b8
@@ -389,27 +356,29 @@
       - binary_sensor.motion_sensor_158d00031b0056
       - sensor.illumination_158d00031b0056
   ikea_things:
-    view: no
     name: IKEA Things
-    control: hidden
     entities:
       - sensor.tradfri_remote_control
       - sensor.tradfri_remote_control_2
-      - !secret light_entrance
-      - !secret light_downstairs
+      - sensor.tradfri_remote_control_3
+      - sensor.tradfri_remote_control_4
+      - sensor.tradfri_remote_control_5
+      - light.tradfri_bulb_1
+      - light.tradfri_bulb_2
       - light.tradfri_bulb_3
-      - !secret light_closet
-      - !secret light_spot_center_1
-      - !secret light_spot_center_2
-      - !secret light_toilet
-      - !secret light_attic
-      - !secret light_spot_bathroom_1
-      - !secret light_spot_bathroom_2
-      - !secret light_spot_bathroom_3
+      - light.tradfri_bulb_4
+      - light.tradfri_bulb_5
+      - light.tradfri_bulb_6
+      - light.tradfri_bulb_7
+      - light.tradfri_bulb_8
+      - light.tradfri_bulb_9
+      - light.tradfri_bulb_10
+      - light.tradfri_bulb_11
+      - light.tradfri_bulb_12
+      - light.tradfri_bulb_13
+      - light.kitchen_led_driver
   vera_things:
-    view: no
     name: Vera Things
-    control: hidden
     entities:
       - !secret button_red
       - !secret button_red_sensor
@@ -426,8 +395,8 @@
       - !secret plug_8
       - !secret plug_9
       - !secret plug_10
-      - !secret light_spots_1
-      - !secret light_table_1
+      - light.fibaro_dimmer_2_1_8
+      - light.fibaro_dimmer_2_2_11
       - !secret vision_alarm_1
       - !secret vision_sensor_1
       - !secret vision_alarm_2
@@ -467,7 +436,6 @@
       - !secret coolcam_motion_sensor_alarm_5
       - !secret coolcam_motion_sensor_5
   alarm_things:
-    view: no
     name: Alarm Things
     entities:
       - !secret vision_alarm_1
@@ -483,9 +451,7 @@
       - !secret 6in1_sensor_move_alarm_2
       - !secret 6in1_sensor_uv_alarm_2
   timer_things:
-    view: no
     name: Timer Things
-    control: hidden
     entities:
       - timer.light_entrance
       - timer.light_downstairs
@@ -501,9 +467,7 @@
       - timer.light_bathroom
       - timer.temperature_boost
   slider_things:
-    view: no
     name: Slider Things
-    control: hidden
     entities:
       - input_number.google_home_volume_bedroom_speaker
       - input_number.google_home_volume_gameroom_speaker
@@ -518,38 +482,33 @@
       - input_number.temp_night
       - input_number.temp_target
   ring_things:
-    view: no
     name: Ring Things
-    control: hidden
     entities:
       - camera.front_door
       - device_tracker.ring_doorbell_1
       - device_tracker.ring_chime_1
-      - binary_sensor.ring_front_door_ding
-      - binary_sensor.ring_front_door_motion
-      - sensor.ring_front_door_last_activity
-      - sensor.ring_front_door_last_motion
-      - sensor.ring_front_door_last_ding
-      - sensor.ring_front_door_battery
-      - sensor.ring_front_door_volume
-      - sensor.ring_front_door_wifi_signal_strength
-      - sensor.ring_front_door_wifi_signal_category
-      - sensor.ring_main_ringer_volume
-      - sensor.ring_main_ringer_wifi_signal_strength
-      - sensor.ring_main_ringer_wifi_signal_category
+      - binary_sensor.front_door_ding
+      - binary_sensor.front_door_motion
+      - sensor.front_door_last_activity
+      - sensor.front_door_last_motion
+      - sensor.front_door_last_ding
+      - sensor.front_door_battery
+      - sensor.front_door_volume
+      - sensor.front_door_wifi_signal_strength
+      - sensor.front_door_wifi_signal_category
+      - sensor.main_ringer_volume
+      - sensor.main_ringer_wifi_signal_strength
+      - sensor.main_ringer_wifi_signal_category
   livingroom_things:
-    view: no
     name: Livingroom Things
     entities:
       - !secret plug_6
   bedroom_things:
-    view: no
     name: Bedroom Things
     entities:
       - !secret plug_2
       - !secret plug_3
   computers:
-    view: no
     name: Computers
     entities:
       - !secret plug_1
@@ -559,32 +518,27 @@
       - !secret sonoff_3
       - switch.soundwave
   sharing_things:
-    view: no
     name: Sharing Things
     entities:
-      - sensor.sab_disk
-      - sensor.sab_disk_free
-      - sensor.sab_left
-      - sensor.sab_queue
-      - sensor.sab_queue_count
-      - sensor.sab_speed
-      - sensor.sab_status
-      - sensor.sab_total
-      - sensor.sab_daily_total
-      - sensor.sab_weekly_total
-      - sensor.sab_monthly_total
+      - sensor.sabnzbd_status
+      - sensor.sabnzbd_speed
+      - sensor.sabnzbd_left
+      - sensor.sabnzbd_queue
+      - sensor.sabnzbd_queue_count
+      - sensor.sabnzbd_disk
+      - sensor.sabnzbd_disk_free
+      - sensor.sabnzbd_daily_total
+      - sensor.sabnzbd_monthly_total
+      - sensor.sabnzbd_weekly_total
+      - sensor.sabnzbd_total
   control_door:
-    view: no
     name: Control Door
-    control: hidden
     entities:
       - !secret 012501_strike
       - switch.pi_switch_2_18
       - binary_sensor.pi_switch_2_18
   remote_gpio:
-    view: no
     name: Remote GPIO
-    control: hidden
     entities:
       - switch.pi_switch_1_17
       - switch.pi_switch_2_18
@@ -596,20 +550,16 @@
       - binary_sensor.pi_switch_4_23
 
   control_things:
-    view: no
     name: Control Things
-    control: hidden
     entities:
       - !secret sonoff_1
       - !secret sonoff_2
       - !secret sonoff_3
       - !secret sonoff_4
   monitor_inside:
-    view: no
     name: Monitor Inside
-    control: hidden
     entities:
-      - binary_sensor.ring_front_door_motion        # front door ring
+      - binary_sensor.front_door_motion             # front door ring
       - !secret vision_sensor_1                     # entrance door
       - !secret coolcam_motion_sensor_1             # entrance
       - !secret vision_sensor_2                     # downstairs door
@@ -632,19 +582,15 @@
       - sensor.battery_status
       - automation.battery_alert
   monitor_outside:
-    view: no
     name: Monitor Outside
-    control: hidden
     entities:
-      - binary_sensor.ring_front_door_ding
-      - binary_sensor.ring_front_door_motion
-      - sensor.ring_front_door_last_activity
-      - sensor.ring_front_door_last_ding
-      - sensor.ring_front_door_last_motion
+      - binary_sensor.front_door_ding
+      - binary_sensor.front_door_motion
+      - sensor.front_door_last_activity
+      - sensor.front_door_last_ding
+      - sensor.front_door_last_motion
   climate_inside:
-    view: no
     name: Climate Inside
-    control: hidden
     entities:
       - !secret 6in1_sensor_temp_1
       - !secret 6in1_sensor_humid_1
@@ -665,7 +611,6 @@
       - sensor.temperature_158d0002c8e95f
       - sensor.humidity_158d0002c8e95f
   motion_sensor_1:
-    view: no
     name: Motion Sensor 1
     entities:
       - !secret 6in1_sensor_move_alarm_1
@@ -676,7 +621,6 @@
       - binary_sensor.6in1multisensor_1_31
       - !secret 6in1_sensor_light_1
   motion_sensor_2:
-    view: no
     name: Motion Sensor 2
     entities:
       - !secret 6in1_sensor_move_alarm_2
@@ -687,7 +631,6 @@
       - !secret 6in1_sensor_move_2
       - !secret 6in1_sensor_light_2
   motion_sensor_3:
-    view: no
     name: Motion Sensor 3
     entities:
       - !secret coolcam_sensor_1
@@ -695,7 +638,6 @@
       - !secret coolcam_motion_sensor_1
       - !secret coolcam_light_sensor_1
   motion_sensor_4:
-    view: no
     name: Motion Sensor 4
     entities:
       - !secret coolcam_sensor_2
@@ -703,7 +645,6 @@
       - !secret coolcam_motion_sensor_2
       - !secret coolcam_light_sensor_2
   motion_sensor_5:
-    view: no
     name: Motion Sensor 5
     entities:
       - !secret coolcam_sensor_3
@@ -711,7 +652,6 @@
       - !secret coolcam_motion_sensor_3
       - !secret coolcam_light_sensor_3
   motion_sensor_6:
-    view: no
     name: Motion Sensor 6
     entities:
       - !secret coolcam_sensor_4
@@ -719,7 +659,6 @@
       - !secret coolcam_motion_sensor_4
       - !secret coolcam_light_sensor_4
   motion_sensor_7:
-    view: no
     name: Motion Sensor 7
     entities:
       - !secret coolcam_sensor_5
@@ -727,52 +666,43 @@
       - !secret coolcam_motion_sensor_5
       - !secret coolcam_light_sensor_5
   motion_sensor_8:
-    view: no
     name: Motion Sensor 8
     entities:
       - binary_sensor.motion_sensor_158d0003138cca
       - sensor.illumination_158d0003138cca
   motion_sensor_9:
-    view: no
     name: Motion Sensor 9
     entities:
       - binary_sensor.motion_sensor_158d00031b00fc
       - sensor.illumination_158d00031b00fc
   motion_sensor_10:
-    view: no
     name: Motion Sensor 10
     entities:
       - binary_sensor.motion_sensor_158d000302d045
       - sensor.illumination_158d000302d045
   motion_sensor_11:
-    view: no
     name: Motion Sensor 11
     entities:
       - binary_sensor.motion_sensor_158d00031b2923
       - sensor.illumination_158d00031b2923
   motion_sensor_12:
-    view: no
     name: Motion Sensor 12
     entities:
       - binary_sensor.motion_sensor_158d000313d7c4
       - sensor.illumination_158d000313d7c4
   motion_sensor_13:
-    view: no
     name: Motion Sensor 13
     entities:
       - binary_sensor.motion_sensor_158d00031b0056
       - sensor.illumination_158d00031b0056
   # zwave_things:
-  #   view: no
   #   name: ZWave Things
   #   control: hidden
   #   entities:
   #     - zwave._
   #     - zwave.aeotec_zw090_zstick_gen5
   rf_things:
-    view: no
     name: RF Things
-    control: hidden
     entities:
       - binary_sensor.RF_Remote1_A
       - binary_sensor.RF_Remote1_B
@@ -785,8 +715,17 @@
       # - switch.rf_light_test1
       # - switch.rf_light_test2
       # - switch.rf_light_test3
+  ir_controls:
+    name: IR Controls
+    entities:
+      - script.ir_remote_tv_on_off
+      - script.ir_remote_tv_source
+      - script.ir_remote_tv_mute
+      - script.ir_remote_tv_volume_up
+      - script.ir_remote_tv_volume_down
+      - script.ir_remote_tv_prog_up
+      - script.ir_remote_tv_prog_down
   environment_outside_weather:
-    view: no
     name: Environment Outside Weather
     entities:
       - sensor.dark_sky_apparent_temperature
@@ -812,7 +751,6 @@
       - sensor.dark_sky_wind_gust
       - sensor.dark_sky_wind_speed
   environment_outside_yr:
-    view: no
     name: Environment Outside Yr
     entities:
       - sensor.yr_symbol
@@ -829,9 +767,7 @@
       - sensor.yr_medium_clouds
       - sensor.yr_high_clouds
   cam_controls:
-    view: no
     name: Cam Controls
-    control: hidden
     entities:
       - automation.notification_start_motion_detection_when_not_at_home
       - automation.notification_stop_motion_detection_when_at_home
@@ -840,111 +776,95 @@
       - automation.notification_xiaofang1_motion_detected
       - automation.notification_xiaofang2_motion_detected
   lights_all_downstairs:
-    view: no
     name: Lights All Downstairs
     entities:
       - input_number.light_duration
-      - !secret light_entrance
-      - !secret light_downstairs
-      - !secret light_spots_1
-      - !secret light_table_1
-      - !secret light_spot_center_1
-      - !secret light_spot_center_2
-      - !secret light_toilet
-      - !secret light_pantry
-      - !secret light_kitchen_1
-      # - !secret light_kitchen_counter_1
+      - light.tradfri_bulb_1
+      - light.tradfri_bulb_2
+      - light.fibaro_dimmer_2_1_8
+      - light.fibaro_dimmer_2_2_11
+      - light.tradfri_bulb_5
+      - light.tradfri_bulb_6
+      - light.tradfri_bulb_8
+      - light.tradfri_bulb_12
+      - light.yeelight_ceiling1_7c49ebb8f12e
+      - light.kitchen_led_driver
+      - light.tradfri_bulb_13
   lights_all_upstairs:
-    view: no
     name: Lights All Upstairs
     entities:
       - input_number.light_duration
       - light.tradfri_bulb_3
-      - !secret light_gameroom_1
-      - !secret light_bedroom_1
-      - !secret light_closet
-      - !secret light_spot_bathroom_1
-      - !secret light_spot_bathroom_2
-      - !secret light_bathroom_1
-      - !secret light_spot_bathroom_3
-      - !secret light_attic
+      - light.yeelight_ceiling3_04cf8c8f5e11
+      - light.yeelight_ceiling3_04cf8c8f5a17
+      - light.tradfri_bulb_4
+      - light.tradfri_bulb_9
+      - light.tradfri_bulb_10
+      - light.yeelight_ceiling1_7c49eb1e4081
+      - light.tradfri_bulb_11
+      - light.tradfri_bulb_7
       # - !secret light_washroom
   lights_entrance:
-    view: no
     name: Lights Entrance
     entities:
-      - !secret light_entrance
+      - light.tradfri_bulb_1
   lights_downstairs:
-    view: no
     name: Lights Downstairs
     entities:
-      - !secret light_downstairs
+      - light.tradfri_bulb_2
   lights_livingroom:
-    view: no
     name: Lights Livingroom
     entities:
-      - !secret light_spots_1
-      - !secret light_spot_center_1
-      - !secret light_spot_center_2
-      - !secret light_table_1
+      - light.fibaro_dimmer_2_1_8
+      - light.tradfri_bulb_5
+      - light.tradfri_bulb_6
+      - light.fibaro_dimmer_2_2_11
   lights_kitchen:
-    view: no
     name: Lights Kitchen
     entities:
-      - !secret light_kitchen_1
-      # - !secret light_kitchen_counter_1
+      - light.yeelight_ceiling1_7c49ebb8f12e
+      - light.kitchen_led_driver
   lights_toilet:
-    view: no
     name: Lights Toilet
     entities:
-      - !secret light_toilet
+      - light.tradfri_bulb_8
   lights_pantry:
-    view: no
     name: Lights Pantry
     entities:
-      - !secret light_pantry
+      - light.tradfri_bulb_12
   lights_woodroom:
-    view: no
     name: Lights Woodroom
     entities:
-      - !secret light_attic # temporary
+      - light.tradfri_bulb_13
   lights_upstairs:
-    view: no
     name: Lights Upstairs
     entities:
       - light.tradfri_bulb_3
   lights_gameroom:
-    view: no
     name: Lights Gameroom
     entities:
-      - !secret light_gameroom_1
+      - light.yeelight_ceiling3_04cf8c8f5e11
   lights_bedroom:
-    view: no
     name: Lights Bedroom
     entities:
-      - !secret light_bedroom_1
+      - light.yeelight_ceiling3_04cf8c8f5a17
   lights_closet:
-    view: no
     name: Lights Closet
     entities:
-      - !secret light_closet
+      - light.tradfri_bulb_4
   lights_bathroom:
-    view: no
     name: Lights bathroom
     entities:
-      - !secret light_spot_bathroom_1
-      - !secret light_spot_bathroom_2
-      - !secret light_bathroom_1
-      - !secret light_spot_bathroom_3
+      - light.tradfri_bulb_9
+      - light.tradfri_bulb_10
+      - light.yeelight_ceiling1_7c49eb1e4081
+      - light.tradfri_bulb_11
   lights_attic:
-    view: no
     name: Lights Attic
     entities:
-      - !secret light_attic
+      - light.tradfri_bulb_7
   xiaofang1:
-    view: no
     name: XiaoFang 1
-    control: hidden
     entities:
       - camera.xiaofang1
       - camera.xiaofang1_motion_snapshot
@@ -966,9 +886,7 @@
       - cover.xiaofang1_move_left_right
       - cover.xiaofang1_move_up_down
   xiaofang2:
-    view: no
     name: XiaoFang 2
-    control: hidden
     entities:
       - camera.xiaofang2
       - camera.xiaofang2_motion_snapshot
@@ -990,9 +908,7 @@
       - cover.xiaofang2_move_left_right
       - cover.xiaofang2_move_up_down
   dafang1:
-    view: no
     name: DaFang 1
-    control: hidden
     entities:
       - camera.dafang1
       - camera.dafang1_motion_snapshot
@@ -1014,9 +930,7 @@
       - cover.dafang1_move_left_right
       - cover.dafang1_move_up_down
   dafang2:
-    view: no
     name: DaFang 2
-    control: hidden
     entities:
       - camera.dafang2
       - camera.dafang2_motion_snapshot
