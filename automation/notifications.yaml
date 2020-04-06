@@ -127,29 +127,9 @@
         title: "ALERT! Door Open!"
         message: "ENTRANCE door open!"
 
-## Tell me door is open ## downstairs
-- id: notification_downstairs_door_is_open
-  alias: Notification Downstairs Door is Open!
-  trigger:
-    - platform: state
-      entity_id: !secret vision_sensor_2
-      to: "on"
-  condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: !secret vision_sensor_2
-      state: "on"
-  action:
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: "ALERT! Door Open!"
-        message: "DOWNSTAIRS door open!"
-
 ## Tell me door is open for longer ## entrance
 - id: notification_entrance_door_is_open_still
-  alias: Notification Entrance Door is Open!
+  alias: Notification Entrance Door is Open STILL!
   trigger:
     - platform: state
       entity_id: !secret vision_sensor_1
@@ -170,6 +150,46 @@
         target: !secret email_target_pushbullet
         title: "ALERT! Door left Open!"
         message: "ENTRANCE door is left open!"
+
+## Tell me door is closed ## entrance
+- id: notification_entrance_door_is_closed
+  alias: Notification Entrance Door is Closed!
+  trigger:
+    - platform: state
+      entity_id: !secret vision_sensor_1
+      to: "off"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: !secret vision_sensor_1
+      state: "off"
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "ALERT! Door Closed!"
+        message: "ENTRANCE door closed!"
+
+## Tell me door is open ## downstairs
+- id: notification_downstairs_door_is_open
+  alias: Notification Downstairs Door is Open!
+  trigger:
+    - platform: state
+      entity_id: !secret vision_sensor_2
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: !secret vision_sensor_2
+      state: "on"
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "ALERT! Door Open!"
+        message: "DOWNSTAIRS door open!"
 
 ## Tell me there is an intruder ## entrance
 - id: notification_ha_there_is_an_intruder_entrance
@@ -302,55 +322,55 @@
         target: !secret email_target_pushbullet
         message: "ZW Door Strike reset!"
 
-## Notify that you have package(s) today!
-- id: notification_packages_today
-  alias: Notification Packages Today!
-  trigger:
-    - platform: homeassistant
-      event: start
-    - platform: numeric_state
-      entity_id: sensor.postnl
-      above: 0
-    - platform: time
-      at: "08:00:00" # at 8am
-    - platform: time
-      at: "14:00:00" # at 2pm
-    - platform: state
-      entity_id: group.presence_kareem
-      to: "home"
-  condition:
-    condition: and
-    conditions:
-    - condition: numeric_state
-      entity_id: 'sensor.postnl'
-      above: 0
-  action:
-    - service: notify.pushbullet
-      data:
-        target: !secret email_target_pushbullet
-        message: "You have POSTNL package(s) today!!!"
+# ## Notify that you have package(s) today!
+# - id: notification_packages_today
+#   alias: Notification Packages Today!
+#   trigger:
+#     - platform: homeassistant
+#       event: start
+#     - platform: numeric_state
+#       entity_id: sensor.postnl
+#       above: 0
+#     - platform: time
+#       at: "08:00:00" # at 8am
+#     - platform: time
+#       at: "14:00:00" # at 2pm
+#     - platform: state
+#       entity_id: group.presence_kareem
+#       to: "home"
+#   condition:
+#     condition: and
+#     conditions:
+#     - condition: numeric_state
+#       entity_id: 'sensor.postnl'
+#       above: 0
+#   action:
+#     - service: notify.pushbullet
+#       data:
+#         target: !secret email_target_pushbullet
+#         message: "You have POSTNL package(s) today!!!"
 
-## Notify that all packages marked delivered
-- id: notification_packages_delivered
-  alias: Notification Packages Delivered
-  trigger:
-    # - platform: numeric_state
-    #   entity_id: sensor.postnl
-    #   below: 1
-    - platform: state
-      entity_id: sensor.postnl
-      to: '0'
-  condition:
-    condition: and
-    conditions:
-    - condition: numeric_state
-      entity_id: 'sensor.postnl'
-      below: 1
-  action:
-    - service: notify.pushbullet
-      data:
-        target: !secret email_target_pushbullet
-        message: "All POSTNL packages marked delivered."
+# ## Notify that all packages marked delivered
+# - id: notification_packages_delivered
+#   alias: Notification Packages Delivered
+#   trigger:
+#     # - platform: numeric_state
+#     #   entity_id: sensor.postnl
+#     #   below: 1
+#     - platform: state
+#       entity_id: sensor.postnl
+#       to: '0'
+#   condition:
+#     condition: and
+#     conditions:
+#     - condition: numeric_state
+#       entity_id: 'sensor.postnl'
+#       below: 1
+#   action:
+#     - service: notify.pushbullet
+#       data:
+#         target: !secret email_target_pushbullet
+#         message: "All POSTNL packages marked delivered."
 
 # - id: notification_upon_failed_login_attempt
 #   alias: "Notification upon failed login attempt"

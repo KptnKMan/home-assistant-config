@@ -1,6 +1,5 @@
 ## Turn off RF Remote1 button A after 5 sec
 - alias: Turn off RF Remote1 button A
-  hide_entity: true
   trigger:
     platform: state
     entity_id: binary_sensor.RF_Remote1_A
@@ -16,7 +15,6 @@
 
 ## Turn off RF Remote1 button B after 5 sec
 - alias: Turn off RF Remote1 button B
-  hide_entity: true
   trigger:
     platform: state
     entity_id: binary_sensor.RF_Remote1_B
@@ -32,7 +30,6 @@
 
 ## Turn off RF Remote1 button C after 5 sec
 - alias: Turn off RF Remote1 button C
-  hide_entity: true
   trigger:
     platform: state
     entity_id: binary_sensor.RF_Remote1_C
@@ -48,7 +45,6 @@
 
 ## Turn off RF Remote1 button D after 5 sec
 - alias: Turn off RF Remote1 button D
-  hide_entity: true
   trigger:
     platform: state
     entity_id: binary_sensor.RF_Remote1_D
@@ -64,7 +60,6 @@
 
 ## Turn off RF Remote2 button A after 5 sec
 - alias: Turn off RF Remote2 button A
-  hide_entity: true
   trigger:
     platform: state
     entity_id: binary_sensor.RF_Remote2_A
@@ -80,7 +75,6 @@
 
 ## Turn off RF Remote2 button B after 5 sec
 - alias: Turn off RF Remote2 button B
-  hide_entity: true
   trigger:
     platform: state
     entity_id: binary_sensor.RF_Remote2_B
@@ -96,7 +90,6 @@
 
 ## Turn off RF Remote2 button C after 5 sec
 - alias: Turn off RF Remote2 button C
-  hide_entity: true
   trigger:
     platform: state
     entity_id: binary_sensor.RF_Remote2_C
@@ -112,7 +105,6 @@
 
 ## Turn off RF Remote2 button D after 5 sec
 - alias: Turn off RF Remote2 button D
-  hide_entity: true
   trigger:
     platform: state
     entity_id: binary_sensor.RF_Remote2_D
