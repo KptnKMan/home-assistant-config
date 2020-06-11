@@ -315,7 +315,7 @@ climate:
   ## https://www.home-assistant.io/components/climate.generic_thermostat
   - platform: generic_thermostat
     name: House Heating
-    heater: switch.pi_switch_1_17 # operate this switch for heating on/of
+    heater: switch.relay4c1_1 # operate this switch for heating on/of
     target_sensor: !secret xiaomi_temp_2 # sensor to monitor to determine switch
     min_temp: 10
     max_temp: 25

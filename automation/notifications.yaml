@@ -280,7 +280,7 @@
   alias: Notification HA Door Strike active
   trigger:
     - platform: state
-      entity_id: switch.pi_switch_2_18
+      entity_id: switch.relay4c1_2
       to: "on"
     - platform: state
       entity_id: lock.poppdoorswitch_1_6
@@ -296,14 +296,14 @@
   alias: Notification HA RL Door Strike reset
   trigger:
     - platform: state
-      entity_id: switch.pi_switch_2_18
+      entity_id: switch.relay4c1_2
       to: "on"
       for:
         seconds: 4
   action:
     - service: homeassistant.turn_off
       entity_id:
-        - switch.pi_switch_2_18
+        - switch.relay4c1_2
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet

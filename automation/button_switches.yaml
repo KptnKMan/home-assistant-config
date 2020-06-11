@@ -112,7 +112,7 @@
   action:
     - service: homeassistant.toggle
       entity_id:
-        - switch.pi_switch_2_18
+        - switch.relay4c1_2
     - service: notify.pushbullet
       data: 
         target: !secret email_target_pushbullet
