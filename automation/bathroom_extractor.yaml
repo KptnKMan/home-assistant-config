@@ -1,4 +1,4 @@
-## Start extractor when humidity is high
+## Start Bathroom extractor when humidity is high
 - alias: Bathroom Extractor Start High humidity
   id: bathroom_extractor_start_high_humidity
   trigger:
@@ -18,7 +18,7 @@
     - service: switch.turn_on
       entity_id: !secret sonoff_4
 
-## Stop extractor when humidity is low
+## Stop Bathroom extractor when humidity is low
 - alias: Bathroom Extractor Stop Low humidity
   id: bathroom_extractor_stop_low_humidity
   trigger:
