@@ -4,16 +4,16 @@
 
 homeassistant:
   ## Name of the location where Home Assistant is running
-  name: Home
+  # name: Home
   ## Location required to calculate the time the sun rises and sets
-  latitude: !secret home_latitude
-  longitude: !secret home_longitude
+  # latitude: !secret home_latitude
+  # longitude: !secret home_longitude
   ## Impacts weather/sunrise data (altitude above sea level in meters)
-  elevation: !secret home_elevation
+  # elevation: !secret home_elevation
   ## metric for Metric, imperial for Imperial
-  unit_system: metric
+  # unit_system: metric
   ## Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  time_zone: !secret home_timezone
+  # time_zone: !secret home_timezone
   ## Device Customised names, icons, etc
   customize: !include customize.yaml
   ## This adds custom externalised packages, like NotoriousBDG's 'Battery Alert'.
@@ -67,7 +67,7 @@ history:
 ## HTTP Core Component
 ## https://www.home-assistant.io/components/http/
 http:
-  base_url: !secret http_base_url
+  # base_url: !secret http_base_url
   # ssl_certificate: /ssl/fullchain.pem
   # ssl_key: /ssl/privkey.pem
   # ssl_certificate: /ssl/letsencrypt/live/straker-me/fullchain.pem
@@ -143,8 +143,6 @@ map:
 ## Enables support for tracking
 ## https://www.home-assistant.io/components/recorder
 recorder:
-  purge_interval: 1  ## (days) Enable scheduled purge of older events and states
-  purge_keep_days: 7  ## (days) Specify number of history days to keep in recorder database after purge
   db_url: !secret dburl_mariadb_addon  ## The URL which point to your database
 
 ## Track the sun
@@ -231,13 +229,13 @@ tradfri:
 
 ## Xiaomi component for Zigbee temp sensors and buttons
 ## https://www.home-assistant.io/components/xiaomi_aqara
-xiaomi_aqara:
-  discovery_retry: 10
-  gateways:
-   - mac: !secret xiaomi_mac_address
-     key: !secret xiaomi_password
-     host: '192.168.178.23'
-     disable: false
+# xiaomi_aqara:
+#   discovery_retry: 10
+#   gateways:
+#   - mac: !secret xiaomi_mac_address
+#     key: !secret xiaomi_password
+#     host: '192.168.178.23'
+#     disable: false
 
 ## Enable fans/air filters
 fan:
@@ -247,6 +245,39 @@ fan:
     name: "air_purifier_2s"
     host: 192.168.178.175
     token: !secret xiaomi_access_token_europe
+
+## Enable Xiaomi Mi Remote(s)
+remote:
+  ## https://www.home-assistant.io/integrations/remote.xiaomi_miio
+  ## https://www.home-assistant.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token
+  ## https://github.com/Maxmudjon/com.xiaomi-miio/blob/master/docs/obtain_token.md
+  ## https://android-apk.org/com.xiaomi.smarthome/43397902-mi-home/
+  - platform: xiaomi_miio
+    name: "livingroom_ir_remote"
+    host: 192.168.178.176
+    token: !secret xiaomi_access_token_mi_remote_1
+    commands:
+      tv_on_off:
+        command:
+          - raw:mUznMwlk2mEwlkxmM3AIWazYAcpiAgYDLTUAcprOAEDAEIBkwIXAp+WTWagQeAPMwgA=
+      tv_source:
+        command:
+          - raw:mUznMwlk1nEwlkxmIBBTaYAGEAg8ymIBCzWagMEAWYDHgITMgENAH8Ac5hAA
+      tv_mute:
+        command:
+          - raw:mUznMwlk1nAAZAD9MZlMgCCm4CHgU+AwcxAEKbTEBjwA6APKYQA=
+      tv_volume_up:
+        command:
+          - raw:mUznMwlk1nAAZADtMZiAQU2mACEgMRMpiAg02AgIAswGPAx8CiABymEA
+      tv_volume_down:
+        command:
+          - raw:mUznMwlk1nEwlkxmUxAIaYgIlNpgAYoAdgQwAHE2AoIBMpjMQDCAIOaglsAPAFFTCAA=
+      tv_prog_up:
+        command:
+          - raw:mU0mEwlk1m4AZTkAMpwAP4A7APlMZlMgENAgcBhQQfAH6YQA
+      tv_prog_down:
+        command:
+          - raw:mUznMwlk1nEwlkxmUxAIWagIMAP8xmIAhTYCQwGPmUyAx8Af5hLJhAA=
 
 ## Enable Text-To-Speech, used by Google Assistant
 tts:
@@ -302,6 +333,12 @@ tts:
 spotify:
   client_id: !secret spotify_client_id
   client_secret: !secret spotify_client_secret
+
+## Spotify custom_component for playing to Chromecast/Google Home
+## https://github.com/fondberg/spotcast
+spotcast:
+  sp_dc: !secret sp_dc
+  sp_key: !secret sp_key
 
 ################################
 ## EXTERNALISED PACKAGES
