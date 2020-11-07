@@ -1,6 +1,5 @@
 project_id: !secret google_assistant_project_id
 secure_devices_pin: google_assistant_secure_devices_pin
-#api_key: !secret google_assistant_api_key
 service_account: !include SERVICE_ACCOUNT.JSON
 report_state: true
 exposed_domains:
@@ -29,7 +28,7 @@ entity_config:
     room: All House
     aliases:
       - Heating
-  script.heating_summary:
+  script.google_tts_notify_heating_summary:
     name: Heating Summary
     expose: true
   !secret 012501_strike:
