@@ -1,5 +1,7 @@
 ## Templates of sensors
-## Good writup here for making graphs: https://www.hiscorebob.lu/2017/11/home-assistant-plot-a-graph-with-objects-attributes/
+## https://www.home-assistant.io/integrations/template/
+## Good writup here for making graphs:
+## https://www.hiscorebob.lu/2017/11/home-assistant-plot-a-graph-with-objects-attributes/
 
 - platform: template
   sensors:
@@ -16,24 +18,197 @@
     #     {%- endfor -%}
     #     {%- endfor -%}
 
+    ## Sensor for Spotify
+    # attribute_spotify_is_playing:
+    #   unique_id: attribute_spotify_is_playing
+    #   friendly_name: "Spotify is Playing Status"
+    #   value_template: "{{ states.media_player.spotify_plonka2000.state }}"
+
+    ## Sensors for Xiaomi Companion Cube
+    attribute_cube_last_action:
+      unique_id: attribute_cube_last_action
+      friendly_name: "Companion Cube Last Action"
+      value_template: "{{ states.binary_sensor.cube_158d00029a7923.attributes.last_action }}"
+
     ## Sensors for Xiaomi Air Purifier 2S
     attribute_fan_aqi:
+      unique_id: attribute_fan_aqi
       friendly_name: "Air Quality Rating"
       value_template: "{{ states.fan.air_purifier_2s.attributes.aqi }}"
       unit_of_measurement:  level
     attribute_fan_favorite_level:
+      unique_id: attribute_fan_favorite_level
       friendly_name: "Air Air Purifier 2S Fave Level"
       value_template: "{{ states.fan.air_purifier_2s.attributes.favorite_level }}"
       unit_of_measurement:  level
     attribute_fan_temperature:
+      unique_id: attribute_fan_temperature
       friendly_name: "Air Purifier 2S Temperature"
       value_template: "{{ states.fan.air_purifier_2s.attributes.temperature }}"
-      unit_of_measurement:  level
+      unit_of_measurement:  °C
+    attribute_fan_humidity:
+      unique_id: attribute_fan_humidity
+      friendly_name: "Air Purifier 2S Humidity"
+      value_template: "{{ states.fan.air_purifier_2s.attributes.humidity }}"
+      unit_of_measurement:  "%"
     attribute_fan_filter_hours_used:
+      unique_id: attribute_fan_filter_hours_used
       friendly_name: "Air Purifier 2S Filter Hours Used"
       value_template: "{{ states.fan.air_purifier_2s.attributes.filter_hours_used }}"
       unit_of_measurement:  hrs
     attribute_fan_filter_life_remaining:
+      unique_id: attribute_fan_filter_life_remaining
       friendly_name: "Air Purifier 2S Filter Life Remaining"
       value_template: "{{ states.fan.air_purifier_2s.attributes.filter_life_remaining }}"
       unit_of_measurement:  life
+
+    ## Sensors for NeoCoolCam Plugs
+    attribute_neocoolcamplug12a_1_current_power_w:
+      unique_id: attribute_neocoolcamplug12a_1_current_power_w
+      friendly_name: "NeoCoolCam Plug 12a 1_20 Current Power"
+      value_template: "{{ states.switch.neocoolcamplug12a_1_20.attributes.current_power_w }}"
+      unit_of_measurement:  W
+    attribute_neocoolcamplug12a_1_current_energy_kwh:
+      unique_id: attribute_neocoolcamplug12a_1_current_energy_kwh
+      friendly_name: "NeoCoolCam Plug 12a 1_20 Current Energy"
+      value_template: "{{ states.switch.neocoolcamplug12a_1_20.attributes.current_energy_kwh }}"
+      unit_of_measurement:  kWh
+
+    attribute_neocoolcamplug12a_2_current_power_w:
+      unique_id: attribute_neocoolcamplug12a_2_current_power_w
+      friendly_name: "NeoCoolCam Plug 12a 2_21 Current Power"
+      value_template: "{{ states.switch.neocoolcamplug12a_2_21.attributes.current_power_w }}"
+      unit_of_measurement:  W
+    attribute_neocoolcamplug12a_2_current_energy_kwh:
+      unique_id: attribute_neocoolcamplug12a_2_current_energy_kwh
+      friendly_name: "NeoCoolCam Plug 12a 2_21 Current Energy"
+      value_template: "{{ states.switch.neocoolcamplug12a_2_21.attributes.current_energy_kwh }}"
+      unit_of_measurement:  kWh
+
+    attribute_neocoolcamplug12a_3_current_power_w:
+      unique_id: attribute_neocoolcamplug12a_3_current_power_w
+      friendly_name: "NeoCoolCam Plug 12a 3_22 Current Power"
+      value_template: "{{ states.switch.neocoolcamplug12a_3_22.attributes.current_power_w }}"
+      unit_of_measurement:  W
+    attribute_neocoolcamplug12a_3_current_energy_kwh:
+      unique_id: attribute_neocoolcamplug12a_3_current_energy_kwh
+      friendly_name: "NeoCoolCam Plug 12a 3_22 Current Energy"
+      value_template: "{{ states.switch.neocoolcamplug12a_3_22.attributes.current_energy_kwh }}"
+      unit_of_measurement:  kWh
+
+    attribute_neocoolcamplug12a_4_current_power_w:
+      unique_id: attribute_neocoolcamplug12a_4_current_power_w
+      friendly_name: "NeoCoolCam Plug 12a 4_23 Current Power"
+      value_template: "{{ states.switch.neocoolcamplug12a_4_23.attributes.current_power_w }}"
+      unit_of_measurement:  W
+    attribute_neocoolcamplug12a_4_current_energy_kwh:
+      unique_id: attribute_neocoolcamplug12a_4_current_energy_kwh
+      friendly_name: "NeoCoolCam Plug 12a 4_23 Current Energy"
+      value_template: "{{ states.switch.neocoolcamplug12a_4_23.attributes.current_energy_kwh }}"
+      unit_of_measurement:  kWh
+
+    attribute_neocoolcamplug12a_5_current_power_w:
+      unique_id: attribute_neocoolcamplug12a_5_current_power_w
+      friendly_name: "NeoCoolCam Plug 12a 5_24 Current Power"
+      value_template: "{{ states.switch.neocoolcamplug12a_5_24.attributes.current_power_w }}"
+      unit_of_measurement:  W
+    attribute_neocoolcamplug12a_5_current_energy_kwh:
+      unique_id: attribute_neocoolcamplug12a_5_current_energy_kwh
+      friendly_name: "NeoCoolCam Plug 12a 5_24 Current Energy"
+      value_template: "{{ states.switch.neocoolcamplug12a_5_24.attributes.current_energy_kwh }}"
+      unit_of_measurement:  kWh
+
+    attribute_neocoolcamplug12a_6_current_power_w:
+      unique_id: attribute_neocoolcamplug12a_6_current_power_w
+      friendly_name: "NeoCoolCam Plug 12a 6_25 Current Power"
+      value_template: "{{ states.switch.neocoolcamplug12a_6_25.attributes.current_power_w }}"
+      unit_of_measurement:  W
+    attribute_neocoolcamplug12a_6_current_energy_kwh:
+      unique_id: attribute_neocoolcamplug12a_6_current_energy_kwh
+      friendly_name: "NeoCoolCam Plug 12a 6_25 Current Energy"
+      value_template: "{{ states.switch.neocoolcamplug12a_6_25.attributes.current_energy_kwh }}"
+      unit_of_measurement:  kWh
+
+    attribute_neocoolcamplug12a_7_current_power_w:
+      unique_id: attribute_neocoolcamplug12a_7_current_power_w
+      friendly_name: "NeoCoolCam Plug 12a 7_26 Current Power"
+      value_template: "{{ states.switch.neocoolcamplug12a_7_26.attributes.current_power_w }}"
+      unit_of_measurement:  W
+    attribute_neocoolcamplug12a_7_current_energy_kwh:
+      unique_id: attribute_neocoolcamplug12a_7_current_energy_kwh
+      friendly_name: "NeoCoolCam Plug 12a 7_26 Current Energy"
+      value_template: "{{ states.switch.neocoolcamplug12a_7_26.attributes.current_energy_kwh }}"
+      unit_of_measurement:  kWh
+
+    attribute_neocoolcamplug12a_8_current_power_w:
+      unique_id: attribute_neocoolcamplug12a_8_current_power_w
+      friendly_name: "NeoCoolCam Plug 12a 8_27 Current Power"
+      value_template: "{{ states.switch.neocoolcamplug12a_8_27.attributes.current_power_w }}"
+      unit_of_measurement:  W
+    attribute_neocoolcamplug12a_8_current_energy_kwh:
+      unique_id: attribute_neocoolcamplug12a_8_current_energy_kwh
+      friendly_name: "NeoCoolCam Plug 12a 8_27 Current Energy"
+      value_template: "{{ states.switch.neocoolcamplug12a_8_27.attributes.current_energy_kwh }}"
+      unit_of_measurement:  kWh
+
+    attribute_neocoolcamplug12a_9_current_power_w:
+      unique_id: attribute_neocoolcamplug12a_9_current_power_w
+      friendly_name: "NeoCoolCam Plug 12a 9_117 Current Power"
+      value_template: "{{ states.switch.neocoolcamplug12a_9_117.attributes.current_power_w }}"
+      unit_of_measurement:  W
+    attribute_neocoolcamplug12a_9_current_energy_kwh:
+      unique_id: attribute_neocoolcamplug12a_9_current_energy_kwh
+      friendly_name: "NeoCoolCam Plug 12a 9_117 Current Energy"
+      value_template: "{{ states.switch.neocoolcamplug12a_9_117.attributes.current_energy_kwh }}"
+      unit_of_measurement:  kWh
+
+    attribute_neocoolcamplug12a_10_current_power_w:
+      unique_id: attribute_neocoolcamplug12a_10_current_power_w
+      friendly_name: "NeoCoolCam Plug 12a 10_29 Current Power"
+      value_template: "{{ states.switch.neocoolcamplug12a_10_29.attributes.current_power_w }}"
+      unit_of_measurement:  W
+    attribute_neocoolcamplug12a_10_current_energy_kwh:
+      unique_id: attribute_neocoolcamplug12a_10_current_energy_kwh
+      friendly_name: "NeoCoolCam Plug 12a 10_29 Current Energy"
+      value_template: "{{ states.switch.neocoolcamplug12a_10_29.attributes.current_energy_kwh }}"
+      unit_of_measurement:  kWh
+
+    # Sensor for all current power draw
+    # total_current_power_w:
+    #   unique_id: total_current_power_w
+    #   friendly_name: "Total Current Power"
+    #   value_template: "{{ states.switch.neocoolcamplug12a_10_29.attributes.current_power_w }}"
+    #   unit_of_measurement:  W
+    # total_current_energy_kwh:
+    #   unique_id: total_current_energy_kwh
+    #   friendly_name: "Total Current Energy"
+    #   value_template: "{{ states.switch.neocoolcamplug12a_10_29.attributes.current_energy_kwh }}"
+    #   unit_of_measurement:  kWh
+
+    # day_phase:
+    #   unique_id: day_phase
+    #   friendly_name: 'Day Phase'
+    #   value_template: >
+    #     {% if now() > now().replace(hour=5).replace(minute=0).replace(second=0) and
+    #         now() < now().replace(hour=9).replace(minute=0).replace(second=0) %}
+    #         Morning
+    #     {% elif states.sun.sun.state == "above_horizon" %}
+    #         Day
+    #     {% elif now() < now().replace(hour=22).replace(minute=0).replace(second=0) and
+    #         now() > now().replace(hour=9).replace(minute=0).replace(second=0) %}
+    #         Evening
+    #     {% else %}
+    #         Night
+    #     {% endif %}
+
+    # house_motion:
+    #   friendly_name: "House Motion"
+    #   value_template: >
+    #     {{ 
+    #       states.binary_sensor.entrance_hall_sensor_motion.state == 'on' or
+    #       states.binary_sensor.kitchen_sensor_motion.state == 'on' or
+    #       states.binary_sensor.living_room_sensor_motion.state == 'on' or
+    #       states.binary_sensor.top_floor_sensor_motion.state == 'on' or
+    #       states.binary_sensor.toilet_sensor_motion.state == 'on' or
+    #       states.binary_sensor.bathroom_sensor_motion.state == 'on'
+    #     }}
