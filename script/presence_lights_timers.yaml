@@ -1,26 +1,5 @@
 ## Automations for timed lights
 
-everything_off_at_home:
-  alias: "Everything off at home"
-  sequence:
-  ## OPTIMUS off
-  - service: shell_command.sleep_optimus
-  ## Lights off
-  - service: homeassistant.turn_off
-    entity_id:
-    ## Turn off OPTIMUS Triple Screens
-    - !secret plug_1
-    ## Turn off bedside Lamp
-    - !secret plug_2
-    ## Turn off Bedroom TV + Chromecast
-    - !secret plug_3
-    ## Turn off Livingroom TV + Chromecast
-    - !secret plug_6
-  # Turn off lights
-  - service: script.lights_off_at_home
-  # Reset counters for lights
-  - service: script.lights_cancel_all_timers
-
 lights_off_at_home:
   alias: "Lights off at home"
   sequence:

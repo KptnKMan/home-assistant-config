@@ -1,0 +1,85 @@
+## Manual script to initiate heating boost automation
+# TBC
+
+## Resume Playback on the Whole House
+google_play_music_resume_whole_house:
+  sequence:
+  - service: spotcast.start
+    data_template:
+      entity_id: media_player.the_whole_house
+      force_playback: true
+
+## Resume Playback on Upstairs
+google_play_music_resume_upstairs:
+  sequence:
+  - service: spotcast.start
+    data_template:
+      entity_id: media_player.upstairs
+      force_playback: true
+
+## Play Music Spotcast
+google_play_music_start_playlist_xmas:
+  sequence:
+  - service: spotcast.start
+    data_template:
+      entity_id: media_player.the_whole_house
+      uri: spotify:user:spotify:playlist:0IB0VjX9NSrGX6PjCXGVcq
+      media_content_type: playlist
+
+
+google_play_music_start_playlist_test:
+  sequence:
+  - service: spotcast.start
+    data_template:
+      device_name: Gameroom Speaker
+      uri: spotify:user:spotify:playlist:4Mm14OcrRVHKp7U2zpDp4j
+      media_content_type: playlist
+
+## Tell me heating details
+google_tts_notify_heating_summary:
+  sequence:
+  - service: tts.google_say
+    entity_id: media_player.the_whole_house
+    data_template:
+      message: "It's currently {{ states.climate.house_heating.attributes.current_temperature }} degrees with a target temperature of {{ states.climate.house_heating.attributes.temperature }}."
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      message: "Guests Notified about heating!"
+
+## Set Google TTS volume before announcements
+google_tts_set_announcement_volumes:
+  sequence:
+  - service: input_number.set_value
+    data_template:
+      entity_id:
+        - input_number.google_home_volume_livingroom_player
+        - input_number.google_home_volume_livingroom_speaker
+        - input_number.google_home_volume_mobile_speaker
+        - input_number.google_home_volume_gameroom_speaker
+        - input_number.google_home_volume_bedroom_speaker
+      value: 0.6
+
+## Reset Google TTS after to normal, eg: after announcements
+google_tts_reset_volumes:
+  sequence:
+  - service: automation.trigger
+    data:
+      entity_id: automation.google_set_volumes_daytime
+      skip_condition: false
+  - service: automation.trigger
+    data:
+      entity_id: automation.google_set_volumes_evening
+      skip_condition: false
+  - service: automation.trigger
+    data:
+      entity_id: automation.google_set_volumes_low
+      skip_condition: false
+  - service: automation.trigger
+    data:
+      entity_id: automation.google_set_volumes_working
+      skip_condition: false
+  - service: automation.trigger
+    data:
+      entity_id: automation.google_set_volumes_test
+      skip_condition: false
