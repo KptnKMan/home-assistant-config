@@ -1,8 +1,8 @@
-## Remote RPi GPIO switches
-- platform: remote_rpi_gpio
-  host: !secret ip_pi10_remote_gpio
-  ports:
-    17: Pi Switch 1 (17) # heating
-    18: Pi Switch 2 (18) # door strike
-    22: Pi Switch 3 (22) # unused
-    23: Pi Switch 4 (23) # unused
+# ## Remote RPi GPIO switches
+# - platform: remote_rpi_gpio
+#   host: !secret ip_pi10_remote_gpio
+#   ports:
+#     17: Pi Switch 1 (17) # heating
+#     18: Pi Switch 2 (18) # door strike
+#     22: Pi Switch 3 (22) # unused
+#     23: Pi Switch 4 (23) # unused
