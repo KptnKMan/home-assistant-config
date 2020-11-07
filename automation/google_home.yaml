@@ -10,7 +10,7 @@
     condition: and
     conditions:
     - condition: time
-      after: "00:00:00"
+      after: "00:00:00" # unlikely condition, restarting HA between 00:00am and 01:00am
       before: "00:01:00"
   action:
     - service: input_number.set_value

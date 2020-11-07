@@ -1,0 +1,298 @@
+## Xiaomi Companion Cube Automations
+
+# Turn cube to change mode
+- alias: Companion Cube - Toggle Cube Mode [Rotate - Select Mode]
+  trigger:
+  - platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00029a7923
+      action_type: rotate
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_select.cube_mode
+      state: 'Gameroom'
+    - condition: state
+      entity_id: input_select.cube_mode
+      state: 'Music'
+    - condition: state
+      entity_id: input_select.cube_mode
+      state: 'House'
+  action:
+  - service: input_select.select_option
+    data_template:
+      entity_id: input_select.cube_mode
+      option: >
+        {% if states.input_select.cube_mode.state == "Gameroom" %}
+          Music 
+        {% elif states.input_select.cube_mode.state == "Music" %}
+          House
+        {% elif states.input_select.cube_mode.state == "House" %}
+          Gameroom
+        {% endif %}
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      message: >
+        {% if is_state('input_select.cube_mode', 'Gameroom') %}
+          Cube mode change to Gameroom
+        {% elif is_state('input_select.cube_mode', 'Music') %}
+          Cube mode change to Music
+        {% elif is_state('input_select.cube_mode', 'House') %}
+          Cube mode change to House
+        {% else %}
+          Cube mode change unknown error
+        {% endif %}
+
+# Turn on Gameroom Lights
+- alias: Companion Cube - Toggle Cube Mode [Free Fall - Gameroom Light Off]
+  trigger:
+  - platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00029a7923
+      action_type: free_fall
+  condition:
+  - condition: state
+    entity_id: input_select.cube_mode
+    state: 'Gameroom'
+  action:
+  - service: homeassistant.turn_off
+    entity_id: switch.neocoolcamplug12a_9_117
+  - service: homeassistant.turn_off
+    entity_id: light.yeelight_ceiling3_04cf8c8f5e11
+
+# Turn off Gameroom Lights
+- alias: Companion Cube - Toggle Cube Mode [Shake - Gameroom Lights On]
+  trigger:
+  - platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00029a7923
+      action_type: shake_air
+  condition:
+  - condition: state
+    entity_id: input_select.cube_mode
+    state: 'Gameroom'
+  action:
+  - service: homeassistant.turn_on
+    entity_id: switch.neocoolcamplug12a_9_117
+  - service: homeassistant.turn_on
+    entity_id: light.yeelight_ceiling3_04cf8c8f5e11
+
+# Music mode - Play Music
+- alias: Companion Cube - Toggle Cube Mode [Shake - Music Play Music]
+  trigger:
+  - platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00029a7923
+      action_type: shake_air
+  condition:
+  - condition: state
+    entity_id: input_select.cube_mode
+    state: 'Music'
+  action:
+  - service: media_player.play_media
+    data:
+      entity_id: media_player.spotify
+      media_content_id: 'https://open.spotify.com/playlist/5xddIVAtLrZKtt4YGLM1SQ?si=YcvRqaKNTxOi043Qn4LYkg'
+      media_content_type: playlist
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      message: "Playing Spotify"
+
+## Xiaomi Companion Cube Test Automations
+
+# Debug Alert
+- alias: Companion Cube - Toggle Cube Mode [Alert]
+  trigger:
+  - platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00029a7923
+      action_type: alert
+  condition:
+  - condition: state
+    entity_id: input_select.cube_mode
+    state: 'Debug'
+  action:
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      title: 'Cube Alert!'
+      message: "Cube Alert!"
+
+# Debug Tap Twice
+- alias: Companion Cube - Toggle Cube Mode [Tap Twice]
+  trigger:
+  - platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00029a7923
+      action_type: tap_twice
+  condition:
+  - condition: state
+    entity_id: input_select.cube_mode
+    state: 'Debug'
+  action:
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      title: 'Cube Tap Twice!'
+      message: "Cube Tap Twice!"
+
+# Debug Iam
+- alias: Companion Cube - Toggle Cube Mode [IAM]
+  trigger:
+  - platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00029a7923
+      action_type: iam
+  condition:
+  - condition: state
+    entity_id: input_select.cube_mode
+    state: 'Debug'
+  action:
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      title: 'Cube IAM?'
+      message: "Cube IAM?"
+
+# Debug Free Fall
+- alias: Companion Cube - Toggle Cube Mode [Free Fall]
+  trigger:
+  - platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00029a7923
+      action_type: free_fall
+  condition:
+  - condition: state
+    entity_id: input_select.cube_mode
+    state: 'Debug'
+  action:
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      title: 'Cube Free Fall!'
+      message: "Cube Free Fall!"
+
+# Debug Shake
+- alias: Companion Cube - Toggle Cube Mode [Shake]
+  trigger:
+  - platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00029a7923
+      action_type: shake_air
+  condition:
+  - condition: state
+    entity_id: input_select.cube_mode
+    state: 'Debug'
+  action:
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      title: 'Cube Shake Air!'
+      message: "Cube Shake Air!"
+
+# Debug Move
+- alias: Companion Cube - Toggle Cube Mode [Move]
+  trigger:
+  - platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00029a7923
+      action_type: move
+  condition:
+  - condition: state
+    entity_id: input_select.cube_mode
+    state: 'Debug'
+  action:
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      title: 'Cube Moved!'
+      message: "Cube Moved!"
+
+# Debug Swing
+- alias: Companion Cube - Toggle Cube Mode [Swing]
+  trigger:
+  - platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00029a7923
+      action_type: swing
+  condition:
+  - condition: state
+    entity_id: input_select.cube_mode
+    state: 'Debug'
+  action:
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      title: 'Cube Swing!'
+      message: "Cube Swing!"
+
+# Debug Rotate
+- alias: Companion Cube - Toggle Cube Mode [Rotate]
+  trigger:
+  - platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00029a7923
+      action_type: rotate
+  condition:
+  - condition: state
+    entity_id: input_select.cube_mode
+    state: 'Debug'
+  action:
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      title: 'Cube Rotate!'
+      message: "Cube Rotate!"
+
+# Debug Flip 90 degrees
+- alias: Companion Cube - Toggle Cube Mode [Flip 90]
+  trigger:
+  - platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00029a7923
+      action_type: flip90
+  condition:
+  - condition: state
+    entity_id: input_select.cube_mode
+    state: 'Debug'
+  action:
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      title: 'Cube Flip 90!'
+      message: "Cube Flip 90!"
+
+# Debug Flip 180 degrees
+- alias: Companion Cube - Toggle Cube Mode [Flip 180]
+  trigger:
+  - platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00029a7923
+      action_type: flip180
+  condition:
+  - condition: state
+    entity_id: input_select.cube_mode
+    state: 'Debug'
+  action:
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      title: 'Cube Flip 180!'
+      message: "Cube Flip 180!"

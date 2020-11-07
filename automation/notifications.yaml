@@ -104,8 +104,12 @@
       data:
         target: !secret email_target_pushbullet
         title: "New Device detected!"
-        message: "New unknown NMAP device detected!"
-#        message: "New unknown NMAP device detected! > {{ states.updater.updater.state }}"
+        message: "New unknown NMAP device detected! ID: {{ trigger.entity_id }}, MAC: {{ device_tracker_new_device.mac }}"
+    - service: persistent_notification.create
+      data:
+        title: "New Device detected!"
+        message: "New unknown NMAP device detected! ID: {{ trigger.entity_id }}, MAC: {{ device_tracker_new_device.mac }}"
+        notification_id: new_nmap
 
 ## Tell me door is open ## entrance
 - id: notification_entrance_door_is_open

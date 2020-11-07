@@ -1,0 +1,49 @@
+- id: '1604350688310'
+  alias: Sync Tasmota states
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+  - service: mqtt.publish
+    data:
+      topic: cmnd/tasmotas/state
+      payload: ''
+  - service: mqtt.publish
+    data:
+      topic: tasmotas/cmnd/state
+      payload: ''
+  initial_state: true
+- id: '1604433533794'
+  alias: Detect Entrance Door then Light on
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.visiondoorsensor_1_77
+    to: 'on'
+  condition:
+  - condition: and
+    conditions:
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+  action:
+  - service: timer.cancel
+    data: {}
+    entity_id: timer.light_entrance
+  - service: timer.start
+    data: {}
+    entity_id: timer.light_entrance
+    data_template:
+      duration: '{{ states(''input_number.light_duration'')|int|multiply(60)|timestamp_custom(''%X'',false)
+        }}
+
+        '
+  mode: single
