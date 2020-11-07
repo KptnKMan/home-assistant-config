@@ -1,11 +1,11 @@
-- name: Home
-  latitude: !secret zone_home_latitude
-  longitude: !secret zone_home_longitude
-  radius: 600
-  icon: mdi:home
+# - name: Home
+#   latitude: !secret zone_home_latitude
+#   longitude: !secret zone_home_longitude
+#   radius: 600
+#   icon: mdi:home
 
-- name: Work
-  latitude: !secret zone_work_latitude
-  longitude: !secret zone_work_longitude
-  radius: 500
-  icon: mdi:briefcase
+# - name: Work
+#   latitude: !secret zone_work_latitude
+#   longitude: !secret zone_work_longitude
+#   radius: 500
+#   icon: mdi:briefcase
