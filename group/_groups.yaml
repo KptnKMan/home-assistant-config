@@ -121,7 +121,6 @@
       - group.alarm_things
       - group.rf_things
       - group.control_door
-      - group.remote_gpio
       - group.motion_sensors
   testing:
     name: Testing
@@ -197,6 +196,7 @@
       - input_boolean.vacation_mode
       - group.control_door
       - group.control_things
+      - input_number.light_duration
       - group.lights_all_downstairs
       - group.lights_all_upstairs
       - group.livingroom_things
@@ -537,17 +537,6 @@
       - !secret 012501_strike
       - switch.pi_switch_2_18
       - binary_sensor.pi_switch_2_18
-  remote_gpio:
-    name: Remote GPIO
-    entities:
-      - switch.pi_switch_1_17
-      - switch.pi_switch_2_18
-      - switch.pi_switch_3_22
-      - switch.pi_switch_4_23
-      - binary_sensor.pi_switch_1_17
-      - binary_sensor.pi_switch_2_18
-      - binary_sensor.pi_switch_3_22
-      - binary_sensor.pi_switch_4_23
 
   control_things:
     name: Control Things
@@ -778,7 +767,6 @@
   lights_all_downstairs:
     name: Lights All Downstairs
     entities:
-      - input_number.light_duration
       - light.tradfri_bulb_1
       - light.tradfri_bulb_2
       - light.fibaro_dimmer_2_1_8
@@ -793,7 +781,6 @@
   lights_all_upstairs:
     name: Lights All Upstairs
     entities:
-      - input_number.light_duration
       - light.tradfri_bulb_3
       - light.yeelight_ceiling3_04cf8c8f5e11
       - light.yeelight_ceiling3_04cf8c8f5a17
