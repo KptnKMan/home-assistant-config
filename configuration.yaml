@@ -38,31 +38,14 @@ discovery:
 downloader:
   download_dir: downloads
 
+## Finds a compatible stream from a stream where possible
+media_extractor:
+
 ## Enables the frontend
 frontend:
 
 ## Enables support for tracking state changes over time.
 history:
-
-## Display a graph similar to the graphs in more-info popups and the history panel.
-## https://www.home-assistant.io/components/history_graph
-# history_graph:
-#   air_quality:
-#     name: Air Quality
-#     entities:
-#       - sensor.attribute_fan_aqi
-#       - sensor.attribute_fan_favorite_level
-#       - sensor.attribute_fan_temperature
-#     hours_to_show: 168 # 168 = 7 days / 1 week, 240 = 10 days
-#     refresh: 60
-#   battery_levels:
-#     name: Air Quality
-#     entities:
-#       - sensor.attribute_fan_aqi
-#       - sensor.attribute_fan_favorite_level
-#       - sensor.attribute_fan_temperature
-#     hours_to_show: 240 # 168 = 7 days / 1 week, 240 = 10 days
-#     refresh: 60
 
 ## HTTP Core Component
 ## https://www.home-assistant.io/components/http/
@@ -143,7 +126,7 @@ map:
 ## Enables support for tracking
 ## https://www.home-assistant.io/components/recorder
 recorder:
-  db_url: !secret dburl_mariadb_addon  ## The URL which point to your database
+#  db_url: !secret dburl_mariadb_addon  ## The URL which point to your database
 
 ## Track the sun
 sun:
@@ -172,7 +155,7 @@ notify:
 ## https://www.home-assistant.io/components/mqtt
 mqtt:
 #  broker: 127.0.0.1
-  broker: 192.168.178.130
+  broker: !secret mqtt_host
   port: 1883
   client_id: home-assistant-1
   keepalive: 60
@@ -355,22 +338,6 @@ binary_sensor: !include_dir_merge_list binary_sensor
 ## Cameras
 camera: !include_dir_merge_list camera
 
-## Setup Thermostats and climate controllers
-climate:
-  ## Custom Thermostat
-  ## https://www.home-assistant.io/components/climate.generic_thermostat
-  - platform: generic_thermostat
-    name: House Heating
-    heater: switch.relay4c1_1 # operate this switch for heating on/of
-    target_sensor: !secret xiaomi_temp_2 # sensor to monitor to determine switch
-    min_temp: 10
-    max_temp: 25
-    target_temp: 20 # don't forget to also set input_number.temp_target
-    cold_tolerance: 0.3
-    hot_tolerance: 0
-    min_cycle_duration:
-      minutes: 1
-
 ## Device Tracker module - Manage tracked devices
 ## https://www.home-assistant.io/components/device_tracker/
 device_tracker: !include_dir_merge_list device_tracker
@@ -411,36 +378,6 @@ shell_command: !include_dir_merge_named shell_command
 
 ## Switches physical (eg: GPIO) and virtual
 switch: !include_dir_merge_list switch
-
-## Timers for automations: heating, lights, etc
-## https://www.home-assistant.io/components/timer
-timer:
-  temperature_boost:
-    duration: '02:00:00'
-  light_entrance:
-    duration: '00:03:00'
-  light_downstairs:
-    duration: '00:03:00'
-  light_livingroom_spots:
-    duration: '00:03:00'
-  light_livingroom_table:
-    duration: '00:03:00'
-  light_upstairs_night:
-    duration: '00:03:00'
-  light_upstairs:
-    duration: '00:03:00'
-  light_closet_night:
-    duration: '00:03:00'
-  light_closet:
-    duration: '00:03:00'
-  light_toilet:
-    duration: '00:03:00'
-  light_pantry:
-    duration: '00:03:00'
-  light_kitchen:
-    duration: '00:03:00'
-  light_bathroom:
-    duration: '00:03:00'
 
 ## Zones using GPS
 zone: !include_dir_merge_list zone

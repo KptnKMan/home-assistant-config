@@ -256,26 +256,26 @@ sensor.yr_high_clouds:
 # # Door Sensor 4
 
 ## Xiaomi Lights
-light.yeelight_ceiling1_7c49ebb8f12e:
-  friendly_name: Kitchen Light
-!secret sensor_kitchen_1:
-  friendly_name: Kitchen Night Sensor
-light.yeelight_ceiling1_7c49eb1e4081:
-  friendly_name: Bathroom Light
-!secret sensor_bathroom_1:
-  friendly_name: Bathroom Night Sensor
+# light.yeelight_ceiling1_7c49ebb8f12e:
+#   friendly_name: Kitchen Light
+# !secret sensor_kitchen_1:
+#   friendly_name: Kitchen Night Sensor
+# light.yeelight_ceiling1_7c49eb1e4081:
+#   friendly_name: Bathroom Light
+# !secret sensor_bathroom_1:
+#   friendly_name: Bathroom Night Sensor
 # light.tradfri_bulb_4_1:
 #   friendly_name: closet Light
 # !secret sensor_closet_1:
 #   friendly_name: closet Night Sensor
-light.yeelight_ceiling3_04cf8c8f5a17:
-  friendly_name: Bedroom Light
-!secret sensor_bedroom_1:
-  friendly_name: Bedroom Night Sensor
-light.yeelight_ceiling3_04cf8c8f5e11:
-  friendly_name: Gameroom Light
-!secret sensor_gameroom_1:
-  friendly_name: Gameroom Night Sensor
+# light.yeelight_ceiling3_04cf8c8f5a17:
+#   friendly_name: Bedroom Light
+# !secret sensor_bedroom_1:
+#   friendly_name: Bedroom Night Sensor
+# light.yeelight_ceiling3_04cf8c8f5e11:
+#   friendly_name: Gameroom Light
+# !secret sensor_gameroom_1:
+#   friendly_name: Gameroom Night Sensor
 
 # ## Light Dimmers
 # light.fibaro_dimmer_2_1_8:
