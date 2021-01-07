@@ -61,14 +61,52 @@ This is often been referred to online as the "wife test", to represent a sufferi
 
 As such, all switches and hardware needs to have hardware switches (Lights need to be operable from the regular switch etc), and operate as normally as possible in the absence of the core system itself.
 
-## Components and Hardware
-
-TBC
-
 ## Diagram
 
 I produced a diagram to keep track of, and help explain my system to others.
 ![Home Automation Diagram](Diagram.png)
+
+## Components and Hardware
+
+Here is a best-effort list (With links where to buy) of all the current hardware I use.
+I try to keep this list updated, and it will likely be more recent than the diagram above.
+
+- Vera Plus Z-Wave Hub
+  - 10x Neo Coolcam Smart Plug (EU)
+  - 5x Neo Coolcam PIR Sensor
+  - 2x Vision Door/Window Sensor
+  - 5x Fibaro Switch
+  - 2x Fibaro Dimmer
+  - 2x Aeotec Multisensor 6
+  - 1x POPP Door Strike
+  - 1x Fibaro "The button" (Red)
+  - 2x Z-Wave Key Remote
+- IKEA TRADFRI Zigbee Hub
+  - 1x LED Driver/Controller
+  - 5x GU11 Spot lights
+  - 1x LED RGB Bulb 800lm
+  - 7x LED White Bulb 1000lm
+  - 1x GL-C-007 Bulb
+  - 2x FYRTUR Blinds
+- Mii-Light LED Bridge (Mostly unused)
+  - 2x Mii-Light LED RGBW Controller (Unused)
+- Xiaomi Gateway II Zigbee Hub
+- Xiaomi Gateway III Zigbee Hub (Mostly unused)
+- Sonoff RF Hub (Running Tasmota)
+  - 2x RF Key Remote
+- Sonoff Zigbee Hub (Running Tasmota)
+
+- 3x Xiaomi "Yeelight Ceiling Light"
+- 2x Xiaomi "Yeelight Ceiling Light (Jiaoyue 480/650)"
+
+- 3x Google Chromecast
+- 2x Google Chromecast Audio
+- 4x Google Home Mini
+
+- 4x Sonoff Basic (Running Tasmota)
+- 2x Sonoff POW2 (Running Tasmota)
+- 2x Shelley RGBW2 (Running Tasmota)
+- 2x LC Technology 5V 4 Channel Relay (Running Tasmota)
 
 ## Automation goals and projects
 
@@ -105,6 +143,11 @@ When enbarking on this, I made sure to make clear a set of taks that I wanted to
     - heating
     - lights
     - automations
+- [x] low battery notifications
+  - I want to be able to be notified:
+    - when batteries are low, at a configurable threshold
+    - which devices have low batteries
+    - what level are the low batteries
 - [ ] plant watering
   - The plants should be watered automatically
     - based on schedule or moisture level
