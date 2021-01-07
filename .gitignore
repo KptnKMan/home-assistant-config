@@ -1,5 +1,6 @@
 .ignore/
 .storage/
+
 .DS_Store
 ._.DS_Store
 ._home-assistant.log
@@ -9,11 +10,15 @@
 .smbdeleteAAA1be9
 .spotify-token-cache
 .uuid
+
+custom_components/
 downloads/
 gactions/
-www/
+image/
 secrets/
 tts/
+www/
+
 OZW_Log.txt
 entity_registry.yaml
 home-assistant.log
