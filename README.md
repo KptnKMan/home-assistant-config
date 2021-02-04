@@ -69,6 +69,7 @@ As such, all switches and hardware needs to have hardware switches (Lights need 
 ## Diagram
 
 I produced a diagram to keep track of, and help explain my system to others.
+This diagram is likely not 100% accurate, as sometimes changes are made to the system.
 ![Home Automation Diagram](Diagram.png)
 
 ## Components and Hardware
