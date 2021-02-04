@@ -4,66 +4,6 @@
 #   min: -100
 #   max: 200
 
-temp_target:
-  name: Target Temp
-  initial: 14
-  min: 14
-  max: 25
-  step: 1
-  mode: slider
-  unit_of_measurement: °C  
-  icon: mdi:thermometer-lines
-
-temp_target_attic:
-  name: Target Temp
-  initial: 26
-  min: 20
-  max: 30
-  step: 1
-  mode: slider
-  unit_of_measurement: °C  
-  icon: mdi:thermometer-lines
-
-temp_daytime:
-  name: Temp Daytime
-  initial: 21
-  min: 14
-  max: 25
-  step: 1
-  mode: slider
-  unit_of_measurement: °C  
-  icon: mdi:thermometer-lines
-
-temp_morning:
-  name: Temp Morning
-  initial: 18
-  min: 14
-  max: 25
-  step: 1
-  mode: slider
-  unit_of_measurement: °C  
-  icon: mdi:thermometer-lines
-
-temp_night:
-  name: Temp Night
-  initial: 15
-  min: 14
-  max: 25
-  step: 1
-  mode: slider
-  unit_of_measurement: °C  
-  icon: mdi:thermometer-lines
-
-temp_away:
-  name: Temp Away
-  initial: 14
-  min: 14
-  max: 25
-  step: 1
-  mode: slider
-  unit_of_measurement: °C  
-  icon: mdi:thermometer-lines
-
 google_home_volume_livingroom_player:
   name: Livingroom Player
   initial: 0.2
@@ -124,12 +64,12 @@ purifier_fave_level:
   unit_of_measurement: level
   icon: mdi:air-filter
 
-light_duration:
-  name: Stay on
-  initial: 10
-  min: 1
-  max: 60
-  step: 1
-  mode: slider
-  unit_of_measurement: mins
-  icon: mdi:lightbulb-on-outline
+# lights_duration:
+#   name: Stay on
+#   initial: 10
+#   min: 1
+#   max: 60
+#   step: 1
+#   mode: slider
+#   unit_of_measurement: mins
+#   icon: mdi:lightbulb-on-outline

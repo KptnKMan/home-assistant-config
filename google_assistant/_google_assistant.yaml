@@ -51,14 +51,14 @@ entity_config:
   light.tradfri_bulb_4:
     expose: true
     room: All House
-  light.yeelight_ceiling3_04cf8c8f5a17:
-    expose: true
-    name: Bedroom Light
-    room: Bedroom
-  light.yeelight_ceiling3_04cf8c8f5e11:
-    expose: true
-    name: Gameroom Light
-    room: Gameroom
+  # light.yeelight_5:
+  #   expose: true
+  #   name: Bedroom Light
+  #   room: Bedroom
+  # light.yeelight_4:
+  #   expose: true
+  #   name: Gameroom Light
+  #   room: Gameroom
   light.fibaro_dimmer_2_1_8:
     expose: true
     name: Livingroom Spots

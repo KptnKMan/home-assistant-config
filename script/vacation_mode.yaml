@@ -20,7 +20,7 @@ vacation_lights_init:
     - service: script.turn_everything_off
     ## wait X hours/mins more
     - delay:
-        hours: 2    
+        hours: 2
     ## activate light sequence
     - service: script.after_dark_select_sequence
     ## wait X hours/mins more
@@ -33,7 +33,7 @@ vacation_lights_init:
 # turn_everything_off:
 #   sequence:
 #     - service: homeassistant.turn_off
-#       data: 
+#       data:
 #         entity_id: !secret plug_2
 #     - service: homeassistant.turn_off
 #       data:
@@ -57,7 +57,7 @@ vacation_lights_away_sequence:
   sequence:
     ## Notify
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
         title: 'Vacation sequence begin'
         message: "Vacation away sequence has activated at home!"
@@ -75,15 +75,15 @@ vacation_lights_away_sequence:
         entity_id: script.timed_lamp_upstairs
     ## turn on downstairs TV
     - service: homeassistant.turn_on
-      data: 
-        entity_id: group.livingroom_things
+      data:
+        entity_id: switch.neocoolcamplug12a_6_25
     ## wait X mins
     - delay:
         minutes: 43
     ## turn off downstairs TV
     - service: homeassistant.turn_off
-      data: 
-        entity_id: group.livingroom_things
+      data:
+        entity_id: switch.neocoolcamplug12a_6_25
     ## trigger downstairs light
     - service: homeassistant.turn_on
       data:
@@ -100,7 +100,7 @@ vacation_lights_away_sequence:
         minutes: 2
     ## turn on bedroom lamp
     - service: homeassistant.turn_on
-      data: 
+      data:
         entity_id: !secret plug_2
     ## wait X mins
     - delay:
@@ -114,11 +114,11 @@ vacation_lights_away_sequence:
         minutes: 111
     ## turn off bedroom TV
     - service: homeassistant.turn_off
-      data: 
+      data:
         entity_id: !secret plug_3
     ## Notify
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
         title: 'Vacation sequence end'
         message: "Vacation away sequence has finished at home!"

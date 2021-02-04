@@ -1,6 +1,21 @@
 ## Manual script to initiate heating boost automation
 # TBC
 
+## Stop Playback on all Chromecasts
+google_play_music_stop:
+  alias: Stop Music on Chromecast
+  sequence:
+  - service: media_player.media_stop
+    data_template:
+      entity_id: # edit this chromecast media_player list
+      - media_player.the_whole_house
+      - media_player.upstairs
+      - media_player.downstairs
+      - media_player.bedroom_speaker
+      - media_player.gameroom_speaker
+      - media_player.livingroom_speaker
+      - media_player.mobile_speaker
+
 ## Resume Playback on the Whole House
 google_play_music_resume_whole_house:
   sequence:
@@ -35,6 +50,135 @@ google_play_music_start_playlist_test:
       uri: spotify:user:spotify:playlist:4Mm14OcrRVHKp7U2zpDp4j
       media_content_type: playlist
 
+## Set Volumes Daytime
+google_volumes_daytime:
+  alias: Speaker Volumes Daytime
+  sequence:
+  - service: input_number.set_value
+    data_template:
+      entity_id:
+        - input_number.google_home_volume_livingroom_player
+        - input_number.google_home_volume_livingroom_speaker
+        - input_number.google_home_volume_mobile_speaker
+      value: 0.3
+  - service: input_number.set_value
+    data_template:
+      entity_id:
+        - input_number.google_home_volume_gameroom_speaker
+        - input_number.google_home_volume_bedroom_speaker
+      value: 0.4
+  # - service: media_player.volume_set
+  #   data_template:
+  #     volume_level: 0.3
+  #     entity_id:
+  #       - media_player.chromecast_audio_1
+  #       - media_player.livingroom_speaker
+  #       - media_player.mobile_speaker
+  # - service: media_player.volume_set
+  #   data_template:
+  #     volume_level: 0.4
+  #     entity_id:
+  #       - media_player.gameroom_speaker
+  #       - media_player.bedroom_speaker
+
+## Set Volumes Evening
+google_volumes_evening:
+  alias: Speaker Volumes Evening
+  sequence:
+  - service: input_number.set_value
+    data_template:
+      entity_id:
+        - input_number.google_home_volume_livingroom_player
+        - input_number.google_home_volume_livingroom_speaker
+        - input_number.google_home_volume_mobile_speaker
+      value: 0.2
+  - service: input_number.set_value
+    data_template:
+      entity_id:
+        - input_number.google_home_volume_gameroom_speaker
+        - input_number.google_home_volume_bedroom_speaker
+      value: 0.3
+  # - service: media_player.volume_set
+  #   data_template:
+  #     volume_level: 0.2
+  #     entity_id:
+  #       - media_player.chromecast_audio_1
+  #       - media_player.livingroom_speaker
+  #       - media_player.mobile_speaker
+  # - service: media_player.volume_set
+  #   data_template:
+  #     volume_level: 0.3
+  #     entity_id:
+  #       - media_player.gameroom_speaker
+  #       - media_player.bedroom_speaker
+
+## Set Volumes Low
+google_volumes_low:
+  alias: Speaker Volumes Low
+  sequence:
+  - service: input_number.set_value
+    data_template:
+      entity_id:
+        - input_number.google_home_volume_livingroom_player
+        - input_number.google_home_volume_livingroom_speaker
+        - input_number.google_home_volume_mobile_speaker
+      value: 0.1
+  - service: input_number.set_value
+    data_template:
+      entity_id:
+        - input_number.google_home_volume_gameroom_speaker
+        - input_number.google_home_volume_bedroom_speaker
+      value: 0.15
+  # - service: media_player.volume_set
+  #   data_template:
+  #     volume_level: 0.1
+  #     entity_id:
+  #       - media_player.chromecast_audio_1
+  #       - media_player.livingroom_speaker
+  #       - media_player.mobile_speaker
+  # - service: media_player.volume_set
+  #   data_template:
+  #     volume_level: 0.15
+  #     entity_id:
+  #       - media_player.gameroom_speaker
+  #       - media_player.bedroom_speaker
+
+## Set Volumes Working
+google_volumes_working:
+  alias: Speaker Volumes Working
+  sequence:
+  - service: input_number.set_value
+    data_template:
+      entity_id:
+        - input_number.google_home_volume_livingroom_player
+        - input_number.google_home_volume_livingroom_speaker
+        - input_number.google_home_volume_mobile_speaker
+        - input_number.google_home_volume_bedroom_speaker
+      value: 0
+  - service: input_number.set_value
+    data_template:
+      entity_id:
+        - input_number.google_home_volume_gameroom_speaker
+      value: 0.3
+
+## Set Volumes Ambient
+google_volumes_ambient:
+  alias: Speaker Volumes Ambient
+  sequence:
+  - service: input_number.set_value
+    data_template:
+      entity_id:
+        - input_number.google_home_volume_livingroom_player
+        - input_number.google_home_volume_livingroom_speaker
+        - input_number.google_home_volume_mobile_speaker
+      value: 0.1
+  - service: input_number.set_value
+    data_template:
+      entity_id:
+        - input_number.google_home_volume_gameroom_speaker
+        - input_number.google_home_volume_bedroom_speaker
+      value: 0.1
+
 ## Tell me heating details
 google_tts_notify_heating_summary:
   sequence:
@@ -43,13 +187,16 @@ google_tts_notify_heating_summary:
     data_template:
       message: "It's currently {{ states.climate.house_heating.attributes.current_temperature }} degrees with a target temperature of {{ states.climate.house_heating.attributes.temperature }}."
   - service: notify.pushbullet
-    data: 
+    data:
       target: !secret email_target_pushbullet
       message: "Guests Notified about heating!"
 
 ## Set Google TTS volume before announcements
 google_tts_set_announcement_volumes:
+  alias: Google TTS Speaker Volumes Announcement
   sequence:
+  - service: homeassistant.turn_on
+    entity_id: script.google_play_music_stop
   - service: input_number.set_value
     data_template:
       entity_id:
@@ -62,6 +209,7 @@ google_tts_set_announcement_volumes:
 
 ## Reset Google TTS after to normal, eg: after announcements
 google_tts_reset_volumes:
+  alias: Google TTS Speaker Volumes Reset
   sequence:
   - service: automation.trigger
     data:
@@ -83,3 +231,8 @@ google_tts_reset_volumes:
     data:
       entity_id: automation.google_set_volumes_test
       skip_condition: false
+  #TODO make action to resume music if was playing
+  # - check switch/sensor for if music was playing
+  #start/resume music
+  # - service: homeassistant.turn_on
+  #   entity_id: script.radio_change_spotify_speakers # script from Radio package

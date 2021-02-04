@@ -1,7 +1,7 @@
-keep_lights_on:
-  name: "Keep Lights ON"
-  initial: off
-  icon: mdi:lightbulb-on-outline
+# lights_keep_all_on:
+#   name: "Keep Lights ON"
+#   initial: off
+#   icon: mdi:lightbulb-on-outline
 
 vacation_mode:
   name: "Vacation Mode"
@@ -22,8 +22,3 @@ welcome_home:
   name: "Welcome Home Timer Switch"
   initial: off
   icon: mdi:timer
-
-heating_boost:
-  name: "Heating Boosting"
-  initial: off
-  icon: mdi:guage
