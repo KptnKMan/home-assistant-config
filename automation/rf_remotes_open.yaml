@@ -1,53 +1,30 @@
-## Lock and Arm house when Remote1 button A pressed
+## Lockdown and Arm House when Remote1 button A pressed
 - id: rf_remote1_arm_house
   alias: RF Remote1 Arm House
   trigger:
     platform: state
     entity_id: binary_sensor.RF_Remote1_A
     to: 'on'
-  # condition:
-  # - condition: and
-  #   conditions:
-  #   - condition: state
-  #     entity_id: group.presence_kareem
-  #     state: "home"
   action:
-    - service: notify.pushbullet
-      data:
-        target: !secret email_target_pushbullet
-        title: '2 min to Arming Home!'
-        message: "2 mins to Arming Home!"
-    - delay: 1:59
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.presence_house
-        option: Away
-    - service: homeassistant.turn_on
-      entity_id:
-        - group.alarm_things
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: 'Home Armed!'
-        message: "Home Armed!"
+  - service: homeassistant.turn_on
+    entity_id:
+      - script.home_lockdown_everything_off
 
-## Disarm House
+## Disarm House when Remote1 button B pressed
 - id: rf_remote1_disarm_house
   alias: RF Remote1 Disarm House
   trigger:
     platform: state
     entity_id: binary_sensor.RF_Remote1_B
     to: 'on'
+  condition:
+  - condition: state
+    entity_id: person.kareem
+    state: "home"
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.presence_house
-        option: 'Home'
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: 'Alarm Disarmed!'
-        message: "Alarm switch disarmed!"
+  - service: homeassistant.turn_on
+    entity_id:
+      - script.home_lockdown_disarm
 
 ## Activate door strike if kareem is "Home" when Remote1 button C pressed
 - id: rf_remote1_door_strike
@@ -57,15 +34,29 @@
     entity_id: binary_sensor.RF_Remote1_C
     to: 'on'
   condition:
-  - condition: and
-    conditions:
-    - condition: state
-      entity_id: group.presence_kareem
-      state: "home"
+  - condition: state
+    entity_id: person.kareem
+    state: "home"
   action:
-    - service: homeassistant.turn_on
-      entity_id:
-        - switch.relay4c1_2
+  - service: homeassistant.turn_on
+    entity_id:
+      - switch.relay4c1_2
+
+## Activate door strike if kareem is "Home" when Remote1 button D pressed
+- id: rf_remote1_popp_lock
+  alias: RF Remote1 POPP Lock
+  trigger:
+    platform: state
+    entity_id: binary_sensor.RF_Remote1_D
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: person.kareem
+    state: "home"
+  action:
+  - service: lock.unlock
+    data:
+      entity_id: lock.poppdoorswitch_1_6
 
 ## Activate door strike if "friends" is "Home" when Remote1 button C pressed
 - id: rf_remote2_door_strike
@@ -78,9 +69,16 @@
   - condition: and
     conditions:
     - condition: state
-      entity_id: group.presence_friends
+      entity_id: person.friends
       state: "home"
+    - condition: state
+      entity_id: input_boolean.friends_visiting
+      state: "on"
   action:
-    - service: homeassistant.turn_on
-      entity_id:
-        - switch.relay4c1_2
+  - service: homeassistant.turn_on
+    entity_id:
+      - switch.relay4c1_2
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      message: "Friends activated door!"

@@ -13,7 +13,9 @@
         click_type: single
   action:
     - service: homeassistant.toggle
-      entity_id: group.bedroom_things
+      entity_id:
+      - switch.neocoolcamplug12a_2_21 # lamp
+      - switch.neocoolcamplug12a_3_22 # tv
 
 ## Toggle nightlight with button double-click
 - id: sw1_gateway_nightlight
@@ -38,6 +40,11 @@
         entity_id: binary_sensor.switch_158d000186dbec
         click_type: long_click_press
   action:
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.lights_automate_bedrooms
+    - service: homeassistant.turn_on
+      entity_id:
+      - script.lights_cancel_all_timers
     - service: homeassistant.turn_on
       entity_id:
       - script.lights_off_at_home
@@ -48,9 +55,9 @@
         transition: 2
         color_name: red
 
-## Lock doors
-- id: sw2_lock_doors
-  alias: sw2 lock doors
+## House Lockdown
+- id: sw2_lockdown_house
+  alias: sw2 Lockdown House
   trigger:
     - platform: event
       event_type: xiaomi_aqara.click
@@ -58,31 +65,13 @@
         entity_id: binary_sensor.switch_158d00018726b8
         click_type: single
   action:
-    - service: notify.pushbullet
-      data:
-        target: !secret email_target_pushbullet
-        title: '2 min to Arming Home!'
-        message: "2 mins to Arming Home!"
-    - delay: 1:59
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.presence_house
-        option: 'Away'
-    ## placeholder for door locks
-    # - service: notify.pushbullet
-    #   data: 
-    #     target: !secret email_target_pushbullet
-    #     title: 'Doors locked!'
-    #     message: "Doors locked!"
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: 'Home Armed!'
-        message: "Home Armed!"
+  - service: homeassistant.turn_on
+    entity_id:
+      - script.home_lockdown_everything_off
 
-## Disarm Alarm system
-- id: sw2_disarm_alarm_system
-  alias: sw2 Disarm Alarm System
+## House Disarm
+- id: sw2_disarm_house
+  alias: sw2 Disarm House
   trigger:
     - platform: event
       event_type: xiaomi_aqara.click
@@ -90,15 +79,9 @@
         entity_id: binary_sensor.switch_158d00018726b8
         click_type: double
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.presence_house
-        option: 'Home'
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: 'Alarm Disarmed!'
-        message: "Alarm switch disarmed!"
+  - service: homeassistant.turn_on
+    entity_id:
+      - script.home_lockdown_disarm
 
 ## Open door strike long press
 - id: sw2_door_strike
@@ -114,7 +97,7 @@
       entity_id:
         - switch.relay4c1_2
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
         title: 'Door strike activated!'
         message: "Door Strike activated!"
@@ -174,7 +157,7 @@
         click_type: long_click_press
   action:
     - service: homeassistant.toggle
-      entity_id: light.yeelight_ceiling3_04cf8c8f5e11
+      entity_id: light.yeelight_4
 
 ## Turn on Livingroom things with button
 - id: sw4_livingroom_things
@@ -187,7 +170,8 @@
         click_type: single
   action:
     - service: homeassistant.toggle
-      entity_id: group.livingroom_things
+      entity_id:
+      - switch.neocoolcamplug12a_6_25 # livingroom tv
 
 ## Toggle Livingroom Spots with button long press
 - id: sw4_livingroom_spots
@@ -255,7 +239,7 @@
       service: turn_on
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
         title: 'Button Pressed!'
         message: "Button 1 pressed!"

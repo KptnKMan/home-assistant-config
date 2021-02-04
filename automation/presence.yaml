@@ -1,35 +1,5 @@
 ## HOUSE PRESENCE
 
-## Arriving HOME! Turn on entrance light
-- id: presence_detect_home_entrance_light
-  alias: Detect Home Entrance Light On
-  trigger:
-  - platform: homeassistant
-    event: start
-  - platform: state
-    entity_id: group.presence_kareem
-    to: "home"
-  - platform: state
-    entity_id: group.presence_friends
-    to: "home"
-  condition:
-  - condition: or
-    conditions:
-    - condition: state
-      entity_id: group.presence_kareem
-      state: "home"
-    - condition: state
-      entity_id: group.presence_friends
-      state: "home"
-  action:
-  - service: timer.cancel
-    entity_id: timer.light_entrance
-  - service: timer.start
-    entity_id: timer.light_entrance
-  - service: homeassistant.turn_off
-    entity_id:
-      - group.alarm_things
-
 ## Arriving HOME/Home Alone/Startup! set presence to "Home"
 - id: presence_detect_home_alone
   alias: Detect Home Alone
@@ -37,22 +7,28 @@
     - platform: homeassistant
       event: start
     - platform: state
-      entity_id: group.presence_kareem
+      entity_id: person.kareem
       to: "home"
   condition:
   - condition: and
     conditions:
     - condition: state
-      entity_id: group.presence_kareem
+      entity_id: person.kareem
       state: "home"
     - condition: state
-      entity_id: group.presence_friends
+      entity_id: person.friends
       state: "not_home"
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.presence_house
-        option: Home
+  - service: timer.cancel
+    entity_id: timer.light_entrance
+  - service: timer.start
+    entity_id: timer.light_entrance
+  - service: homeassistant.turn_on
+    entity_id: script.home_lockdown_disarm
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.presence_house
+      option: Home
 
 ## Home with guests! set presence to "Home Guests".
 - id: presence_detect_home_with_guests
@@ -61,30 +37,32 @@
     - platform: homeassistant
       event: start
     - platform: state
-      entity_id: group.presence_kareem
+      entity_id: person.kareem
       to: "home"
     - platform: state
-      entity_id: group.presence_friends
+      entity_id: person.friends
       to: "home"
   condition:
   - condition: and
     conditions:
     - condition: state
-      entity_id: group.presence_kareem
+      entity_id: person.kareem
       state: "home"
     - condition: state
-      entity_id: group.presence_friends
+      entity_id: person.friends
       state: "home"
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.presence_house
-        option: Home Guests
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: "Home with Guests"
-        message: "Home with Guests!"
+  - service: homeassistant.turn_on
+    entity_id: script.home_lockdown_disarm
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.presence_house
+      option: Home Guests
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Home with Guests"
+      message: "Home with Guests!"
 
 ## Home Alone! set presence to "Home"
 - id: presence_detect_home_without_guests
@@ -93,27 +71,29 @@
     - platform: homeassistant
       event: start
     - platform: state
-      entity_id: group.presence_friends
+      entity_id: person.friends
       to: "not_home"
   condition:
   - condition: and
     conditions:
     - condition: state
-      entity_id: group.presence_kareem
+      entity_id: person.kareem
       state: "home"
     - condition: state
-      entity_id: group.presence_friends
+      entity_id: person.friends
       state: "not_home"
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.presence_house
-        option: Home
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: "Home alone, guests left"
-        message: "Home alone, guests left!"
+  - service: homeassistant.turn_on
+    entity_id: script.home_lockdown_disarm
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.presence_house
+      option: Home
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Home alone, guests left"
+      message: "Home alone, guests left!"
 
 ## Guests are HOME ALONE! set presence to "Away Guests".
 - id: presence_detect_guests_home_alone
@@ -122,30 +102,32 @@
     - platform: homeassistant
       event: start
     - platform: state
-      entity_id: group.presence_kareem
+      entity_id: person.kareem
       to: "not_home"
     - platform: state
-      entity_id: group.presence_friends
+      entity_id: person.friends
       to: "home"
   condition:
   - condition: and
     conditions:
     - condition: state
-      entity_id: group.presence_kareem
+      entity_id: person.kareem
       state: "not_home"
     - condition: state
-      entity_id: group.presence_friends
+      entity_id: person.friends
       state: "home"
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.presence_house
-        option: Away Guests
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: "Guests HOME ALONE"
-        message: "Guests HOME ALONE!"
+  - service: homeassistant.turn_on
+    entity_id: script.home_lockdown_disarm
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.presence_house
+      option: Away Guests
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Guests HOME ALONE"
+      message: "Guests HOME ALONE!"
 
 ## Nobody Home, set presence to "Away"
 - id: presence_detect_leaving
@@ -154,19 +136,19 @@
     - platform: homeassistant
       event: start
     - platform: state
-      entity_id: group.presence_kareem
+      entity_id: person.kareem
       to: "not_home"
     - platform: state
-      entity_id: group.presence_friends
+      entity_id: person.friends
       to: "not_home"
   condition:
   - condition: and
     conditions:
     - condition: state
-      entity_id: group.presence_kareem
+      entity_id: person.kareem
       state: "not_home"
     - condition: state
-      entity_id: group.presence_friends
+      entity_id: person.friends
       state: "not_home"
   action:
     - service: input_select.select_option
@@ -180,8 +162,8 @@
         message: "Nobody Home!"
 
 ## Turn stuff off when nobody is home
-- id: presence_detect_nobody_home
-  alias: Detect Nobody Home
+- id: presence_detect_nobody_home_lockdown_house
+  alias: Detect Nobody Home Lockdown House
   trigger:
     - platform: state
       entity_id: input_select.presence_house
@@ -191,12 +173,4 @@
   action:
     - service: homeassistant.turn_on
       entity_id:
-        - group.alarm_things
-    - service: homeassistant.turn_on
-      entity_id:
-        - script.everything_off_at_home
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: "House turning down"
-        message: "House turning down!"
+        - script.home_lockdown_everything_off

@@ -20,14 +20,14 @@
   alias: Notification Detect Automate Lights Disabled
   trigger:
     - platform: state
-      entity_id: input_boolean.keep_lights_on
+      entity_id: input_boolean.lights_keep_all_on
       from: "off"
       to: "on"
   condition:
   - condition: or
     conditions:
     - condition: state
-      entity_id: input_boolean.keep_lights_on
+      entity_id: input_boolean.lights_keep_all_on
       state: "on"
   action:
   - service: homeassistant.turn_on
@@ -44,14 +44,14 @@
   alias: Notification Detect Automate Lights Enabled
   trigger:
     - platform: state
-      entity_id: input_boolean.keep_lights_on
+      entity_id: input_boolean.lights_keep_all_on
       from: "on"
       to: "off"
   condition:
   - condition: or
     conditions:
     - condition: state
-      entity_id: input_boolean.keep_lights_on
+      entity_id: input_boolean.lights_keep_all_on
       state: "off"
   action:
   - service: homeassistant.turn_on

@@ -1,120 +1,120 @@
-## This is an example of automated light method 1
-## Uses a timer
+# ## This is an example of automated light method 1
+# ## Uses a timer
 
-## Start timer when movement detected upstairs
-- alias: movement upstairs start timer
-  id: movement_upstairs_start_timer
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.6in1multisensor_1_31
-    to: "on"
-  condition:
-    condition: and
-    conditions:
-    - condition: time
-      after: "06:00:00"
-      before: "01:00:00"
-    - condition: or
-      conditions:
-      # - condition: state
-      #   entity_id: sun.sun
-      #   state: "below_horizon"
-      - condition: sun
-        after: sunset
-        after_offset: "-02:00:00"
-      - condition: sun
-        before: sunrise
-        before_offset: "+01:00:00"
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: input_select.presence_house
-        state: Home
-      - condition: state
-        entity_id: input_select.presence_house
-        state: Home Guests
-      - condition: state
-        entity_id: input_select.presence_house
-        state: Away Guests
-  action:
-  - service: timer.cancel
-    entity_id: timer.light_upstairs
-  - service: timer.start
-    entity_id: timer.light_upstairs
-    data_template:
-      duration: >
-        {{ states('input_number.light_duration')|int|multiply(60)|timestamp_custom('%X',false) }}
+# ## Start timer when movement detected upstairs
+# - alias: movement upstairs start timer
+#   id: movement_upstairs_start_timer
+#   trigger:
+#   - platform: state
+#     entity_id: binary_sensor.6in1multisensor_1_31
+#     to: "on"
+#   condition:
+#     condition: and
+#     conditions:
+#     - condition: time
+#       after: "06:00:00"
+#       before: "01:00:00"
+#     - condition: or
+#       conditions:
+#       # - condition: state
+#       #   entity_id: sun.sun
+#       #   state: "below_horizon"
+#       - condition: sun
+#         after: sunset
+#         after_offset: "-02:00:00"
+#       - condition: sun
+#         before: sunrise
+#         before_offset: "+01:00:00"
+#     - condition: or
+#       conditions:
+#       - condition: state
+#         entity_id: input_select.presence_house
+#         state: Home
+#       - condition: state
+#         entity_id: input_select.presence_house
+#         state: Home Guests
+#       - condition: state
+#         entity_id: input_select.presence_house
+#         state: Away Guests
+#   action:
+#   - service: timer.cancel
+#     entity_id: timer.light_upstairs
+#   - service: timer.start
+#     entity_id: timer.light_upstairs
+#     data_template:
+#       duration: >
+#         {{ states('input_number.lights_duration')|int|multiply(60)|timestamp_custom('%X',false) }}
 
-# When timer is started, turn on light
-- alias: Timer started light_upstairs
-  id: 'timer_started_light_upstairs'
-  trigger:
-  - platform: event
-    event_type: timer.started
-    event_data:
-      entity_id: timer.light_upstairs
-  action:
-  - service: light.turn_on
-    data:
-      entity_id: light.tradfri_bulb_3
-      transition: 2
-      brightness: 255
-      kelvin: 3000
-  # - service: notify.pushbullet
-  #   data: 
-  #     target: !secret email_target_pushbullet
-  #     message: "debug upstairs light on"
+# # When timer is started, turn on light
+# - alias: Timer started light_upstairs
+#   id: 'timer_started_light_upstairs'
+#   trigger:
+#   - platform: event
+#     event_type: timer.started
+#     event_data:
+#       entity_id: timer.light_upstairs
+#   action:
+#   - service: light.turn_on
+#     data:
+#       entity_id: light.tradfri_bulb_3
+#       transition: 2
+#       brightness: 255
+#       kelvin: 3000
+#   # - service: notify.pushbullet
+#   #   data: 
+#   #     target: !secret email_target_pushbullet
+#   #     message: "debug upstairs light on"
 
-# When timer is finished, if sensor is "on", reset timer
-- alias: Timer reset light_upstairs
-  id: 'timer_reset_light_upstairs'
-  trigger:
-  - platform: event
-    event_type: timer.finished
-    event_data:
-      entity_id: timer.light_upstairs
-  condition:
-  - condition: and
-    conditions:
-    - condition: state
-      entity_id: input_boolean.keep_lights_on
-      state: "off"
-    - condition: state
-      entity_id: binary_sensor.6in1multisensor_1_31
-      state: "on"
-  action:
-  - service: timer.cancel
-    entity_id: timer.light_upstairs
-  - service: timer.start
-    entity_id: timer.light_upstairs
-    data_template:
-      duration: >
-        {{ states('input_number.light_duration')|int|multiply(60)|timestamp_custom('%X',false) }}
+# # When timer is finished, if sensor is "on", reset timer
+# - alias: Timer reset light_upstairs
+#   id: 'timer_reset_light_upstairs'
+#   trigger:
+#   - platform: event
+#     event_type: timer.finished
+#     event_data:
+#       entity_id: timer.light_upstairs
+#   condition:
+#   - condition: and
+#     conditions:
+#     - condition: state
+#       entity_id: input_boolean.lights_keep_all_on
+#       state: "off"
+#     - condition: state
+#       entity_id: binary_sensor.6in1multisensor_1_31
+#       state: "on"
+#   action:
+#   - service: timer.cancel
+#     entity_id: timer.light_upstairs
+#   - service: timer.start
+#     entity_id: timer.light_upstairs
+#     data_template:
+#       duration: >
+#         {{ states('input_number.lights_duration')|int|multiply(60)|timestamp_custom('%X',false) }}
 
-# When timer is finished, if sensor is "off", turn off light
-- alias: Timer finished light_upstairs
-  id: 'timer_finished_light_upstairs'
-  trigger:
-  - platform: event
-    event_type: timer.finished
-    event_data:
-      entity_id: timer.light_upstairs
-  condition:
-  - condition: and
-    conditions:
-    - condition: state
-      entity_id: input_boolean.keep_lights_on
-      state: "off"
-    - condition: state
-      entity_id: binary_sensor.6in1multisensor_1_31
-      state: "off"
-  action:
-  - service: timer.cancel
-    entity_id: timer.light_upstairs
-  - service: light.turn_off
-    data:
-      entity_id: light.tradfri_bulb_3
-  # - service: notify.pushbullet
-  #   data: 
-  #     target: !secret email_target_pushbullet
-  #     message: "debug upstairs light off"
+# # When timer is finished, if sensor is "off", turn off light
+# - alias: Timer finished light_upstairs
+#   id: 'timer_finished_light_upstairs'
+#   trigger:
+#   - platform: event
+#     event_type: timer.finished
+#     event_data:
+#       entity_id: timer.light_upstairs
+#   condition:
+#   - condition: and
+#     conditions:
+#     - condition: state
+#       entity_id: input_boolean.lights_keep_all_on
+#       state: "off"
+#     - condition: state
+#       entity_id: binary_sensor.6in1multisensor_1_31
+#       state: "off"
+#   action:
+#   - service: timer.cancel
+#     entity_id: timer.light_upstairs
+#   - service: light.turn_off
+#     data:
+#       entity_id: light.tradfri_bulb_3
+#   # - service: notify.pushbullet
+#   #   data: 
+#   #     target: !secret email_target_pushbullet
+#   #     message: "debug upstairs light off"

@@ -13,16 +13,16 @@
       after: "00:00:00" # unlikely condition, restarting HA between 00:00am and 01:00am
       before: "00:01:00"
   action:
-    - service: input_number.set_value
-      data_template:
-        entity_id: input_number.google_home_volume_gameroom_speaker
-        value: 0.1
-        # value: "{{ trigger.payload }}"
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: "Speaker Volume slider TEST started!"
-        message: "Speaker Volume slider TEST started!"
+  - service: input_number.set_value
+    data_template:
+      entity_id: input_number.google_home_volume_gameroom_speaker
+      value: 0.1
+      # value: "{{ trigger.payload }}"
+  - service: notify.pushbullet
+    data: 
+      target: !secret email_target_pushbullet
+      title: "Speaker Volume slider TEST started!"
+      message: "Speaker Volume slider TEST started!"
 
 ## Google Home Set Daytime Volumes
 - id: google_set_volumes_daytime
@@ -37,34 +37,10 @@
     conditions:
     - condition: time
       after: "06:00:00"
-      before: "22:00:00"
+      before: "20:00:00"
   action:
-    - service: input_number.set_value
-      data_template:
-        entity_id:
-          - input_number.google_home_volume_livingroom_player
-          - input_number.google_home_volume_livingroom_speaker
-          - input_number.google_home_volume_mobile_speaker
-        value: 0.3
-    - service: input_number.set_value
-      data_template:
-        entity_id:
-          - input_number.google_home_volume_gameroom_speaker
-          - input_number.google_home_volume_bedroom_speaker
-        value: 0.4
-    # - service: media_player.volume_set
-    #   data_template:
-    #     volume_level: 0.3
-    #     entity_id:
-    #       - media_player.chromecast_audio_1
-    #       - media_player.livingroom_speaker
-    #       - media_player.mobile_speaker
-    # - service: media_player.volume_set
-    #   data_template:
-    #     volume_level: 0.4
-    #     entity_id:
-    #       - media_player.gameroom_speaker
-    #       - media_player.bedroom_speaker
+  - service: homeassistant.turn_on
+    entity_id: script.google_volumes_daytime
 
 ## Google Home Set Evening Volumes
 - id: google_set_volumes_evening
@@ -73,40 +49,16 @@
     - platform: homeassistant
       event: start
     - platform: time
-      at: "22:00:00"
+      at: "20:00:00"
   condition:
     condition: and
     conditions:
     - condition: time
-      after: "22:00:00"
-      before: "06:00:00"
+      after: "20:00:00"
+      before: "23:00:00"
   action:
-    - service: input_number.set_value
-      data_template:
-        entity_id:
-          - input_number.google_home_volume_livingroom_player
-          - input_number.google_home_volume_livingroom_speaker
-          - input_number.google_home_volume_mobile_speaker
-        value: 0.2
-    - service: input_number.set_value
-      data_template:
-        entity_id:
-          - input_number.google_home_volume_gameroom_speaker
-          - input_number.google_home_volume_bedroom_speaker
-        value: 0.3
-    # - service: media_player.volume_set
-    #   data_template:
-    #     volume_level: 0.2
-    #     entity_id:
-    #       - media_player.chromecast_audio_1
-    #       - media_player.livingroom_speaker
-    #       - media_player.mobile_speaker
-    # - service: media_player.volume_set
-    #   data_template:
-    #     volume_level: 0.3
-    #     entity_id:
-    #       - media_player.gameroom_speaker
-    #       - media_player.bedroom_speaker
+  - service: homeassistant.turn_on
+    entity_id: script.google_volumes_evening
 
 ## Google Home Set Low/Ambient/Night Volumes
 - id: google_set_volumes_low
@@ -115,40 +67,16 @@
     - platform: homeassistant
       event: start
     - platform: time
-      at: "22:00:00"
+      at: "23:00:00"
   condition:
     condition: and
     conditions:
     - condition: time
-      after: "22:00:00"
+      after: "23:00:00"
       before: "06:00:00"
   action:
-    - service: input_number.set_value
-      data_template:
-        entity_id:
-          - input_number.google_home_volume_livingroom_player
-          - input_number.google_home_volume_livingroom_speaker
-          - input_number.google_home_volume_mobile_speaker
-        value: 0.1
-    - service: input_number.set_value
-      data_template:
-        entity_id:
-          - input_number.google_home_volume_gameroom_speaker
-          - input_number.google_home_volume_bedroom_speaker
-        value: 0.15
-    # - service: media_player.volume_set
-    #   data_template:
-    #     volume_level: 0.1
-    #     entity_id:
-    #       - media_player.chromecast_audio_1
-    #       - media_player.livingroom_speaker
-    #       - media_player.mobile_speaker
-    # - service: media_player.volume_set
-    #   data_template:
-    #     volume_level: 0.15
-    #     entity_id:
-    #       - media_player.gameroom_speaker
-    #       - media_player.bedroom_speaker
+  - service: homeassistant.turn_on
+    entity_id: script.google_volumes_low
 
 ## Google Home Set Working Volumes, to avoid noise elsewhere without stopping playback
 - id: google_set_volumes_working
@@ -163,19 +91,8 @@
       after: "05:57:00"
       before: "05:58:00"
   action:
-    - service: input_number.set_value
-      data_template:
-        entity_id:
-          - input_number.google_home_volume_livingroom_player
-          - input_number.google_home_volume_livingroom_speaker
-          - input_number.google_home_volume_mobile_speaker
-          - input_number.google_home_volume_bedroom_speaker
-        value: 0
-    - service: input_number.set_value
-      data_template:
-        entity_id:
-          - input_number.google_home_volume_gameroom_speaker
-        value: 0.3
+  - service: homeassistant.turn_on
+    entity_id: script.google_volumes_working
 
 ## Manual Volume control via slider - Livingroom Player
 - id: google_home_livingroom_player_slider_moved

@@ -43,7 +43,7 @@
 #     entity_id: timer.light_livingroom_spots
 #     data_template:
 #       duration: >
-#         {{ states('input_number.light_duration')|int|multiply(60)|timestamp_custom('%X',false) }}
+#         {{ states('input_number.lights_duration')|int|multiply(60)|timestamp_custom('%X',false) }}
 
 # # When timer is started, turn on light
 # - alias: Timer started light_livingroom_spots
@@ -72,7 +72,7 @@
 #   - condition: and
 #     conditions:
 #     - condition: state
-#       entity_id: input_boolean.keep_lights_on
+#       entity_id: input_boolean.lights_keep_all_on
 #       state: "off"
 #     - condition: state
 #       entity_id: !secret 6in1_sensor_move_2
@@ -84,7 +84,7 @@
 #     entity_id: timer.light_livingroom_spots
 #     data_template:
 #       duration: >
-#         {{ states('input_number.light_duration')|int|multiply(60)|timestamp_custom('%X',false) }}
+#         {{ states('input_number.lights_duration')|int|multiply(60)|timestamp_custom('%X',false) }}
 
 # # When timer is finished, if sensor is "off", turn off light
 # - alias: Timer finished light_livingroom_spots
@@ -98,7 +98,7 @@
 #   - condition: and
 #     conditions:
 #     - condition: state
-#       entity_id: input_boolean.keep_lights_on
+#       entity_id: input_boolean.lights_keep_all_on
 #       state: "off"
 #     - condition: state
 #       entity_id: !secret 6in1_sensor_move_2

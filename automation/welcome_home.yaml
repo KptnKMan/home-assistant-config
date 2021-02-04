@@ -5,13 +5,13 @@
     - platform: homeassistant
       event: start
     - platform: state
-      entity_id: group.presence_kareem
+      entity_id: person.kareem
       to: "home"
   condition:
     condition: and
     conditions:
     - condition: state
-      entity_id: group.presence_kareem
+      entity_id: person.kareem
       state: "home"
     - condition: time
       after: "06:00:00"

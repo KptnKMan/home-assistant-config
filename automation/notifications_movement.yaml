@@ -1,0 +1,83 @@
+## Tell me there is an intruder ## entrance
+- id: notification_ha_there_is_an_intruder_entrance
+  alias: Notification HA There is an intruder ENTRANCE
+  trigger:
+    - platform: state
+      entity_id: !secret coolcam_motion_sensor_1
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Away
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "ALERT! Movement at Home!"
+        message: "Movement has been detected at ENTRANCE!"
+
+## Tell me there is an intruder ## downstairs
+- id: notification_ha_there_is_an_intruder_downstairs
+  alias: Notification HA There is an intruder DOWNSTAIRS
+  trigger:
+    - platform: state
+      entity_id: !secret coolcam_motion_sensor_2
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Away
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "ALERT! Movement at Home!"
+        message: "Movement has been detected DOWNSTAIRS!"
+
+## Tell me there is an intruder ## upstairs
+- id: notification_ha_there_is_an_intruder_upstairs
+  alias: Notification HA There is an intruder UPSTAIRS
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.6in1multisensor_1_31
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Away
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "ALERT! Movement at Home!"
+        message: "Movement has been detected UPSTAIRS!"
+
+## Tell me there is an intruder ## living room
+- id: notification_ha_there_is_an_intruder_livingroom
+  alias: Notification HA There is an intruder LIVINGROOM
+  trigger:
+    - platform: state
+      entity_id: !secret 6in1_sensor_move_2
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Away
+  action:
+    - service: notify.pushbullet
+      data: 
+        target: !secret email_target_pushbullet
+        title: "ALERT! Movement at Home!"
+        message: "Movement has been detected at LIVINGROOM!"

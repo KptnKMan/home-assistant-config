@@ -3,7 +3,7 @@
   alias: Notification Detect Friends
   trigger:
     - platform: state
-      entity_id: group.presence_friends
+      entity_id: person.friends
       to: "home"
     - platform: state
       entity_id: input_boolean.friends_visiting
@@ -12,7 +12,7 @@
   - condition: or
     conditions:
     - condition: state
-      entity_id: group.presence_friends
+      entity_id: person.friends
       state: "home"
     - condition: state
       entity_id: input_boolean.friends_visiting
@@ -29,7 +29,7 @@
   alias: Notification Detect Friends Leaving
   trigger:
     - platform: state
-      entity_id: group.presence_friends
+      entity_id: person.friends
       to: "not_home"
     - platform: state
       entity_id: input_boolean.friends_visiting
@@ -38,7 +38,7 @@
   - condition: or
     conditions:
     - condition: state
-      entity_id: group.presence_friends
+      entity_id: person.friends
       state: "not_home"
     - condition: state
       entity_id: input_boolean.friends_visiting

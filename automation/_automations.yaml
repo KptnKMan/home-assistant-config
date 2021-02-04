@@ -2,26 +2,7 @@
 #### GENERAL AUTOMATIONS ####
 #############################
 
-## Restart HA, every day, at 2am
-- alias: Restart HA
-  trigger:
-    - platform: state
-      entity_id: input_select.presence_house
-      to: Fake State # will never be triggered, state does not exist
-  #   - platform: time
-  #     at: "02:00:00"
-  condition:
-    condition: time
-    weekday:
-    - sun
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
-    - sat
-  action:
-    - service: homeassistant.restart
+# General Automations, mostly moved to automations.yaml
 
 ## Purge Recorder DB history daily
 - id: ha_purge_recorder
@@ -33,17 +14,3 @@
     service: recorder.purge
     data:
       keep_days: 3
-
-## Ziggo Router reset after 5 seconds
-- id: ziggo_router_reset
-  alias: Ziggo Router Reset
-  trigger:
-    - platform: state
-      entity_id: !secret sonoff_2
-      to: "off"
-      for:
-        seconds: 5
-  action:
-    - service: homeassistant.turn_on
-      entity_id:
-        - !secret sonoff_2
