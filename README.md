@@ -1,8 +1,8 @@
-![Home Assistant Logo](www/hass.png "Home Assistant Logo")
+![Home Assistant Logo](hass.png "Home Assistant Logo")
 
 # Kareems home-assistant-config
 
-Configuration for [Kareem's](https://twitter.com/plonka2000) [HomeAssistant](https://home-assistant.io).
+Configuration for Kareem's [HomeAssistant](https://home-assistant.io).
 
 ## Introduction
 
