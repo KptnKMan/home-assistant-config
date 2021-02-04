@@ -1,0 +1,443 @@
+## Originally from Chromecast Radio by Bob_NL:
+# https://community.home-assistant.io/t/chromecast-radio-with-station-and-player-selection/
+# I went through much of this thread and pulled together the best bits I could see, as of 2020-11-08. Enjoy.
+# Fyi this template has additions, modifications, and some resources are renamed in places to make more sense to me.
+# For example, all resources are prefixed with "radio_" so they can be easily monitored and grouped in states.
+
+## Requirements:
+# Media Extractor: https://www.home-assistant.io/integrations/media_extractor/
+# Spotcast: https://github.com/fondberg/spotcast
+
+## To customise this template
+# Throughout this template, I have added comments to indicate where to modify for your needs.
+# TL;DR - Edit the Chromecast lists, Radio Station lists and Spotify Playlist lists... look for "edit this".
+
+## Lovelace.yaml config from: https://community.home-assistant.io/t/chromecast-radio-with-station-and-player-selection/12732/615
+#
+#   - title: Radio
+#     path: radio
+#     icon: 'mdi:radio'
+#     badges: []
+#     cards:
+#       - type: entities
+#         entities:
+#           - entity: input_number.radio_volume_set
+#           - input_select.radio_choose_chromecast
+#           - action_name: Change/Resume Speakers
+#             entity: script.radio_change_radio_speakers
+#           - action_name: Stop all radio
+#             entity: script.radio_stop
+#           - input_select.radio_choose_station
+#           - action_name: Play Radio
+#             entity: script.radio_play_station
+#           - input_text.radio_stream_url
+#         title: Radio Internet
+#         show_header_toggle: false
+#       - type: entities
+#         entities:
+#           - entity: input_number.radio_volume_set
+#           - input_select.radio_choose_chromecast
+#           - action_name: Change/Resume Speakers
+#             entity: script.radio_change_spotify_speakers
+#           - action_name: Stop all radio
+#             entity: script.radio_stop
+#           - input_select.radio_choose_spotify_playlist
+#           - action_name: Play Spotify
+#             entity: script.radio_play_spotify
+#           - input_text.radio_spotify_id
+#           - input_boolean.radio_spotify_random_song
+#           - input_boolean.radio_spotify_shuffle
+#         title: Radio Spotify
+#         show_header_toggle: false
+
+## Example spotify playlists, to test the Spotify_ID UI text input
+#
+# 37i9dQZF1DZ06evO0mmegU - raleigh ritchie (The Grey Worm guy from Game of Thrones)
+# 37i9dQZF1DZ06evO3t7MVW - stick figure
+# 37i9dQZF1DX88lIyu3KACm - charles bradley
+# 37i9dQZF1DWUX9LKy3x6bc - marvin gaye
+
+homeassistant:
+  customize:
+    script.radio_play_station:
+      friendly_name: Start Playing
+      icon: mdi:play
+
+    script.radio_play_spotify:
+      friendly_name: Start Playing
+      icon: mdi:play
+
+group:
+  residence_radio:
+    name: Residentie Radio
+    entities:
+    - input_select.radio_choose_station
+    - input_select.radio_choose_spotify_playlist
+    - input_select.radio_choose_chromecast
+    - script.radio_play_station
+    - script.spotify
+    - input_number.radio_volume_set
+
+input_text:
+  radio_stream_url:
+    name: Streaming URL
+    initial: Enter URL
+
+  radio_spotify_id:
+    name: Spotify Playlist ID
+    initial: Enter Playlist ID
+
+input_number:
+  radio_volume_set:
+    name: Volume
+    icon: mdi:volume-high
+    min: 0
+    max: 1
+    step: 0.05
+
+input_boolean:
+  radio_spotify_random_song:
+    name: "Spotify Random Song"
+    initial: off
+    icon: mdi:arrow-expand-all
+
+  radio_spotify_shuffle:
+    name: "Spotify Shuffle"
+    initial: off
+    icon: mdi:shuffle
+
+input_select:
+  radio_choose_chromecast:
+    name: 'Select Speakers:'
+    options: # edit this list of Chromecast names
+    - Whole House
+    - Upstairs
+    - Downstairs
+    - Bedroom
+    - Gameroom
+    - Livingroom
+    - Kitchen
+    - Livingroom Player
+    - Chromecast Audio 2
+    initial: Whole House
+    icon: mdi:speaker-wireless
+
+  radio_choose_station:
+    name: 'Select Radio Station:'
+    options: # edit this list of Radio Station names
+    - Radio 538
+    - Q-Music
+    - 3FM
+    - 100% NL
+    - Veronica
+    - Sky Radio
+    - Arrow Classic Rock
+    - Classic FM
+    - BNR Nieuwsradio
+    - SLAM! Hardstyle
+    - Sleep Radio
+    - Ambient Sleeping Pill
+    - Radio Art - Sleep
+    - Ambi Nature Radio
+    - Calm Radio - Sleep
+    - Dinamo.FM Sleep
+
+    - 'Kiss FM'
+    - 'Europa FM'
+    - 'Rock FM'
+    - 'Digi FM'
+    - 'Romantic FM'
+    - 'Radio Clasic'
+    - 'P1'
+    - 'P2'
+    - 'P3'
+    - 'P4'
+    - 'Ekot'
+    - 'RIX FM'
+    - 'Bandit Rock'
+    - 'Lugna Favoriter'
+    - 'STAR FM'
+    - 'Power Hit Radio'
+    - 'Bandit Ballads'
+    - 'Bandit Classics'
+    - 'Bandit Metal'
+    - 'RIX FM FRESH'
+    - 'Power Club'
+    - 'Power Street'
+    - 'Indie 101'
+    - 'Svenska Favoriter'
+    - 'Dansbandsfavoriter'
+    - 'Country Classics'
+    - 'Star 90s'
+    - 'Star 80s'
+    - 'Star 70s'
+    - 'Star 60s'
+    - 'Electro Lounge'
+    - 'Soul Classics'
+    - 'One Hit Wonders'
+
+    - Radio 1
+    - MNM
+    - Nostalgie
+    - MNM hits
+    - MNM 90's & 00's
+
+  radio_choose_spotify_playlist:
+    name: 'Select Spotify Station:'
+    options: # edit this list of Spotify Playlists
+    - Spotify Favorites
+    - Liked from Radio
+    - Raleigh Ritchie
+    - Everything Everything
+    - Action Bronson
+    - Charles Bradley
+    - Childish Gambino
+    - Fleetwood Mac
+    - Bush
+    - Stick Figure
+    - Marvin Gaye
+    - "Steezyasfuck Coffee Shop Vibes"
+    - "Steezyasfuck Relax Lofi"
+    - "Chill Mode: On"
+
+    - Nat King Cole Christmas
+
+    - Global Top 50
+    - Today's Top Hits
+    - New Music Friday
+    - Discover Weekly
+    - Neef
+    - Omelette du Frommage
+    - Fissa
+    - Baila Reggaeton
+    - Golden Era Music
+    - Rock
+    - Golden Oldies
+    - Lo-Fi Hip-Hop
+    - Supalonely Radio
+    - Morning Dew Radio
+    - Winter Acoustic
+    - Koffiehuis
+    - Resume
+
+automation:
+- alias: Radio Event Set Volume
+  trigger:
+  - platform: state
+    entity_id: input_number.radio_volume_set
+  action:
+  - service: media_player.volume_set
+    data_template:
+      entity_id: &chromecast_list > # edit this chromecast master list
+        {% if is_state("input_select.radio_choose_chromecast", "Whole House") %} media_player.the_whole_house
+        {% elif is_state("input_select.radio_choose_chromecast", "Upstairs") %} media_player.upstairs
+        {% elif is_state("input_select.radio_choose_chromecast", "Downstairs") %} media_player.downstairs
+        {% elif is_state("input_select.radio_choose_chromecast", "Bedroom") %} media_player.bedroom_speaker
+        {% elif is_state("input_select.radio_choose_chromecast", "Gameroom") %} media_player.gameroom_speaker
+        {% elif is_state("input_select.radio_choose_chromecast", "Livingroom") %} media_player.livingroom_speaker
+        {% elif is_state("input_select.radio_choose_chromecast", "Kitchen") %} media_player.mobile_speaker
+        {% elif is_state("input_select.radio_choose_chromecast", "Livingroom Player") %} media_player.chromecast_audio_1
+        {% elif is_state("input_select.radio_choose_chromecast", "Chromecast Audio 2") %} media_player.chromecast_audio_2
+        {% endif %}
+      volume_level: '{{ trigger.to_state.state }}'
+
+- alias: Radio Event Stream URL Text Changed
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: input_text.radio_stream_url
+  action:
+  - service: homeassistant.turn_on
+    entity_id: script.radio_stop
+  - service: media_extractor.play_media
+    data_template:
+      entity_id: *chromecast_list # reference to chromecast master list, do NOT edit
+      media_content_id: "{{states.input_text.radio_stream_url.state}}"
+      media_content_type: 'video/mp4'
+
+- alias: Radio Event Spotify Playlist Text Changed
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: input_text.radio_spotify_id
+  action:
+  - service: homeassistant.turn_on
+    entity_id: script.radio_stop
+  - service: spotcast.start
+    data_template:
+      entity_id: *chromecast_list # reference to chromecast master list, do NOT edit
+      uri: spotify:playlist:{{ trigger.to_state.state }}
+      random_song: '{{ states.input_boolean.radio_spotify_random_song.state }}'
+      shuffle: '{{ states.input_boolean.radio_spotify_shuffle.state }}'
+
+- alias: Radio Event Spotify Enable/Disable Shuffle
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: input_boolean.radio_spotify_shuffle
+  action:
+  - service: media_player.shuffle_set
+    data_template:
+      entity_id: *chromecast_list # reference to chromecast master list, do NOT edit
+      shuffle: '{{ trigger.to_state.state }}'
+
+script:
+  radio_stop:
+    alias: Stop Radio on Chromecast
+    sequence:
+    - service: media_player.media_stop
+      data_template:
+        entity_id: # edit this chromecast media_player device list
+        - media_player.the_whole_house
+        - media_player.upstairs
+        - media_player.downstairs
+        - media_player.bedroom_speaker
+        - media_player.gameroom_speaker
+        - media_player.livingroom_speaker
+        - media_player.mobile_speaker
+
+  # extra automation for external use
+  radio_play_next_track:
+    alias: Play Next Track on Chromecast Audio
+    sequence:
+    - service: media_player.media_next_track
+      data_template:
+        entity_id: *chromecast_list # reference to chromecast master list, do NOT edit
+
+  # extra automation for external use
+  radio_play_previous_track:
+    alias: Play Previous on Chromecast Audio
+    sequence:
+    - service: media_player.media_next_track
+      data_template:
+        entity_id: *chromecast_list # reference to chromecast master list, do NOT edit
+
+  radio_change_radio_speakers:
+    alias: Change/Resume Radio
+    sequence:
+    - service: homeassistant.turn_on
+      entity_id: script.radio_stop
+    - service: media_player.play_media
+      data_template:
+        entity_id: *chromecast_list # reference to chromecast master list, do NOT edit
+
+  radio_change_spotify_speakers:
+    alias: Change/Resume Spotify
+    sequence:
+    - service: homeassistant.turn_on
+      entity_id: script.radio_stop
+    - service: spotcast.start
+      data_template:
+        entity_id: *chromecast_list # reference to chromecast master list, do NOT edit
+        force_playback: true
+
+  radio_play_station:
+    alias: Play Radio on Chromecast Audio
+    sequence:
+    - service: media_player.play_media
+      data_template:
+        entity_id: *chromecast_list # reference to chromecast master list, do NOT edit
+        media_content_id: > # edit this list of Radio Stations below
+          {% if is_state("input_select.radio_choose_station", "Radio 538") %} http://vip-icecast.538.lw.triple-it.nl:80/RADIO538_MP3
+          {% elif is_state("input_select.radio_choose_station", "Q-Music") %} http://icecast-qmusic.cdp.triple-it.nl/Qmusic_nl_live_96.mp3
+          {% elif is_state("input_select.radio_choose_station", "3FM") %} http://icecast.omroep.nl/3fm-bb-mp3
+          {% elif is_state("input_select.radio_choose_station", "100% NL") %} http://stream.100p.nl/100pctnl.mp3
+          {% elif is_state("input_select.radio_choose_station", "Veronica") %} http://8543.live.streamtheworld.com/VERONICACMP3
+          {% elif is_state("input_select.radio_choose_station", "Sky Radio") %} http://8623.live.streamtheworld.com:80/SKYRADIOAAC_SC
+          {% elif is_state("input_select.radio_choose_station", "Arrow Classic Rock") %} http://91.221.151.155/listen.mp3
+          {% elif is_state("input_select.radio_choose_station", "Classic FM") %} http://19143.live.streamtheworld.com/CLASSICFM_SC
+          {% elif is_state("input_select.radio_choose_station", "BNR Nieuwsradio") %} http://icecast-bnr.cdp.triple-it.nl/bnr_mp3_96_03
+          {% elif is_state("input_select.radio_choose_station", "SLAM! Hardstyle") %} http://vip-icecast.538.lw.triple-it.nl/WEB17_MP3
+          {% elif is_state("input_select.radio_choose_station", "Sleep Radio") %} http://37.59.28.208:8722/stream
+          {% elif is_state("input_select.radio_choose_station", "Ambient Sleeping Pill") %} http://perseus.shoutca.st:8447/h
+          {% elif is_state("input_select.radio_choose_station", "Radio Art - Sleep") %} http://live.radioart.com/fSleep.mp3
+          {% elif is_state("input_select.radio_choose_station", "Ambi Nature Radio") %} http://94.23.252.14:8067/stream
+          {% elif is_state("input_select.radio_choose_station", "Calm Radio - Sleep") %} http://streams.calmradio.com/api/39/128/stream
+          {% elif is_state("input_select.radio_choose_station", "Dinamo.FM Sleep") %} http://channels.dinamo.fm/sleep-aac
+
+          {% elif is_state("input_select.radio_choose_station", "Kiss FM") %} http://andromeda.shoutca.st:8396/;stream.mp3
+          {% elif is_state("input_select.radio_choose_station", "Europa FM") %} http://astreaming.europafm.ro:8000/europafm_aacp48k.m3u
+          {% elif is_state("input_select.radio_choose_station", "Rock FM") %} http://80.86.106.143:9128/rockfm.mp3
+          {% elif is_state("input_select.radio_choose_station", "Digi FM") %} http://edge76.rdsnet.ro:84/digifm/digifm.mp3
+          {% elif is_state("input_select.radio_choose_station", "Romantic FM") %} http://5.254.113.34:9123/romanticfm.aacp
+          {% elif is_state("input_select.radio_choose_station", "Radio Clasic") %} http://37.251.146.169:8000/stream
+          {% elif is_state("input_select.radio_choose_station", "P1") %} https://sverigesradio.se/topsy/direkt/132-hi-mp3
+          {% elif is_state("input_select.radio_choose_station", "P2") %} https://sverigesradio.se/topsy/direkt/2562-hi-mp3
+          {% elif is_state("input_select.radio_choose_station", "P3") %} https://sverigesradio.se/topsy/direkt/164-hi-mp3
+          {% elif is_state("input_select.radio_choose_station", "P4") %} https://sverigesradio.se/topsy/direkt/212-hi-mp3
+          {% elif is_state("input_select.radio_choose_station", "Ekot") %} https://sverigesradio.se/topsy/direkt/4540-hi-mp3
+          {% elif is_state("input_select.radio_choose_station", "RIX FM") %} http://fm01-icecast.mtg-r.net/fm01_aac
+          {% elif is_state("input_select.radio_choose_station", "Bandit Rock") %} http://fm02-icecast.mtg-r.net/fm02_aac
+          {% elif is_state("input_select.radio_choose_station", "Lugna Favoriter") %} http://fm03-icecast.mtg-r.net/fm03_aac
+          {% elif is_state("input_select.radio_choose_station", "STAR FM") %} http://fm05-icecast.mtg-r.net/fm05_aac
+          {% elif is_state("input_select.radio_choose_station", "Power Hit Radio") %} http://fm04-icecast.mtg-r.net/fm04_aac
+          {% elif is_state("input_select.radio_choose_station", "Bandit Ballads") %} http://wr21-ice.stream.mtgr.se/wr21_aac
+          {% elif is_state("input_select.radio_choose_station", "Bandit Classics") %} http://wr11-icecast.mtg-r.net/wr11_aac
+          {% elif is_state("input_select.radio_choose_station", "Bandit Metal") %} http://wr03-icecast.mtg-r.net/wr03_aac
+          {% elif is_state("input_select.radio_choose_station", "RIX FM FRESH") %} http://wr04-icecast.mtg-r.net/wr04_aac
+          {% elif is_state("input_select.radio_choose_station", "Power Club") %} http://wr06-icecast.mtg-r.net/wr06_aac
+          {% elif is_state("input_select.radio_choose_station", "Power Street") %} http://wr07-icecast.mtg-r.net/wr07_aac
+          {% elif is_state("input_select.radio_choose_station", "Indie 101") %} http://wr05-icecast.mtg-r.net/wr05_aac
+          {% elif is_state("input_select.radio_choose_station", "Svenska Favoriter") %} http://wr13-icecast.mtg-r.net/wr13_aac
+          {% elif is_state("input_select.radio_choose_station", "Dansbandsfavoriter") %} http://wr15-icecast.mtg-r.net/wr15_aac
+          {% elif is_state("input_select.radio_choose_station", "Country Classics") %} http://wr14-icecast.mtg-r.net/wr14_aac
+          {% elif is_state("input_select.radio_choose_station", "Star 90s") %} http://wr12-icecast.mtg-r.net/wr12_aac
+          {% elif is_state("input_select.radio_choose_station", "Star 80s") %} http://wr02-icecast.mtg-r.net/wr02_aac
+          {% elif is_state("input_select.radio_choose_station", "Star 70s") %} http://wr10-icecast.mtg-r.net/wr10_aac
+          {% elif is_state("input_select.radio_choose_station", "Star 60s") %} http://wr09-icecast.mtg-r.net/wr09_aac
+          {% elif is_state("input_select.radio_choose_station", "Electro Lounge") %} http://wr16-icecast.mtg-r.net/wr16_aac
+          {% elif is_state("input_select.radio_choose_station", "Soul Classics") %} http://wr08-icecast.mtg-r.net/wr08_aac
+          {% elif is_state("input_select.radio_choose_station", "One Hit Wonders") %} http://wr18-icecast.mtg-r.net/wr18_aac
+
+          {% elif is_state("input_select.radio_choose_station", "Radio 1") %} http://icecast.vrtcdn.be/radio1-mid.mp3
+          {% elif is_state("input_select.radio_choose_station", "MNM") %} http://icecast.vrtcdn.be/mnm-mid.mp3
+          {% elif is_state("input_select.radio_choose_station", "Nostalgie") %} http://nostalgiewhatafeeling.ice.infomaniak.ch/nostalgiewhatafeeling-128.mp3
+          {% elif is_state("input_select.radio_choose_station", "MNM hits") %} http://icecast.vrtcdn.be/mnm_hits-mid.mp3
+          {% elif is_state("input_select.radio_choose_station", "MNM 90's & 00's") %} http://icecast.vrtcdn.be/mnm_90s00s-mid.mp3
+          {% endif %}
+        media_content_type: 'audio/mp4'
+
+  radio_play_spotify:
+    alias: Start Spotify
+    sequence:
+    - service: spotcast.start
+      data_template:
+        entity_id: *chromecast_list # reference to chromecast master list, do NOT edit
+        uri: > # edit this list of Spotify Playlists below
+          {% if is_state("input_select.radio_choose_spotify_playlist", "Spotify Favorites") %} spotify:playlist:5HsJKOLlpv5oahxUFlsD8a
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Liked from Radio") %} spotify:playlist:401h6qcDiM4y9LMrYQSNEW
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Raleigh Ritchie") %} spotify:playlist:37i9dQZF1DZ06evO0mmegU
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Everything Everything") %} spotify:playlist:37i9dQZF1DZ06evO0XbGoM
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Action Bronson") %} spotify:playlist:37i9dQZF1DZ06evO4voyEo
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Charles Bradley") %} spotify:playlist:37i9dQZF1DX88lIyu3KACm
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Childish Gambino") %} spotify:playlist:37i9dQZF1DZ06evO4aKvZe
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Fleetwood Mac") %} spotify:playlist:37i9dQZF1DX2s2cwqMcO31
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Bush") %} spotify:playlist:37i9dQZF1DZ06evO4e0CVW
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Marvin Gaye") %} spotify:playlist:37i9dQZF1DWUX9LKy3x6bc
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Stick Figure") %} spotify:playlist:37i9dQZF1DZ06evO3t7MVW
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Steezyasfuck Coffee Shop Vibes") %} spotify:playlist:2s9R059mmdc8kz6lrUqZZd
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Steezyasfuck Relax Lofi") %} spotify:playlist:28gkj3su0EjS9tD20XTG9T
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Chill Mode: On") %} spotify:playlist:37i9dQZF1DX9FcC8tuoPzi
+
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Nat King Cole Christmas") %} spotify:playlist:5bexynGe011PkpjnwmSeeA
+
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Global Top 50") %} spotify:playlist:37i9dQZEVXbMDoHDwVN2tF
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Today's Top Hits") %} spotify:playlist:37i9dQZEVXbMDoHDwVN2tF
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "New Music Friday") %} spotify:playlist:37i9dQZF1DX4JAvHpjipBk
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Discover Weekly") %} spotify:playlist:37i9dQZEVXcQorVlmdOh35
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Neef") %} spotify:playlist:0hbQY0xakFZ0o5Xf30rlph
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Omelette du Frommage") %} spotify:playlist:3w16ohVvJwiYZ8N1Kz6tIz
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Fissa") %} spotify:playlist:5WZ951CGTTuOeay4c7jMsb
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Baila Reggaeton") %} spotify:playlist:37i9dQZF1DWY7IeIP1cdjF
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Golden Era Music") %} spotify:playlist:1X8CLmPyo2dBLXgmOotqGb
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Rock") %} spotify:playlist:5BI3eXjUNc7CmDTRQo8Eh2
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Golden Oldies") %} spotify:playlist:3oqXop9kNZ1JCbJTyk9sJs
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Lo-Fi Hip-Hop") %} spotify:playlist:37i9dQZF1DWWQRwui0ExPn
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Supalonely Radio") %} spotify:playlist:37i9dQZF1E8BaEV2PtTgL1
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Morning Dew Radio") %} spotify:playlist:37i9dQZF1E8AvabLLYZIuG
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Winter Acoustic") %} spotify:playlist:4LFjFTv8HmijBmqVwIyxnb
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Koffiehuis") %} spotify:playlist:37i9dQZF1DWYPwGkJoztcR
+          {% elif is_state("input_select.radio_choose_spotify_playlist", "Resume") %}
+          {% endif %}
+        random_song: '{{  states.input_boolean.radio_spotify_random_song.state  }}'
+        shuffle: '{{  states.input_boolean.radio_spotify_shuffle.state  }}'
