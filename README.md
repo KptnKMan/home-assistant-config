@@ -8,6 +8,11 @@ Configuration for Kareem's [HomeAssistant](https://home-assistant.io).
 
 This is the project of my Home Automation journey.
 
+Be warned: This is definitely a perpetual work in progress, and is full of messy commented code.
+
+This code is provided to help myself and others learn.
+If you like anything you see, and/or have any questions, contact me and I can try to help/describe what was going through my ape brain.
+
 ## Why I did this
 
 I wanted to automate my living space for some time, but I never had the chance or the right property.
@@ -99,7 +104,7 @@ I try to keep this list updated, and it will likely be more recent than the diag
 - 3x Xiaomi "Yeelight Ceiling Light"
 - 2x Xiaomi "Yeelight Ceiling Light (Jiaoyue 480/650)"
 
-- 3x Google Chromecast
+- 3x Google Chromecast (Ultra 4k, 2nd Gen, 1st Gen)
 - 2x Google Chromecast Audio
 - 4x Google Home Mini
 
@@ -143,11 +148,19 @@ When enbarking on this, I made sure to make clear a set of taks that I wanted to
     - heating
     - lights
     - automations
+- [x] Music and radio
+  - I should be able to play music anywhere in the house
+  - I should be able to play music throughout the entire house
+  - I should be able to play music by source (Spotify/Internet Radio)
+  - The volume levels will automatically adjust based on time of day/night
 - [x] low battery notifications
   - I want to be able to be notified:
     - when batteries are low, at a configurable threshold
     - which devices have low batteries
     - what level are the low batteries
+- [ ] Power/Electricity monitoring
+  - I want a summary of electricity usage, of particular items/systems
+  - I want to see an approximate electricity cost calculation
 - [ ] plant watering
   - The plants should be watered automatically
     - based on schedule or moisture level
