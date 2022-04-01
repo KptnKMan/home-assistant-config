@@ -6,70 +6,70 @@
 
 google_home_volume_livingroom_player:
   name: Livingroom Player
-  initial: 0.2
+  initial: 0.20
   min: 0
-  max: 1
+  max: 1.00
   step: 0.05
   mode: slider
-  unit_of_measurement: louds
+  unit_of_measurement: "%"
   icon: mdi:speaker
 
 google_home_volume_livingroom_speaker:
   name: Livingroom Speaker
-  initial: 0.2
+  initial: 0.20
   min: 0
-  max: 1
+  max: 1.00
   step: 0.05
   mode: slider
-  unit_of_measurement: louds
+  unit_of_measurement: "%"
   icon: mdi:google-home
 
 google_home_volume_mobile_speaker:
   name: Mobile Speaker
-  initial: 0.2
+  initial: 0.20
   min: 0
-  max: 1
+  max: 1.00
   step: 0.05
   mode: slider
-  unit_of_measurement: louds
+  unit_of_measurement: "%"
   icon: mdi:google-home
 
 google_home_volume_gameroom_speaker:
   name: Gameroom Speaker
-  initial: 0.4
+  initial: 0.40
   min: 0
-  max: 1
+  max: 1.00
   step: 0.05
   mode: slider
-  unit_of_measurement: louds
+  unit_of_measurement: "%"
   icon: mdi:google-home
 
 google_home_volume_bedroom_speaker:
   name: Bedroom Speaker
-  initial: 0.4
+  initial: 0.40
   min: 0
-  max: 1
+  max: 1.00
   step: 0.05
   mode: slider
-  unit_of_measurement: louds
+  unit_of_measurement: "%"
   icon: mdi:google-home
 
 purifier_fave_level:
   name: Air Purifier 2S Level
   initial: 5
   min: 0
-  max: 14
+  max: 15
   step: 1
   mode: slider
   unit_of_measurement: level
   icon: mdi:air-filter
 
-# lights_duration:
-#   name: Stay on
-#   initial: 10
-#   min: 1
-#   max: 60
-#   step: 1
-#   mode: slider
-#   unit_of_measurement: mins
-#   icon: mdi:lightbulb-on-outline
+attic_high_temp:
+  name: Attic High Temperature
+  initial: 34
+  min: 0
+  max: 40
+  step: 1
+  mode: slider
+  unit_of_measurement: °C
+  icon: mdi:air-filter
