@@ -167,6 +167,13 @@ light:
   - light.tradfri_bulb_10
   - light.tradfri_bulb_11
   - light.yeelight_2
+  # bathroom spots
+- platform: group
+  name: Lights Bathroom Spots
+  entities:
+  - light.tradfri_bulb_9
+  - light.tradfri_bulb_10
+  - light.tradfri_bulb_11
   # attic (lower)
 - platform: group
   name: Lights Attic Lower
@@ -174,6 +181,85 @@ light:
   - light.tradfri_bulb_7
 
 automation:
+  ## Test conditional - Turn Bathroom main light off when spots off
+- alias: lights bathroom turn off main when spots off
+  id: 'lights_bathroom_turn_off_main_when_spots_off'
+  trigger:
+  - platform: state
+    entity_id: light.lights_bathroom_spots
+    to: "off"
+    for:
+      seconds: 1
+  action: # transition the lights on with a nice delay
+  - service: light.turn_off
+    data:
+      entity_id:
+      - light.yeelight_2
+  ## Test conditional - Turn Bathroom main light on when spots on
+- alias: lights bathroom turn on main when spots on
+  id: 'lights_bathroom_turn_on_main_when_spots_on'
+  trigger:
+  - platform: state
+    entity_id: light.lights_bathroom_spots
+    to: "on"
+    for:
+      seconds: 1
+  action: # transition the lights on with a nice delay
+  - service: light.turn_on
+    data:
+      entity_id:
+      - light.yeelight_2
+      transition: 2
+      ## set brightness based on sunset/time
+      brightness: >
+        {% if (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "18:00") and
+            (states.sensor.time.state < "20:00") %}
+          200
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "20:00") and
+            (states.sensor.time.state < "22:00") %}
+          160
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "22:00") and
+            (states.sensor.time.state < "00:00") %}
+          130
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "00:00") and
+            (states.sensor.time.state < "03:00") %}
+          100
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "03:00") and
+            (states.sensor.time.state < "06:00") %}
+          130
+        {% else %}
+          255
+        {% endif %}
+      ## TODO set kelvin based on sunset/time
+      kelvin: >
+        {% if (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "18:00") and
+            (states.sensor.time.state < "20:00") %}
+          3000
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "20:00") and
+            (states.sensor.time.state < "22:00") %}
+          3000
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "22:00") and
+            (states.sensor.time.state < "00:00") %}
+          3000
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "00:00") and
+            (states.sensor.time.state < "03:00") %}
+          3000
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "03:00") and
+            (states.sensor.time.state < "06:00") %}
+          3000
+        {% else %}
+          3000
+        {% endif %}
   ## Test conditional - Clear & Start timer when movement detected
 - alias: lights movement start timer light_groups
   id: lights_movement_start_timer_light_groups

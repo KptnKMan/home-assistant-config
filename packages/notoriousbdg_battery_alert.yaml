@@ -621,7 +621,7 @@ automation:
           notify.notify
         {% endif %}
       data_template:
-        title: "Low Battery Levels"
+        title: "Home Assistant - Low Battery Levels"
         message: *message
 
 - alias: battery_notification_slack

@@ -142,7 +142,7 @@ automation:
         value: "{{ states('input_number.temp_daytime') }}"
     # - service: notify.pushbullet
     #   data:
-    #     title: "House heating up"
+    #     title: "Home Assistant - House heating up"
     #     message: "House heating up!"
 
 ## Heating when Home Morning, check ever 5 minutes
@@ -242,7 +242,7 @@ automation:
 #        temperature: "{{ states('input_number.temp_night') }}"
 #    - service: notify.pushbullet
 #      data:
-#        title: "Heating Night Mode"
+#        title: "Home Assistant - Heating Night Mode"
 #        message: "House cooling!"
 
 ## Daytime/Nighttime Heating when Leaving/Away
@@ -271,7 +271,7 @@ automation:
 #        temperature: "{{ states('input_number.temp_away') }}"
 #    - service: notify.pushbullet
 #      data:
-#        title: "Heating Away Mode"
+#        title: "Home Assistant - Heating Away Mode"
 #        message: "House cooling!"
 
 ## Whenever these slider move, set the heating to same
@@ -307,7 +307,7 @@ automation:
         value: "{{ trigger.to_state.attributes.temperature }}"
     - service: notify.pushbullet
       data:
-        title: "Climate changed, adjusted temp_target"
+        title: "Home Assistant - Climate Temp Changed"
         message: >
           "Climate changed at {{now().strftime("%H:%M:%S")}},
           adjusted temp_target to {{ states.climate.house_heating.attributes.temperature }},

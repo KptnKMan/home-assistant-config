@@ -20,35 +20,35 @@
 #     badges: []
 #     cards:
 #       - type: entities
+#         title: Radio Internet
+#         show_header_toggle: false
 #         entities:
+#           - input_select.radio_choose_station
+#           - input_text.radio_stream_url
+#           - action_name: Play Radio
+#             entity: script.radio_play_station
+#           - action_name: Stop all radio
+#             entity: script.radio_stop
 #           - entity: input_number.radio_volume_set
 #           - input_select.radio_choose_chromecast
 #           - action_name: Change/Resume Speakers
 #             entity: script.radio_change_radio_speakers
+#       - type: entities
+#         title: Radio Spotify
+#         show_header_toggle: false
+#         entities:
+#           - input_select.radio_choose_spotify_playlist
+#           - input_text.radio_spotify_id
+#           - action_name: Play Spotify
+#             entity: script.radio_play_spotify
 #           - action_name: Stop all radio
 #             entity: script.radio_stop
-#           - input_select.radio_choose_station
-#           - action_name: Play Radio
-#             entity: script.radio_play_station
-#           - input_text.radio_stream_url
-#         title: Radio Internet
-#         show_header_toggle: false
-#       - type: entities
-#         entities:
 #           - entity: input_number.radio_volume_set
 #           - input_select.radio_choose_chromecast
 #           - action_name: Change/Resume Speakers
 #             entity: script.radio_change_spotify_speakers
-#           - action_name: Stop all radio
-#             entity: script.radio_stop
-#           - input_select.radio_choose_spotify_playlist
-#           - action_name: Play Spotify
-#             entity: script.radio_play_spotify
-#           - input_text.radio_spotify_id
 #           - input_boolean.radio_spotify_random_song
 #           - input_boolean.radio_spotify_shuffle
-#         title: Radio Spotify
-#         show_header_toggle: false
 
 ## Example spotify playlists, to test the Spotify_ID UI text input
 #
@@ -92,8 +92,9 @@ input_number:
     name: Volume
     icon: mdi:volume-high
     min: 0
-    max: 1
+    max: 1.00
     step: 0.05
+    unit_of_measurement: "%"
 
 input_boolean:
   radio_spotify_random_song:
