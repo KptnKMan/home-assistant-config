@@ -182,7 +182,7 @@
   - service: notify.pushbullet
     data:
       target: !secret email_target_pushbullet
-      title: 'Cube Alert!'
+      title: 'Home Assistant - Cube Alert!'
       message: "Cube Alert!"
 
 # Debug Tap Twice
@@ -201,7 +201,7 @@
   - service: notify.pushbullet
     data:
       target: !secret email_target_pushbullet
-      title: 'Cube Tap Twice!'
+      title: 'Home Assistant - Cube Tap Twice!'
       message: "Cube Tap Twice!"
 
 # Debug Iam
@@ -220,7 +220,7 @@
   - service: notify.pushbullet
     data:
       target: !secret email_target_pushbullet
-      title: 'Cube IAM?'
+      title: 'Home Assistant - Cube IAM?'
       message: "Cube IAM?"
 
 # Debug Free Fall
@@ -239,7 +239,7 @@
   - service: notify.pushbullet
     data:
       target: !secret email_target_pushbullet
-      title: 'Cube Free Fall!'
+      title: 'Home Assistant - Cube Free Fall!'
       message: "Cube Free Fall!"
 
 # Debug Shake
@@ -258,7 +258,7 @@
   - service: notify.pushbullet
     data:
       target: !secret email_target_pushbullet
-      title: 'Cube Shake Air!'
+      title: 'Home Assistant - Cube Shake Air!'
       message: "Cube Shake Air!"
 
 # Debug Move
@@ -277,7 +277,7 @@
   - service: notify.pushbullet
     data:
       target: !secret email_target_pushbullet
-      title: 'Cube Moved!'
+      title: 'Home Assistant - Cube Moved!'
       message: "Cube Moved!"
 
 # Debug Swing
@@ -296,7 +296,7 @@
   - service: notify.pushbullet
     data:
       target: !secret email_target_pushbullet
-      title: 'Cube Swing!'
+      title: 'Home Assistant - Cube Swing!'
       message: "Cube Swing!"
 
 # Debug Rotate
@@ -315,7 +315,7 @@
   - service: notify.pushbullet
     data:
       target: !secret email_target_pushbullet
-      title: 'Cube Rotate!'
+      title: 'Home Assistant - Cube Rotate!'
       message: "Cube Rotate!"
 
 # Debug Flip 90 degrees
@@ -334,7 +334,7 @@
   - service: notify.pushbullet
     data:
       target: !secret email_target_pushbullet
-      title: 'Cube Flip 90!'
+      title: 'Home Assistant - Cube Flip 90!'
       message: "Cube Flip 90!"
 
 # Debug Flip 180 degrees
@@ -353,5 +353,5 @@
   - service: notify.pushbullet
     data:
       target: !secret email_target_pushbullet
-      title: 'Cube Flip 180!'
+      title: 'Home Assistant - Cube Flip 180!'
       message: "Cube Flip 180!"

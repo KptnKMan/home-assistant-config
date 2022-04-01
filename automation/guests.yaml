@@ -19,9 +19,9 @@
       state: "on"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Guests Detected"
+        title: "Home Assistant - Guests Detected"
         message: "Guests Detected!"
 
 ## Detect friends Leaving House
@@ -45,7 +45,7 @@
       state: "off"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Guests Leaving"
+        title: "Home Assistant - Guests Leaving"
         message: "Guests Leaving!"

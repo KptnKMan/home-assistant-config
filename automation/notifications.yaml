@@ -17,7 +17,7 @@
     - service: notify.pushbullet
       data:
         target: !secret email_target_pushbullet
-        title: "Device Online!"
+        title: "Home Assistant - Device Online!"
         message: "Device ID: {{ trigger.entity_id }}, name: {{ trigger.to_state.name }}, is now {{ trigger.to_state.state }}!"
 
 ## Tell me when a device is offline
@@ -28,36 +28,42 @@
       entity_id:
       - person.kareem
       - person.friends
-      - device_tracker.hotrod_local_lan_lan1
-      - device_tracker.hotrod_local_lan_lan2
-      - device_tracker.shockwave1
-      - device_tracker.shockwave2
-      - device_tracker.shockwave3
-      - device_tracker.blaster_1
-      - device_tracker.blaster_2
-      - device_tracker.blaster_3
-      - device_tracker.soundwave_1
-      - device_tracker.soundwave_2
-      - device_tracker.soundwave_3
-      - device_tracker.optimus
+      - person.hotrod
+      - person.blaster
+      - person.soundwave
+      - person.eject1
+      - person.flipsides1
+      - person.major_lj1320n
+      # - device_tracker.hotrod_local_lan_lan1
+      # - device_tracker.hotrod_local_lan_lan2
+      # - device_tracker.shockwave1
+      # - device_tracker.shockwave2
+      # - device_tracker.shockwave3
+      # - device_tracker.blaster_1
+      # - device_tracker.blaster_2
+      # - device_tracker.blaster_3
+      # - device_tracker.soundwave_1
+      # - device_tracker.soundwave_2
+      # - device_tracker.soundwave_3
+      # - device_tracker.optimus
       - device_tracker.ring_doorbell_1
       - device_tracker.ring_chime_1
-      - device_tracker.vera1
-      - device_tracker.vera2
-      - device_tracker.ikea_tradfri_gateway
-      - device_tracker.xiaomi_gateway
-      - device_tracker.xiaomi_airpurifier2s_1
-      - device_tracker.xiaofang1
-      - device_tracker.xiaofang2
-      - device_tracker.dafang1
-      - device_tracker.dafang2
+      # - device_tracker.vera1
+      # - device_tracker.vera2
+      # - device_tracker.ikea_tradfri_gateway
+      # - device_tracker.xiaomi_gateway
+      # - device_tracker.xiaomi_airpurifier2s_1
+      # - device_tracker.xiaofang1
+      # - device_tracker.xiaofang2
+      # - device_tracker.dafang1
+      # - device_tracker.dafang2
       to: "not_home"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Device Offline!"
-        message: "Device ID: {{ trigger.entity_id }}, name: {{ trigger.to_state.name }}, is now {{ trigger.to_state.state }}!"
+        title: "Home Assistant - Device Offline!"
+        message: "{{ trigger.to_state.name }} is now {{ trigger.to_state.state }}! Device ID: {{ trigger.entity_id }}"
 
 ## Tell me when Home Assistant starts/restarts
 - id: notification_ha_startup
@@ -67,9 +73,9 @@
       event: start
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Home Assistant Started!"
+        title: "Home Assistant - Started!"
         message: "Home Assistant started and available!"
 
 ## Tell me when Home Assistant Stopping/Shutdown
@@ -80,9 +86,9 @@
       event: shutdown
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Home Assistant Stopping!"
+        title: "Home Assistant - Stopping!"
         message: "Home Assistant shutting down!"
 
 ## Tell me when Home Assistant update available
@@ -93,9 +99,9 @@
       entity_id: updater.updater
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "New Home Assistant Release"
+        title: "Home Assistant - New Release"
         message: "Home Assistant  {{ states.updater.updater.state }}  is now available."
 
 ## Tell me when new devices detected on network
@@ -108,7 +114,7 @@
     - service: notify.pushbullet
       data:
         target: !secret email_target_pushbullet
-        title: "New Device detected!"
+        title: "Home Assistant - New Device detected!"
         message: "New unknown NMAP device detected! ID: {{ trigger.entity_id }}, MAC: {{ device_tracker_new_device.mac }}"
     - service: persistent_notification.create
       data:
@@ -131,9 +137,9 @@
       state: "on"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "ALERT! Door Open!"
+        title: "Home Assistant - ALERT! Door Open!"
         message: "ENTRANCE door open!"
 
 ## Tell me door is open for longer ## entrance
@@ -155,9 +161,9 @@
       state: "on"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "ALERT! Door left Open!"
+        title: "Home Assistant - ALERT! Door left Open!"
         message: "ENTRANCE door is left open!"
 
 ## Tell me door is closed ## entrance
@@ -175,9 +181,9 @@
       state: "off"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "ALERT! Door Closed!"
+        title: "Home Assistant - ALERT! Door Closed!"
         message: "ENTRANCE door closed!"
 
 ## Tell me door is open ## downstairs
@@ -195,9 +201,9 @@
       state: "on"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "ALERT! Door Open!"
+        title: "Home Assistant - ALERT! Door Open!"
         message: "DOWNSTAIRS door open!"
 
 ## Notify Door Strike reset activated
@@ -212,7 +218,7 @@
       to: "unlocked"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
         message: "Door Strike activated!"
 
@@ -230,7 +236,7 @@
       entity_id:
         - switch.relay4c1_2
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
         message: "RL Door Strike reset!"
 
@@ -243,7 +249,7 @@
       to: "locked"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
         message: "ZW Door Strike reset!"
 
@@ -307,13 +313,13 @@
 #       value_template: "{{ trigger.to_state.state != off }}"
 #   action:
 #     - service: notify.pushbullet
-#       data: 
+#       data:
 #         target: !secret email_target_pushbullet
 #         title: "Debug failed login!"
 #         message: "Debug failed login!"
 #     - service: notify.pushbullet
 #       data_template:
-#         title: "Failed Home Assistant login attempt!"
+#         title: "Home Assistant - Failed login attempt!"
 #         message: "{{ trigger.to_state.state }}"
 #         data:
 #           url: http://www.ip-tracker.org/locator/ip-lookup.php?ip={{ states.persistent_notification.httplogin.state.split ("from ") [1]}}
@@ -329,9 +335,9 @@
 #         service: create
 #   action:
 #     - service: notify.pushbullet
-#       data: 
+#       data:
 #         target: !secret email_target_pushbullet
-#         title: "Debug failed login!"
+#         title: "Home Assistant - Debug failed login!"
 #         message: "Debug failed login!"
 #     - service: notify.pushbullet
 #       data_template:

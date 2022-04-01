@@ -99,7 +99,7 @@
     - service: notify.pushbullet
       data:
         target: !secret email_target_pushbullet
-        title: 'Door strike activated!'
+        title: 'Home Assistant - Door strike activated!'
         message: "Door Strike activated!"
 
 ## Activate OPTIMUS single click
@@ -241,5 +241,5 @@
     - service: notify.pushbullet
       data:
         target: !secret email_target_pushbullet
-        title: 'Button Pressed!'
+        title: 'Home Assistant - Button Pressed!'
         message: "Button 1 pressed!"

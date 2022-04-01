@@ -61,7 +61,7 @@
   - service: notify.pushbullet
     data:
       target: !secret email_target_pushbullet
-      title: "Home with Guests"
+      title: "Home Assistant - Home with Guests"
       message: "Home with Guests!"
 
 ## Home Alone! set presence to "Home"
@@ -92,7 +92,7 @@
   - service: notify.pushbullet
     data:
       target: !secret email_target_pushbullet
-      title: "Home alone, guests left"
+      title: "Home Assistant - Home alone, guests left"
       message: "Home alone, guests left!"
 
 ## Guests are HOME ALONE! set presence to "Away Guests".
@@ -126,7 +126,7 @@
   - service: notify.pushbullet
     data:
       target: !secret email_target_pushbullet
-      title: "Guests HOME ALONE"
+      title: "Home Assistant - Guests HOME ALONE"
       message: "Guests HOME ALONE!"
 
 ## Nobody Home, set presence to "Away"
@@ -158,7 +158,7 @@
     - service: notify.pushbullet
       data:
         target: !secret email_target_pushbullet
-        title: "Nobody Home"
+        title: "Home Assistant - Nobody Home"
         message: "Nobody Home!"
 
 ## Turn stuff off when nobody is home

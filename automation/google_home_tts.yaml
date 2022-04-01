@@ -148,9 +148,9 @@
     - service: homeassistant.turn_on
       entity_id: script.google_tts_reset_volumes
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Guests Notified about heating"
+        title: "Home Assistant - Guests Notified about heating"
         message: "Guests Notified about heating!"
 
 ## Google Home notify guests Kareem is outside!
@@ -174,9 +174,9 @@
     - service: homeassistant.turn_on
       entity_id: script.google_tts_reset_volumes
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Guests Notified to let in Kareem"
+        title: "Home Assistant - Guests Notified to let in Kareem"
         message: "Guests Notified to let in Kareem"
 
 ## Google Home Voice TTS Notify Guests of assistant
@@ -224,9 +224,9 @@
     - service: homeassistant.turn_on
       entity_id: script.google_tts_reset_volumes
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Guests Notified about assistant"
+        title: "Home Assistant - Guests Notified about assistant"
         message: "Guests Notified about assistant"
 
 ## Google Home Voice TTS Welcome Home Guests

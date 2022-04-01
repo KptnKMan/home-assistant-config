@@ -14,6 +14,6 @@
       entity_id: fan.air_purifier_2s
       level: '{{ states.input_number.purifier_fave_level.state | int }}'
 #   - service: notify.pushbullet
-#     data: 
+#     data:
 #       target: !secret email_target_pushbullet
 #       message: "Fan favorite level changed!"

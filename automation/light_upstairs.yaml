@@ -61,7 +61,7 @@
 #       brightness: 255
 #       kelvin: 3000
 #   # - service: notify.pushbullet
-#   #   data: 
+#   #   data:
 #   #     target: !secret email_target_pushbullet
 #   #     message: "debug upstairs light on"
 
@@ -115,6 +115,6 @@
 #     data:
 #       entity_id: light.tradfri_bulb_3
 #   # - service: notify.pushbullet
-#   #   data: 
+#   #   data:
 #   #     target: !secret email_target_pushbullet
 #   #     message: "debug upstairs light off"

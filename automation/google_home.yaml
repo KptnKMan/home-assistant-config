@@ -16,12 +16,12 @@
   - service: input_number.set_value
     data_template:
       entity_id: input_number.google_home_volume_gameroom_speaker
-      value: 0.1
+      value: 0.10
       # value: "{{ trigger.payload }}"
   - service: notify.pushbullet
-    data: 
+    data:
       target: !secret email_target_pushbullet
-      title: "Speaker Volume slider TEST started!"
+      title: "Home Assistant - Speaker Volume slider TEST started!"
       message: "Speaker Volume slider TEST started!"
 
 ## Google Home Set Daytime Volumes
@@ -144,7 +144,7 @@
     # - service: notify.pushbullet
     #   data:
     #     target: !secret email_target_pushbullet
-    #     title: "Gameroom Speaker Volume slider moved!"
+    #     title: "Home Assistant - Gameroom Speaker Volume slider moved!"
     #     message: "Gameroom Speaker Volume slider moved!"
 
 ## Manual Volume control via slider - Bedroom Speaker

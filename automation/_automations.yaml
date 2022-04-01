@@ -9,8 +9,9 @@
   alias: HA Purge Recorder
   trigger:
     - platform: time
-      at: "04:00:00"
+      at: "02:00:00"
   action:
     service: recorder.purge
     data:
-      keep_days: 3
+      keep_days: 14
+      repack: true

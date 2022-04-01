@@ -34,9 +34,9 @@
     entity_id:
     - script.lights_cancel_all_timers
   - service: notify.pushbullet
-    data: 
+    data:
       target: !secret email_target_pushbullet
-      title: "Lights automation disabled"
+      title: "Home Assistant - Lights automation disabled"
       message: "Lights will not automate!"
 
 ## Detect lights should be automated in House
@@ -58,7 +58,7 @@
     entity_id:
     - script.lights_cancel_all_timers
   - service: notify.pushbullet
-    data: 
+    data:
       target: !secret email_target_pushbullet
-      title: "Lights automated"
+      title: "Home Assistant - Lights automated"
       message: "Lights will automatically automate!"

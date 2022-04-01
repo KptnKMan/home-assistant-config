@@ -13,9 +13,9 @@
       state: "on"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Children Detected"
+        title: "Home Assistant - Children Detected"
         message: "Children Detected!"
 
 ## Detect children Leaving House
@@ -33,9 +33,9 @@
       state: "off"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Children Leaving"
+        title: "Home Assistant - Children Leaving"
         message: "Children Leaving!"
 
 ## Notify when movement in attic
@@ -55,7 +55,7 @@
     - service: notify.pushbullet
       data:
         target: !secret email_target_pushbullet
-        title: "Child Alarm Attic"
+        title: "Home Assistant - Child Alarm Attic"
         message: "Child Alarm Attic!"
 
 ## Notify when movement upstairs / bedroom / gameroom
@@ -73,9 +73,9 @@
       state: "on"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Child Alarm Upstairs"
+        title: "Home Assistant - Child Alarm Upstairs"
         message: "Child Alarm Upstairs!"
 
 - id: notification_child_alarm_bedroom
@@ -92,9 +92,9 @@
       state: "on"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Child Alarm Bedroom"
+        title: "Home Assistant - Child Alarm Bedroom"
         message: "Child Alarm Bedroom!"
 
 - id: notification_child_alarm_gameroom
@@ -111,7 +111,7 @@
       state: "on"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Child Alarm Gameroom"
+        title: "Home Assistant - Child Alarm Gameroom"
         message: "Child Alarm Gameroom!"

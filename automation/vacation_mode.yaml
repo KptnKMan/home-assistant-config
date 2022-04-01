@@ -70,9 +70,9 @@
       state: "on"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Vacation Mode active!"
+        title: "Home Assistant - Vacation Mode active!"
         message: "Vacation Mode active!"
 
 ## Detect Vacation Mode Deactivations
@@ -90,7 +90,7 @@
       state: "off"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: "Vacation Mode deactivated!"
+        title: "Home Assistant - Vacation Mode deactivated!"
         message: "Vacation Mode deactivated!"
