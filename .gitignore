@@ -21,7 +21,10 @@ www/
 
 OZW_Log.txt
 entity_registry.yaml
+home-assistant.log.fault
 home-assistant.log
+home-assistant.log.1
+home-assistant.log.2
 home-assistant_v2.db
 home-assistant_v2.db-shm
 home-assistant_v2.db-wal
