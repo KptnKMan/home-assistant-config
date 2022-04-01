@@ -4,52 +4,52 @@
 ## Enable tracking at /15 min period, currently /5 min
 ## https://www.home-assistant.io/components/sensor.google_travel_time/
 
-# # Tracking my current location to home, driving
-# - platform: google_travel_time
-#   name: Travel Time To Home Drive
-#   api_key: !secret google_maps_api_key
-#   origin: device_tracker.kareem_ot
-#   destination: zone.home
+# Tracking my current location to home, driving
+- platform: google_travel_time
+  name: Travel Time To Home Drive
+  api_key: !secret google_maps_api_key
+  origin: device_tracker.kareem_ot
+  destination: zone.home
 
-# # Tracking home location to work, driving
-# - platform: google_travel_time
-#   name: Travel Home To Work Drive
-#   api_key: !secret google_maps_api_key
-#   origin: zone.home
-#   destination: zone.work
-#   # destination: place_id: ChIJa81X5ekJxkcRlQMFMl77x-c
+# Tracking home location to work, driving
+- platform: google_travel_time
+  name: Travel Home To Work Drive
+  api_key: !secret google_maps_api_key
+  origin: zone.home
+  destination: zone.work
+  # destination: place_id: ChIJa81X5ekJxkcRlQMFMl77x-c
 
-# # Tracking work location to home, driving
-# - platform: google_travel_time
-#   name: Travel Work To Home Drive
-#   api_key: !secret google_maps_api_key
-#   origin: zone.work
-#   # origin: place_id: ChIJa81X5ekJxkcRlQMFMl77x-c
-#   destination: zone.home
+# Tracking work location to home, driving
+- platform: google_travel_time
+  name: Travel Work To Home Drive
+  api_key: !secret google_maps_api_key
+  origin: zone.work
+  # origin: place_id: ChIJa81X5ekJxkcRlQMFMl77x-c
+  destination: zone.home
 
-# # Tracking my current location to home, public transport
-# - platform: google_travel_time
-#   name: Travel Time To Home Public
-#   api_key: !secret google_maps_api_key
-#   origin: device_tracker.kareem_ot
-#   destination: zone.home
-#   options:
-#     mode: transit
+# Tracking my current location to home, public transport
+- platform: google_travel_time
+  name: Travel Time To Home Public
+  api_key: !secret google_maps_api_key
+  origin: device_tracker.kareem_ot
+  destination: zone.home
+  options:
+    mode: transit
 
-# # Tracking home location to work, public transport
-# - platform: google_travel_time
-#   name: Travel Home To Work Public
-#   api_key: !secret google_maps_api_key
-#   origin: zone.home
-#   destination: zone.work
-#   options:
-#     mode: transit
+# Tracking home location to work, public transport
+- platform: google_travel_time
+  name: Travel Home To Work Public
+  api_key: !secret google_maps_api_key
+  origin: zone.home
+  destination: zone.work
+  options:
+    mode: transit
 
-# # Tracking work location to home, public transport
-# - platform: google_travel_time
-#   name: Travel Work To Home Public
-#   api_key: !secret google_maps_api_key
-#   origin: zone.work
-#   destination: zone.home
-#   options:
-#     mode: transit
+# Tracking work location to home, public transport
+- platform: google_travel_time
+  name: Travel Work To Home Public
+  api_key: !secret google_maps_api_key
+  origin: zone.work
+  destination: zone.home
+  options:
+    mode: transit
