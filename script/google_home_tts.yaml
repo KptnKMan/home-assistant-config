@@ -60,23 +60,23 @@ google_volumes_daytime:
         - input_number.google_home_volume_livingroom_player
         - input_number.google_home_volume_livingroom_speaker
         - input_number.google_home_volume_mobile_speaker
-      value: 0.3
+      value: 0.30
   - service: input_number.set_value
     data_template:
       entity_id:
         - input_number.google_home_volume_gameroom_speaker
         - input_number.google_home_volume_bedroom_speaker
-      value: 0.4
+      value: 0.40
   # - service: media_player.volume_set
   #   data_template:
-  #     volume_level: 0.3
+  #     volume_level: 0.30
   #     entity_id:
   #       - media_player.chromecast_audio_1
   #       - media_player.livingroom_speaker
   #       - media_player.mobile_speaker
   # - service: media_player.volume_set
   #   data_template:
-  #     volume_level: 0.4
+  #     volume_level: 0.40
   #     entity_id:
   #       - media_player.gameroom_speaker
   #       - media_player.bedroom_speaker
@@ -91,23 +91,23 @@ google_volumes_evening:
         - input_number.google_home_volume_livingroom_player
         - input_number.google_home_volume_livingroom_speaker
         - input_number.google_home_volume_mobile_speaker
-      value: 0.2
+      value: 0.20
   - service: input_number.set_value
     data_template:
       entity_id:
         - input_number.google_home_volume_gameroom_speaker
         - input_number.google_home_volume_bedroom_speaker
-      value: 0.3
+      value: 0.30
   # - service: media_player.volume_set
   #   data_template:
-  #     volume_level: 0.2
+  #     volume_level: 0.20
   #     entity_id:
   #       - media_player.chromecast_audio_1
   #       - media_player.livingroom_speaker
   #       - media_player.mobile_speaker
   # - service: media_player.volume_set
   #   data_template:
-  #     volume_level: 0.3
+  #     volume_level: 0.30
   #     entity_id:
   #       - media_player.gameroom_speaker
   #       - media_player.bedroom_speaker
@@ -122,7 +122,7 @@ google_volumes_low:
         - input_number.google_home_volume_livingroom_player
         - input_number.google_home_volume_livingroom_speaker
         - input_number.google_home_volume_mobile_speaker
-      value: 0.1
+      value: 0.10
   - service: input_number.set_value
     data_template:
       entity_id:
@@ -131,7 +131,7 @@ google_volumes_low:
       value: 0.15
   # - service: media_player.volume_set
   #   data_template:
-  #     volume_level: 0.1
+  #     volume_level: 0.10
   #     entity_id:
   #       - media_player.chromecast_audio_1
   #       - media_player.livingroom_speaker
@@ -159,7 +159,7 @@ google_volumes_working:
     data_template:
       entity_id:
         - input_number.google_home_volume_gameroom_speaker
-      value: 0.3
+      value: 0.30
 
 ## Set Volumes Ambient
 google_volumes_ambient:
@@ -171,13 +171,13 @@ google_volumes_ambient:
         - input_number.google_home_volume_livingroom_player
         - input_number.google_home_volume_livingroom_speaker
         - input_number.google_home_volume_mobile_speaker
-      value: 0.1
+      value: 0.10
   - service: input_number.set_value
     data_template:
       entity_id:
         - input_number.google_home_volume_gameroom_speaker
         - input_number.google_home_volume_bedroom_speaker
-      value: 0.1
+      value: 0.10
 
 ## Tell me heating details
 google_tts_notify_heating_summary:
@@ -205,7 +205,7 @@ google_tts_set_announcement_volumes:
         - input_number.google_home_volume_mobile_speaker
         - input_number.google_home_volume_gameroom_speaker
         - input_number.google_home_volume_bedroom_speaker
-      value: 0.6
+      value: 0.60
 
 ## Reset Google TTS after to normal, eg: after announcements
 google_tts_reset_volumes:

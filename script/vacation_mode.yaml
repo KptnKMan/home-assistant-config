@@ -17,7 +17,11 @@ vacation_lights_init:
     - delay:
         hours: 3
     ## turn everything off
-    - service: script.turn_everything_off
+    - service: homeassistant.turn_off
+      entity_id:
+      - switch.NeoCoolcamPlug12A_2_21 # bedroom lamp
+      - switch.NeoCoolcamPlug12A_3_22 # bedroom tv
+      - switch.neocoolcamplug12a_6_25 # livingroom tv
     ## wait X hours/mins more
     - delay:
         hours: 2
@@ -27,20 +31,11 @@ vacation_lights_init:
     - delay:
         minutes: 30
     ## turn everything off
-    - service: script.turn_everything_off
-
-# ## Turn off everything
-# turn_everything_off:
-#   sequence:
-#     - service: homeassistant.turn_off
-#       data:
-#         entity_id: !secret plug_2
-#     - service: homeassistant.turn_off
-#       data:
-#         entity_id: !secret plug_3
-#     - service: homeassistant.turn_off
-#       data:
-#         entity_id: !secret plug_3
+    - service: homeassistant.turn_off
+      entity_id:
+      - switch.NeoCoolcamPlug12A_2_21 # bedroom lamp
+      - switch.NeoCoolcamPlug12A_3_22 # bedroom tv
+      - switch.neocoolcamplug12a_6_25 # livingroom tv
 
 ## Turns on either one or both bulbs based on the brightness outside. Alternates which bulb by day of the month
 after_dark_select_sequence:
@@ -101,21 +96,21 @@ vacation_lights_away_sequence:
     ## turn on bedroom lamp
     - service: homeassistant.turn_on
       data:
-        entity_id: !secret plug_2
+        entity_id: switch.NeoCoolcamPlug12A_2_21
     ## wait X mins
     - delay:
         minutes: 4
     ## turn on bedroom TV
     - service: homeassistant.turn_on
       data:
-        entity_id: !secret plug_3
+        entity_id: switch.NeoCoolcamPlug12A_3_22
     ## wait X mins
     - delay:
         minutes: 111
     ## turn off bedroom TV
     - service: homeassistant.turn_off
       data:
-        entity_id: !secret plug_3
+        entity_id: switch.NeoCoolcamPlug12A_3_22
     ## Notify
     - service: notify.pushbullet
       data:
