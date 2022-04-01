@@ -66,6 +66,11 @@ This is often been referred to online as the "wife test", to represent a sufferi
 
 As such, all switches and hardware needs to have hardware switches (Lights need to be operable from the regular switch etc), and operate as normally as possible in the absence of the core system itself.
 
+## Dashboard
+
+My current Home Assistant Dashboard:
+<br><img src="Dashboard.png" width="1000">
+
 ## Diagram
 
 I produced a diagram to keep track of, and help explain my system to others.
