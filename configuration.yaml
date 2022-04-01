@@ -50,7 +50,10 @@ history:
 ## HTTP Core Component
 ## https://www.home-assistant.io/components/http/
 http:
-  # base_url: !secret http_base_url
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.178.1
+    - 172.17.0.1
   # ssl_certificate: /ssl/fullchain.pem
   # ssl_key: /ssl/privkey.pem
   # ssl_certificate: /ssl/letsencrypt/live/straker-me/fullchain.pem
@@ -127,6 +130,8 @@ map:
 ## https://www.home-assistant.io/components/recorder
 recorder:
 #  db_url: !secret dburl_mariadb_addon  ## The URL which point to your database
+  auto_purge: true
+  purge_keep_days: 14
 
 ## Track the sun
 sun:
@@ -151,30 +156,30 @@ notify:
     platform: pushbullet
     api_key: !secret apikey_pushbullet
 
-## Integrated MQTT Server
-## https://www.home-assistant.io/components/mqtt
-mqtt:
-#  broker: 127.0.0.1
-  broker: !secret mqtt_host
-  port: 1883
-  client_id: home-assistant-1
-  keepalive: 60
-  username: !secret mqtt_username
-  password: !secret mqtt_password
-  discovery: true
-  discovery_prefix: homeassistant
-#  certificate: /home/paulus/dev/addtrustexternalcaroot.crt
-#  protocol: 3.1
-  birth_message:
-    topic: 'hass/status'
-    payload: 'online'
-    qos: 1
-    retain: true
-  will_message:
-    topic: 'hass/status'
-    payload: 'offline'
-    qos: 1
-    retain: true
+# ## Integrated MQTT Server
+# ## https://www.home-assistant.io/components/mqtt
+# mqtt:
+# #  broker: 127.0.0.1
+#   broker: !secret mqtt_host
+#   port: 1883
+#   client_id: home-assistant-1
+#   keepalive: 60
+#   username: !secret mqtt_username
+#   password: !secret mqtt_password
+#   discovery: true
+#   discovery_prefix: homeassistant
+# #  certificate: /home/paulus/dev/addtrustexternalcaroot.crt
+# #  protocol: 3.1
+#   birth_message:
+#     topic: 'hass/status'
+#     payload: 'online'
+#     qos: 1
+#     retain: true
+#   will_message:
+#     topic: 'hass/status'
+#     payload: 'offline'
+#     qos: 1
+#     retain: true
 
 ## Owntracks via MQTT for mobile tracking
 ## https://www.home-assistant.io/components/owntracks/
@@ -233,13 +238,13 @@ cover:
 
 ## Enable fans/air filters
 ## https://www.home-assistant.io/integrations/fan/
-fan:
-    ## Xiaomi Air Purifier 2S setup
-    ## https://www.home-assistant.io/components/fan.xiaomi_miio/
-  - platform: xiaomi_miio
-    name: "air_purifier_2s"
-    host: 192.168.178.175
-    token: !secret xiaomi_access_token_europe
+# fan:
+#     ## Xiaomi Air Purifier 2S setup
+#     ## https://www.home-assistant.io/components/fan.xiaomi_miio/
+#   - platform: xiaomi_miio
+#     name: "air_purifier_2s"
+#     host: 192.168.178.175
+#     token: !secret xiaomi_access_token_europe
 
 ## Enable Xiaomi Mi Remote(s)
 remote:
@@ -283,7 +288,6 @@ tts:
     cache: true
     cache_dir: /config/tts
     time_memory: 300
-    # base_url: http://192.168.178.10:8123
     service_name: google_say # default google_translate_say
 
 ## Setup tracking using InfluxDB
