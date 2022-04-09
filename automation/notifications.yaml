@@ -53,10 +53,6 @@
       # - device_tracker.ikea_tradfri_gateway
       # - device_tracker.xiaomi_gateway
       # - device_tracker.xiaomi_airpurifier2s_1
-      # - device_tracker.xiaofang1
-      # - device_tracker.xiaofang2
-      # - device_tracker.dafang1
-      # - device_tracker.dafang2
       to: "not_home"
   action:
     - service: notify.pushbullet

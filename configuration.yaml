@@ -85,22 +85,6 @@ map:
 #     title: 'zConfigurator'
 #     url: 'http://192.168.178.130:3218'
 #     icon: mdi:wrench
-#   fang1:
-#     title: 'zZfang1'
-#     url: 'https://192.168.178.171'
-#     icon: mdi:camera-wireless
-#   fang2:
-#     title: 'zZfang2'
-#     url: 'https://192.168.178.172'
-#     icon: mdi:camera-wireless
-#   fang3:
-#     title: 'zZfang3'
-#     url: 'https://192.168.178.173'
-#     icon: mdi:camera-wireless
-#   fang4:
-#     title: 'zZfang4'
-#     url: 'https://192.168.178.174'
-#     icon: mdi:camera-wireless
 #   router:
 #     title: 'zRouter'
 #     url: 'https://192.168.178.1'
