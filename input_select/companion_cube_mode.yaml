@@ -1,0 +1,9 @@
+cube_mode:
+  name: Companion Cube Mode
+  options:
+    - Gameroom
+    - Music
+    - House
+    - Debug
+  initial: Gameroom
+  icon: mdi:cube-outline

@@ -2,48 +2,16 @@
 #### GENERAL AUTOMATIONS ####
 #############################
 
+# General Automations, mostly moved to automations.yaml
+
 ## Purge Recorder DB history daily
 - id: ha_purge_recorder
   alias: HA Purge Recorder
   trigger:
     - platform: time
-      at: '04:00:00'
-#    - platform: time
-#      at: '16:00:00'
+      at: "02:00:00"
   action:
     service: recorder.purge
     data:
-      keep_days: 3
-
-## Pi Door Strike reset after 4 seconds
-- id: pi_door_strike
-  alias: Pi Door Strike reset
-  trigger:
-    - platform: state
-      entity_id: switch.pi_door_strike
-      to: 'on'
-      for:
-        seconds: 4
-  action:
-    - service: homeassistant.turn_off
-      entity_id:
-        - switch.pi_door_strike
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: 'Door Strike deactivated!'
-        message: "Door Strike deactivated!"
-
-## Ziggo Router reset after 5 seconds
-- id: ziggo_router_reset
-  alias: Ziggo Router Reset
-  trigger:
-    - platform: state
-      entity_id: !secret plug_4
-      to: 'off'
-      for:
-        seconds: 5
-  action:
-    - service: homeassistant.turn_on
-      entity_id:
-        - !secret plug_4
+      keep_days: 14
+      repack: true

@@ -1,0 +1,14 @@
+# MQTT switches for ESP01v4s etc
+
+# - platform: mqtt
+#   name: "ESP01v41_1"
+#   state_topic: "stat/ESP01v41/POWER1"
+#   value_template: "{{ value_json.POWER1 }}"
+#   command_topic: "cmnd/ESP01v41/POWER1"
+#   availability_topic: "tele/ESP01v41/LWT"
+#   qos: 1
+#   payload_on: "ON"
+#   payload_off: "OFF"
+#   payload_available: "Online"
+#   payload_not_available: "Offline"
+#   retain: false

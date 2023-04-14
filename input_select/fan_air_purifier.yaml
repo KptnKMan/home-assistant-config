@@ -1,0 +1,8 @@
+fan_modes:
+  name: Air Purifier 2S Modes
+  options:
+    - Auto
+    - Silent
+    - Home Guests
+  initial: Auto
+  icon: mdi:air-filter

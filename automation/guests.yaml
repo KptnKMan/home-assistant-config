@@ -1,0 +1,51 @@
+## Detect friends in House
+- id: notification_presence_detect_friends
+  alias: Notification Detect Friends
+  trigger:
+    - platform: state
+      entity_id: person.friends
+      to: "home"
+    - platform: state
+      entity_id: input_boolean.friends_visiting
+      to: "on"
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: person.friends
+      state: "home"
+    - condition: state
+      entity_id: input_boolean.friends_visiting
+      state: "on"
+  action:
+    - service: notify.pushbullet
+      data:
+        target: !secret email_target_pushbullet
+        title: "Home Assistant - Guests Detected"
+        message: "Guests Detected!"
+
+## Detect friends Leaving House
+- id: notification_presence_detect_friends_leaving
+  alias: Notification Detect Friends Leaving
+  trigger:
+    - platform: state
+      entity_id: person.friends
+      to: "not_home"
+    - platform: state
+      entity_id: input_boolean.friends_visiting
+      to: "off"
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: person.friends
+      state: "not_home"
+    - condition: state
+      entity_id: input_boolean.friends_visiting
+      state: "off"
+  action:
+    - service: notify.pushbullet
+      data:
+        target: !secret email_target_pushbullet
+        title: "Home Assistant - Guests Leaving"
+        message: "Guests Leaving!"

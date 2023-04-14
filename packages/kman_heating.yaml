@@ -1,0 +1,419 @@
+################################################################
+## Heating Control Package by KptnKMan
+##
+## Source: https://raw.githubusercontent.com/KptnKMan/home-assistant-config/master/packages/kman_heating.yaml
+################################################################
+
+timer:
+  temperature_boost:
+    duration: '02:00:00'
+
+climate:
+  ## Custom Thermostat
+  ## https://www.home-assistant.io/components/climate.generic_thermostat
+- platform: generic_thermostat
+  name: House Heating
+  heater: switch.relay4c1_1 # operate this switch for heating on/of
+  target_sensor: sensor.temperature_158d00019ce72e # sensor to monitor to determine switch
+  min_temp: 14
+  max_temp: 24
+  target_temp: 18 # don't forget to also set initial for input_number.temp_target_home & input_number.temp_daytime
+  cold_tolerance: 0.3
+  hot_tolerance: 0
+  min_cycle_duration:
+    minutes: 1
+
+input_boolean:
+  heating_boost:
+    name: "Heating Boosting"
+    initial: off
+    icon: mdi:guage
+
+input_number:
+  temp_target_attic:
+    name: Target Temp Attic
+    initial: 34
+    min: 20
+    max: 40
+    step: 1
+    mode: slider
+    unit_of_measurement: °C
+    icon: mdi:air-filter
+
+  temp_target_home:
+    name: Target Temp Home
+    initial: 14
+    min: 14
+    max: 24
+    step: 1
+    mode: slider
+    unit_of_measurement: °C
+    icon: mdi:thermometer-lines
+
+  temp_daytime:
+    name: Temp Daytime
+    initial: 20
+    min: 14
+    max: 24
+    step: 1
+    mode: slider
+    unit_of_measurement: °C
+    icon: mdi:thermometer-lines
+
+  temp_morning:
+    name: Temp Morning
+    initial: 18
+    min: 14
+    max: 24
+    step: 1
+    mode: slider
+    unit_of_measurement: °C
+    icon: mdi:thermometer-lines
+
+  temp_night:
+    name: Temp Night
+    initial: 16
+    min: 14
+    max: 24
+    step: 1
+    mode: slider
+    unit_of_measurement: °C
+    icon: mdi:thermometer-lines
+
+  temp_away:
+    name: Temp Away
+    initial: 14
+    min: 14
+    max: 24
+    step: 1
+    mode: slider
+    unit_of_measurement: °C
+    icon: mdi:thermometer-lines
+
+automation:
+## HEATING PRESENCE
+
+## Heating when Home Daytime, check ever 5 minutes
+- id: heating_detect_home_daytime
+  alias: Heating DETECT Daytime
+  trigger:
+    - platform: state
+      entity_id: input_number.temp_daytime # manual slider move
+    - platform: homeassistant
+      event: start # HA startup
+    - platform: time
+      at: "09:00:00" # at 9am
+    - platform: time_pattern
+      minutes: '/5' # every 5mins 24/7/365
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Home # when home alone
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Home Guests # when home with guests
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Away Guests # when guests home alone
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "09:00:00"
+      before: "23:00:00"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+  action:
+    # - service: climate.set_temperature
+    #   entity_id: climate.house_heating
+    #   data_template:
+    #     temperature: "{{ states('input_number.temp_target_home') }}"
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.temp_target_home
+        value: "{{ states('input_number.temp_daytime') }}"
+    # - service: notify.pushbullet
+    #   data:
+    #     title: "Home Assistant - House heating up"
+    #     message: "House heating up!"
+
+## Heating when Home Morning, check ever 5 minutes
+- id: heating_detect_home_morning
+  alias: Heating DETECT Morning
+  trigger:
+    - platform: state
+      entity_id: input_number.temp_morning
+    - platform: homeassistant
+      event: start
+    - platform: time
+      at: "06:00:00"
+    - platform: time_pattern
+      minutes: '/5'
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Home
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Home Guests
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Away Guests
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "06:00:00"
+      before: "09:00:00"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.temp_target_home
+        value: "{{ states('input_number.temp_morning') }}"
+    # - service: climate.set_temperature
+    #   entity_id: climate.house_heating
+    #   data_template:
+    #     temperature: "{{ states('input_number.temp_morning') }}"
+
+## Heating when Home Night, check every 5 minutes
+- id: heating_detect_home_night
+  alias: Heating DETECT Night
+  trigger:
+    - platform: state
+      entity_id: input_number.temp_night
+    - platform: homeassistant
+      event: start
+    - platform: time
+      at: "23:00:00"
+    - platform: time_pattern
+      minutes: '/5'
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Home
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Home Guests
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Away Guests
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "23:00:00"
+      before: "06:00:00"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.temp_target_home
+        value: "{{ states('input_number.temp_night') }}"
+#    - service: climate.set_temperature
+#      entity_id: climate.house_heating
+#      data_template:
+#        temperature: "{{ states('input_number.temp_night') }}"
+#    - service: notify.pushbullet
+#      data:
+#        title: "Home Assistant - Heating Night Mode"
+#        message: "House cooling!"
+
+## Daytime/Nighttime Heating when Leaving/Away
+- id: heating_detect_away
+  alias: Heating DETECT Away
+  trigger:
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Away
+    - platform: time_pattern
+      minutes: '/5'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Away
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.temp_target_home
+        value: "{{ states('input_number.temp_away') }}"
+#    - service: climate.set_temperature
+#      entity_id: climate.house_heating
+#      data_template:
+#        temperature: "{{ states('input_number.temp_away') }}"
+#    - service: notify.pushbullet
+#      data:
+#        title: "Home Assistant - Heating Away Mode"
+#        message: "House cooling!"
+
+## Whenever these slider move, set the heating to same
+## This should be the only entity to change heating
+
+## MASTER Heating control via slider
+- id: heating_temp_target_home_slider_moved
+  alias: Heating temp_arget slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.temp_target_home
+  action:
+    - service: climate.set_temperature
+      entity_id: climate.house_heating
+      data_template:
+        temperature: "{{ states('input_number.temp_target_home') }}"
+
+## Detecting Climate 'temperature' change, set temp_target_home
+- id: heating_climate_slider_moved_anytime
+  alias: heating climate slider moved anytime
+  trigger:
+    - platform: state
+      entity_id: climate.house_heating
+  condition:
+    - condition: template
+      value_template: >
+        {{ trigger.to_state.attributes.temperature !=
+            trigger.from_state.attributes.temperature }}
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.temp_target_home
+        value: "{{ trigger.to_state.attributes.temperature }}"
+    - service: notify.pushbullet
+      data:
+        title: "Home Assistant - Climate Temp Changed"
+        message: >
+          "Climate changed at {{now().strftime("%H:%M:%S")}},
+          adjusted temp_target_home to {{ states.climate.house_heating.attributes.temperature }},
+          currently {{ states.climate.house_heating.attributes.current_temperature }}"
+
+## Manual Heating control via slider
+- id: heating_climate_set_changed_daytime
+  alias: Heating Daytime slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.temp_target_home
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "09:00:00"
+      before: "23:00:00"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.temp_daytime
+        value: "{{ states('input_number.temp_target_home') }}"
+
+## Manual Heating control via slider
+- id: heating_climate_set_changed_morning
+  alias: Heating Morning slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.temp_target_home
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "06:00:00"
+      before: "09:00:00"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.temp_morning
+        value: "{{ states('input_number.temp_target_home') }}"
+
+## Manual Heating control via slider
+- id: heating_climate_set_changed_night
+  alias: Heating Night slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.temp_target_home
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: "23:00:00"
+      before: "06:00:00"
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.temp_night
+        value: "{{ states('input_number.temp_target_home') }}"
+
+## Manual Heating control via slider
+- id: heating_climate_set_changed_away
+  alias: Heating Away slider moved
+  trigger:
+    - platform: state
+      entity_id: input_number.temp_target_home
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Away
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.temp_away
+        value: "{{ states('input_number.temp_target_home') }}"

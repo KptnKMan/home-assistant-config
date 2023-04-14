@@ -1,0 +1,64 @@
+## IR Remote Controls
+
+## Turn TV ON or OFF
+ir_remote_tv_on_off:
+  sequence:
+    - service: remote.send_command
+      entity_id: 'remote.livingroom_ir_remote'
+      data:
+        command:
+          - 'tv_on_off'
+
+## Change TV SOURCE
+ir_remote_tv_source:
+  sequence:
+    - service: remote.send_command
+      entity_id: 'remote.livingroom_ir_remote'
+      data:
+        command:
+          - 'tv_source'
+
+## Set TV Mute/Unmute
+ir_remote_tv_mute:
+  sequence:
+    - service: remote.send_command
+      entity_id: 'remote.livingroom_ir_remote'
+      data:
+        command:
+          - 'tv_mute'
+
+## Set TV Volume UP
+ir_remote_tv_volume_up:
+  sequence:
+    - service: remote.send_command
+      entity_id: 'remote.livingroom_ir_remote'
+      data:
+        command:
+          - 'tv_volume_up'
+
+## Set TV Volume DOWN
+ir_remote_tv_volume_down:
+  sequence:
+    - service: remote.send_command
+      entity_id: 'remote.livingroom_ir_remote'
+      data:
+        command:
+          - 'tv_volume_down'
+
+## Set TV Program UP
+ir_remote_tv_prog_up:
+  sequence:
+    - service: remote.send_command
+      entity_id: 'remote.livingroom_ir_remote'
+      data:
+        command:
+          - 'tv_prog_up'
+
+## Set TV Program DOWN
+ir_remote_tv_prog_down:
+  sequence:
+    - service: remote.send_command
+      entity_id: 'remote.livingroom_ir_remote'
+      data:
+        command:
+          - 'tv_prog_down'

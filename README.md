@@ -1,8 +1,17 @@
+![Home Assistant Logo](hass.png "Home Assistant Logo")
+
 # Kareems home-assistant-config
+
+Configuration for Kareem's [HomeAssistant](https://home-assistant.io).
 
 ## Introduction
 
 This is the project of my Home Automation journey.
+
+Be warned: This is definitely a perpetual work in progress, and is full of messy commented code.
+
+This code is provided to help myself and others learn.
+If you like anything you see, and/or have any questions, contact me and I can try to help/describe what was going through my ape brain.
 
 ## Why I did this
 
@@ -57,14 +66,58 @@ This is often been referred to online as the "wife test", to represent a sufferi
 
 As such, all switches and hardware needs to have hardware switches (Lights need to be operable from the regular switch etc), and operate as normally as possible in the absence of the core system itself.
 
-## Components and Hardware
+## Dashboard
 
-TBC
+My current Home Assistant Dashboard:
+<br><img src="Dashboard.png" width="1000">
 
 ## Diagram
 
 I produced a diagram to keep track of, and help explain my system to others.
+This diagram is likely not 100% accurate, as sometimes changes are made to the system.
 ![Home Automation Diagram](Diagram.png)
+
+## Components and Hardware
+
+Here is a best-effort list (With links where to buy) of all the current hardware I use.
+I try to keep this list updated, and it will likely be more recent than the diagram above.
+
+- Vera Plus Z-Wave Hub
+  - 10x Neo Coolcam Smart Plug (EU)
+  - 5x Neo Coolcam PIR Sensor
+  - 2x Vision Door/Window Sensor
+  - 5x Fibaro Switch
+  - 2x Fibaro Dimmer
+  - 2x Aeotec Multisensor 6
+  - 1x POPP Door Strike
+  - 1x Fibaro "The button" (Red)
+  - 2x Z-Wave Key Remote
+- IKEA TRADFRI Zigbee Hub
+  - 1x LED Driver/Controller
+  - 5x GU11 Spot lights
+  - 1x LED RGB Bulb 800lm
+  - 7x LED White Bulb 1000lm
+  - 1x GL-C-007 Bulb
+  - 2x FYRTUR Blinds
+- Mii-Light LED Bridge (Mostly unused)
+  - 2x Mii-Light LED RGBW Controller (Unused)
+- Xiaomi Gateway II Zigbee Hub
+- Xiaomi Gateway III Zigbee Hub (Mostly unused)
+- Sonoff RF Hub (Running Tasmota)
+  - 2x RF Key Remote
+- Sonoff Zigbee Hub (Running Tasmota)
+
+- 3x Xiaomi "Yeelight Ceiling Light"
+- 2x Xiaomi "Yeelight Ceiling Light (Jiaoyue 480/650)"
+
+- 3x Google Chromecast (Ultra 4k, 2nd Gen, 1st Gen)
+- 2x Google Chromecast Audio
+- 4x Google Home Mini
+
+- 4x Sonoff Basic (Running Tasmota)
+- 2x Sonoff POW2 (Running Tasmota)
+- 2x Shelley RGBW2 (Running Tasmota)
+- 2x LC Technology 5V 4 Channel Relay (Running Tasmota)
 
 ## Automation goals and projects
 
@@ -77,19 +130,43 @@ When enbarking on this, I made sure to make clear a set of taks that I wanted to
 - [x] lights by motion
   - I should be able to walk through the house without activating lights myself
   - The lights should switch themselves off
-- [x] heating & presence
+- [x] heating presence detection
   - The house should be warm when I am home
-  - The house should automatically adjust the heating down when I'm away (Or nobody is home)
+  - The house should automatically adjust the heating down when nobody is home
   - Heating should adjust down when its night time
-  - If a designated girlfriend is in the house, the heating should auto-adjust itself 1 or 2 degrees higher
-    - And return to "normal" when I am alone
+  - If a designated "friend group" is in the house, the heating should auto-adjust itself 1 or 2 degrees higher
+    - And return to my own "normal" when I am alone
+- [x] heating control
+  - Fine-grained and simple control of heating at anytime
+  - Heating will auto-adjust during the day/night, when a valid presence in the house
+  - Temperatures will auto-set based on periods of day:
+    - Daytime - 9am to 11pm
+    - Morning - 6am to 9am
+    - Night - 11pm to 6am
+    - Away - anytime when nobody is home
 - [x] secure keyless entry
   - I should be able to buzz my door when without using a key
+- [x] security of entry
   - I should be able to see who is at the door
+  - I should be able to remotely lock the door(s)
 - [x] voice control
   - I want to be able to control, using my voice:
+    - heating
     - lights
     - automations
+- [x] Music and radio
+  - I should be able to play music anywhere in the house
+  - I should be able to play music throughout the entire house
+  - I should be able to play music by source (Spotify/Internet Radio)
+  - The volume levels will automatically adjust based on time of day/night
+- [x] low battery notifications
+  - I want to be able to be notified:
+    - when batteries are low, at a configurable threshold
+    - which devices have low batteries
+    - what level are the low batteries
+- [ ] Power/Electricity monitoring
+  - I want a summary of electricity usage, of particular items/systems
+  - I want to see an approximate electricity cost calculation
 - [ ] plant watering
   - The plants should be watered automatically
     - based on schedule or moisture level

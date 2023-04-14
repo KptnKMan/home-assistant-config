@@ -1,0 +1,7 @@
+
+- platform: ping
+  hosts:
+    blaster_ping: 192.168.178.11
+    soundwave_ping: 192.168.178.12
+    kareem_magnus3_ping: 192.168.178.126
+    kareem_magnus4_ping: 192.168.178.127

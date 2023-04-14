@@ -1,0 +1,119 @@
+## Turn off RF Remote1 button A after 5 sec
+- alias: Turn off RF Remote1 button A
+  trigger:
+    platform: state
+    entity_id: binary_sensor.RF_Remote1_A
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+    service: mqtt.publish
+    data:
+      topic: "tele/RF_Bridge/RESULT"
+      payload: "Remote1ButtonAoff"
+      retain: "true"
+
+## Turn off RF Remote1 button B after 5 sec
+- alias: Turn off RF Remote1 button B
+  trigger:
+    platform: state
+    entity_id: binary_sensor.RF_Remote1_B
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+    service: mqtt.publish
+    data:
+      topic: "tele/RF_Bridge/RESULT"
+      payload: "Remote1ButtonBoff"
+      retain: "true"
+
+## Turn off RF Remote1 button C after 5 sec
+- alias: Turn off RF Remote1 button C
+  trigger:
+    platform: state
+    entity_id: binary_sensor.RF_Remote1_C
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+    service: mqtt.publish
+    data:
+      topic: "tele/RF_Bridge/RESULT"
+      payload: "Remote1ButtonCoff"
+      retain: "true"
+
+## Turn off RF Remote1 button D after 5 sec
+- alias: Turn off RF Remote1 button D
+  trigger:
+    platform: state
+    entity_id: binary_sensor.RF_Remote1_D
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+    service: mqtt.publish
+    data:
+      topic: "tele/RF_Bridge/RESULT"
+      payload: "Remote1ButtonDoff"
+      retain: "true"
+
+## Turn off RF Remote2 button A after 5 sec
+- alias: Turn off RF Remote2 button A
+  trigger:
+    platform: state
+    entity_id: binary_sensor.RF_Remote2_A
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+    service: mqtt.publish
+    data:
+      topic: "tele/RF_Bridge/RESULT"
+      payload: "Remote2ButtonAoff"
+      retain: "true"
+
+## Turn off RF Remote2 button B after 5 sec
+- alias: Turn off RF Remote2 button B
+  trigger:
+    platform: state
+    entity_id: binary_sensor.RF_Remote2_B
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+    service: mqtt.publish
+    data:
+      topic: "tele/RF_Bridge/RESULT"
+      payload: "Remote2ButtonBoff"
+      retain: "true"
+
+## Turn off RF Remote2 button C after 5 sec
+- alias: Turn off RF Remote2 button C
+  trigger:
+    platform: state
+    entity_id: binary_sensor.RF_Remote2_C
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+    service: mqtt.publish
+    data:
+      topic: "tele/RF_Bridge/RESULT"
+      payload: "Remote2ButtonCoff"
+      retain: "true"
+
+## Turn off RF Remote2 button D after 5 sec
+- alias: Turn off RF Remote2 button D
+  trigger:
+    platform: state
+    entity_id: binary_sensor.RF_Remote2_D
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+    service: mqtt.publish
+    data:
+      topic: "tele/RF_Bridge/RESULT"
+      payload: "Remote2ButtonDoff"
+      retain: "true"

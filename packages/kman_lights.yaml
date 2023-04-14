@@ -1,0 +1,894 @@
+################################################################
+## Lights Control Package by KptnKMan
+##
+## Source: https://raw.githubusercontent.com/KptnKMan/home-assistant-config/master/packages/kman_lights.yaml
+################################################################
+
+## This is an example of automated light method 1
+## Uses a timer for each light group/room
+## Uses an input_number for setting the lights-on duration
+## Uses light groups for lights
+## Uses a few automations to manage the sensor triggers, timer monitoring and light on/off actions
+
+input_number:
+  ## Light duration slider for setting how long lights should stay on
+  lights_duration:
+    name: Lights Stay On
+    initial: 10
+    min: 1
+    max: 60
+    step: 1
+    mode: slider
+    unit_of_measurement: mins
+    icon: mdi:lightbulb-on-outline
+
+input_boolean:
+  ## Boolean yes/no to check if lights should be left on
+  lights_keep_all_on:
+    name: "Keep Lights ON (All)"
+    initial: off
+    icon: mdi:lightbulb-on-outline
+  ## enable/disable automatic management of bedroom lights
+  lights_automate_bedrooms:
+    name: "Automate Lights (Bedrooms)"
+    initial: off
+    icon: mdi:lightbulb-on-outline
+  ## enable/disable testing mode for light automations to run at any time
+  lights_anytime:
+    name: "Allow Light Automations Anytime"
+    initial: off
+    icon: mdi:lightbulb-on-outline
+
+timer:
+  ## A timer for each light group/room in house
+  light_entrance:
+    duration: '00:03:00'
+  light_downstairs:
+    duration: '00:03:00'
+  light_pantry:
+    duration: '00:03:00'
+  light_toilet:
+    duration: '00:03:00'
+  light_livingroom:
+    duration: '00:03:00'
+  light_kitchen:
+    duration: '00:03:00'
+  light_upstairs:
+    duration: '00:03:00'
+  light_closet:
+    duration: '00:03:00'
+  light_bedroom:
+    duration: '00:03:00'
+  light_gameroom:
+    duration: '00:03:00'
+  light_bathroom:
+    duration: '00:03:00'
+  light_attic_lower:
+    duration: '00:03:00'
+  light_misc:
+    duration: '00:03:00'
+
+## create light groups for all groups/rooms
+light:
+  # all downstairs
+- platform: group
+  name: Lights All Downstairs
+  entities:
+  - light.tradfri_bulb_1
+  - light.tradfri_bulb_2
+  - light.fibaro_dimmer_2_1_8
+  - light.fibaro_dimmer_2_2_11
+  - light.tradfri_bulb_5
+  - light.tradfri_bulb_6
+  - light.tradfri_bulb_8
+  - light.tradfri_bulb_12
+  - light.yeelight_1
+  - light.kitchen_led_driver
+  - light.tradfri_bulb_13
+  # all upstairs
+- platform: group
+  name: Lights All Upstairs
+  entities:
+  - light.tradfri_bulb_3
+  - light.yeelight_5
+  - light.yeelight_4
+  - light.tradfri_bulb_4
+  - light.tradfri_bulb_9
+  - light.tradfri_bulb_10
+  - light.yeelight_2
+  - light.tradfri_bulb_11
+  - light.tradfri_bulb_7
+  # entrance
+- platform: group
+  name: Lights Entrance
+  entities:
+  - light.tradfri_bulb_1
+  # downstairs
+- platform: group
+  name: Lights Downstairs
+  entities:
+  - light.tradfri_bulb_2 # downstairs hallway
+  - light.tradfri_bulb_3 # upstairs hallway
+  # pantry
+- platform: group
+  name: Lights Pantry
+  entities:
+  - light.tradfri_bulb_12
+  # toilet
+- platform: group
+  name: Lights Toilet
+  entities:
+  - light.tradfri_bulb_8
+  # woodroom
+- platform: group
+  name: Lights Woodroom
+  entities:
+  - light.tradfri_bulb_13
+  # livingroom
+- platform: group
+  name: Lights Livingroom
+  entities:
+  - light.tradfri_bulb_5
+  - light.tradfri_bulb_6
+  - light.fibaro_dimmer_2_1_8
+  - light.fibaro_dimmer_2_2_11
+  # kitchen
+- platform: group
+  name: Lights Kitchen
+  entities:
+  - light.yeelight_1
+  - light.kitchen_led_driver
+  # upstairs
+- platform: group
+  name: Lights Upstairs
+  entities:
+  - light.tradfri_bulb_3 # upstairs hallway
+  - light.tradfri_bulb_2 # downstairs hallway
+  # closet
+- platform: group
+  name: Lights Closet
+  entities:
+  - light.tradfri_bulb_4
+  # bedroom
+- platform: group
+  name: Lights Bedroom
+  entities:
+  - light.yeelight_5
+  # gameroom
+- platform: group
+  name: Lights Gameroom
+  entities:
+  - light.yeelight_4
+  # bathroom
+- platform: group
+  name: Lights Bathroom
+  entities:
+  - light.tradfri_bulb_9
+  - light.tradfri_bulb_10
+  - light.tradfri_bulb_11
+  - light.yeelight_2
+  # bathroom spots
+- platform: group
+  name: Lights Bathroom Spots
+  entities:
+  - light.tradfri_bulb_9
+  - light.tradfri_bulb_10
+  - light.tradfri_bulb_11
+  # attic (lower)
+- platform: group
+  name: Lights Attic Lower
+  entities:
+  - light.tradfri_bulb_7
+
+automation:
+  ## Test conditional - Turn Bathroom main light off when spots off
+- alias: lights bathroom turn off main when spots off
+  id: 'lights_bathroom_turn_off_main_when_spots_off'
+  trigger:
+  - platform: state
+    entity_id: light.lights_bathroom_spots
+    to: "off"
+    for:
+      seconds: 1
+  action: # transition the lights on with a nice delay
+  - service: light.turn_off
+    data:
+      entity_id:
+      - light.yeelight_2
+  ## Test conditional - Turn Bathroom main light on when spots on
+- alias: lights bathroom turn on main when spots on
+  id: 'lights_bathroom_turn_on_main_when_spots_on'
+  trigger:
+  - platform: state
+    entity_id: light.lights_bathroom_spots
+    to: "on"
+    for:
+      seconds: 1
+  action: # transition the lights on with a nice delay
+  - service: light.turn_on
+    data:
+      entity_id:
+      - light.yeelight_2
+      transition: 2
+      ## set brightness based on sunset/time
+      brightness: >
+        {% if (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "18:00") and
+            (states.sensor.time.state < "20:00") %}
+          200
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "20:00") and
+            (states.sensor.time.state < "22:00") %}
+          160
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "22:00") and
+            (states.sensor.time.state < "00:00") %}
+          130
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "00:00") and
+            (states.sensor.time.state < "03:00") %}
+          100
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "03:00") and
+            (states.sensor.time.state < "06:00") %}
+          130
+        {% else %}
+          255
+        {% endif %}
+      ## TODO set kelvin based on sunset/time
+      kelvin: >
+        {% if (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "18:00") and
+            (states.sensor.time.state < "20:00") %}
+          3000
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "20:00") and
+            (states.sensor.time.state < "22:00") %}
+          3000
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "22:00") and
+            (states.sensor.time.state < "00:00") %}
+          3000
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "00:00") and
+            (states.sensor.time.state < "03:00") %}
+          3000
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "03:00") and
+            (states.sensor.time.state < "06:00") %}
+          3000
+        {% else %}
+          3000
+        {% endif %}
+  ## Test conditional - Clear & Start timer when movement detected
+- alias: lights movement start timer light_groups
+  id: lights_movement_start_timer_light_groups
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.visiondoorsensor_1_77 # door sensor Entrance
+    - binary_sensor.visiondoorsensor_2_78 # door sensor Downstairs
+    - binary_sensor.ccamdevice_1_1_102 # entrance
+    - binary_sensor.ccamdevice_2_1_105 # downstairs
+    - binary_sensor.motion_sensor_158d000302d045 # pantry
+    - binary_sensor.motion_sensor_158d00031b00fc # toilet
+    - binary_sensor.6in1multisensor_2_118 # livingroom
+    - binary_sensor.motion_sensor_158d000313d7c4 # kitchen
+    - binary_sensor.6in1multisensor_1_31 # upstairs
+    - binary_sensor.ccamdevice_5_1_114 # closet
+    - binary_sensor.ccamdevice_4_1_111 # bedroom
+    - binary_sensor.ccamdevice_3_1_108 # gameroom
+    - binary_sensor.motion_sensor_158d00031b2923 # bathroom
+    - binary_sensor.motion_sensor_158d0003138cca # attic (lower)
+    - binary_sensor.motion_sensor_158d00031b0056 # attic (upper)
+    to: "on"
+  condition:
+  - condition: or
+    conditions:
+      ## debug testing lights at anytime
+    - condition: state
+      entity_id: input_boolean.lights_anytime
+      state: "on"
+    - condition: and
+      conditions:
+      # - condition: time
+      #   after: "06:00:00"
+      #   before: "01:00:00"
+      - condition: or
+        conditions:
+        # - condition: state
+        #   entity_id: sun.sun
+        #   state: "below_horizon"
+        - condition: sun
+          after: sunset
+          after_offset: "-02:00:00"
+        - condition: sun
+          before: sunrise
+          before_offset: "+01:00:00"
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: input_select.presence_house
+          state: Home
+        - condition: state
+          entity_id: input_select.presence_house
+          state: Home Guests
+        - condition: state
+          entity_id: input_select.presence_house
+          state: Away Guests
+  action:
+  # - service: notify.pushbullet
+  #   data:
+  #     message: 'debug {{ trigger.entity_id }} movement seen at {{now().strftime("%H:%M:%S")}}'
+  - service: timer.cancel
+    data:
+      entity_id: &light_start_timer_groups >
+        {% if
+          (trigger.entity_id == 'binary_sensor.ccamdevice_1_1_102')
+        %}
+          timer.light_entrance
+        {% elif
+          (trigger.entity_id == 'binary_sensor.ccamdevice_2_1_105')
+        %}
+          timer.light_downstairs
+        {% elif
+          (trigger.entity_id == 'binary_sensor.motion_sensor_158d000302d045')
+        %}
+          timer.light_pantry
+        {% elif
+          (trigger.entity_id == 'binary_sensor.motion_sensor_158d00031b00fc')
+        %}
+          timer.light_toilet
+        {% elif
+          (trigger.entity_id == 'binary_sensor.6in1multisensor_2_118')
+        %}
+          timer.light_livingroom
+        {% elif
+          (trigger.entity_id == 'binary_sensor.motion_sensor_158d000313d7c4')
+        %}
+          timer.light_kitchen
+        {% elif
+          (trigger.entity_id == 'binary_sensor.6in1multisensor_1_31')
+        %}
+          timer.light_upstairs
+        {% elif
+          (trigger.entity_id == 'binary_sensor.ccamdevice_5_1_114')
+        %}
+          timer.light_closet
+        {% elif
+          (trigger.entity_id == 'binary_sensor.ccamdevice_4_1_111') and
+          (states.input_boolean.lights_automate_bedrooms.state == "on")
+        %}
+          timer.light_bedroom
+        {% elif
+          (trigger.entity_id == 'binary_sensor.ccamdevice_3_1_108') and
+          (states.input_boolean.lights_automate_bedrooms.state == "on")
+        %}
+          timer.light_gameroom
+        {% elif
+          (trigger.entity_id == 'binary_sensor.motion_sensor_158d00031b2923')
+        %}
+          timer.light_bathroom
+        {% elif
+          (trigger.entity_id == 'binary_sensor.motion_sensor_158d0003138cca')
+        %}
+          timer.light_attic_lower
+        {% endif %}
+  - service: timer.start
+    data:
+      entity_id: *light_start_timer_groups
+      duration: >
+        {{ states('input_number.lights_duration')|int|multiply(60)|timestamp_custom('%X',false) }}
+
+  ## When timer is started, turn on light
+- alias: lights timer started light_groups
+  id: 'lights_timer_started_light_groups'
+  trigger:
+    ## trigger for each group/room, combined single trigger doesn't work
+  - platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.light_entrance
+  - platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.light_downstairs
+  - platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.light_pantry
+  - platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.light_toilet
+  - platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.light_livingroom
+  - platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.light_kitchen
+  - platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.light_upstairs
+  - platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.light_closet
+  - platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.light_bedroom
+  - platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.light_gameroom
+  - platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.light_bathroom
+  - platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.light_attic_lower
+  action:
+  # - service: notify.pushbullet
+  #   data:
+  #     message: 'debug {{ trigger.event.data.entity_id }} light on at {{now().strftime("%H:%M:%S")}}'
+  - service: light.turn_on
+    data:
+      entity_id: >
+        {% if
+          (trigger.event.data.entity_id == 'timer.light_entrance')
+        %}
+          light.lights_entrance
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_downstairs')
+        %}
+          light.lights_downstairs
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_pantry')
+        %}
+          light.lights_pantry
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_toilet')
+        %}
+          light.lights_toilet
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_livingroom')
+        %}
+          light.lights_livingroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_kitchen')
+        %}
+          light.lights_kitchen
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_upstairs')
+        %}
+          light.lights_upstairs
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_closet')
+        %}
+          light.lights_closet
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_bedroom') and
+          (states.input_boolean.lights_automate_bedrooms.state == "on")
+        %}
+          light.lights_bedroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_gameroom') and
+          (states.input_boolean.lights_automate_bedrooms.state == "on")
+        %}
+          light.lights_gameroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_bathroom')
+        %}
+          light.lights_bathroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_attic_lower')
+        %}
+          light.lights_attic_lower
+        {% endif %}
+      transition: 2
+      ## set brightness based on sunset/time
+      brightness: >
+        {% if (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "18:00") and
+            (states.sensor.time.state < "20:00") %}
+          200
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "20:00") and
+            (states.sensor.time.state < "22:00") %}
+          160
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "22:00") and
+            (states.sensor.time.state < "00:00") %}
+          130
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "00:00") and
+            (states.sensor.time.state < "03:00") %}
+          100
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "03:00") and
+            (states.sensor.time.state < "06:00") %}
+          130
+        {% else %}
+          255
+        {% endif %}
+      ## TODO set kelvin based on sunset/time
+      kelvin: >
+        {% if (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "18:00") and
+            (states.sensor.time.state < "20:00") %}
+          3000
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "20:00") and
+            (states.sensor.time.state < "22:00") %}
+          3000
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "22:00") and
+            (states.sensor.time.state < "00:00") %}
+          3000
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "00:00") and
+            (states.sensor.time.state < "03:00") %}
+          3000
+        {% elif (states.sun.sun.state == "below_horizon") and
+          (states.sensor.time.state > "03:00") and
+            (states.sensor.time.state < "06:00") %}
+          3000
+        {% else %}
+          3000
+        {% endif %}
+
+  ## When misc timer is started, notify and cancel
+- alias: lights timer started light_misc_cancel
+  id: 'lights_timer_started_light_misc_cancel'
+  trigger:
+  - platform: event
+    event_type: timer.started
+    event_data:
+      entity_id: timer.light_misc
+  action:
+  - service: notify.pushbullet
+    data:
+      message: 'debug {{ trigger.event.data.entity_id }} cancelled at {{now().strftime("%H:%M:%S")}}'
+  - service: timer.cancel
+    entity_id: timer.light_misc
+
+  ## When timer is finished, if sensor is "on", and not lights_keep_all_on, reset timer to lights_duration value
+- alias: lights_timer reset light_groups
+  id: 'lights_timer_reset_light_groups'
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_entrance
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_downstairs
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_pantry
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_toilet
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_livingroom
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_kitchen
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_upstairs
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_closet
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_bedroom
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_gameroom
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_bathroom
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_attic_lower
+  # condition:
+  # - condition: and
+  #   conditions:
+  #   - condition: state
+  #     entity_id: input_boolean.lights_keep_all_on
+  #     state: "off"
+  #   - condition: state
+  #     entity_id: binary_sensor.ccamdevice_3_1_108
+  #     state: "on"
+  action:
+  # - service: notify.pushbullet
+  #   data:
+  #     message: 'debug {{ trigger.event.data.entity_id }} timer reset at {{now().strftime("%H:%M:%S")}}'
+  - service: timer.cancel
+    data:
+      entity_id: &reset_light_groups >
+        {% if
+          (trigger.event.data.entity_id == 'timer.light_entrance') and
+          (states.binary_sensor.ccamdevice_1_1_102.state == "on")
+        %}
+          timer.light_entrance
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_downstairs') and
+          (states.binary_sensor.ccamdevice_2_1_105.state == "on")
+        %}
+          timer.light_downstairs
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_pantry') and
+          (states.binary_sensor.motion_sensor_158d000302d045.state == "on")
+        %}
+          timer.light_pantry
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_toilet') and
+          (states.binary_sensor.motion_sensor_158d00031b00fc.state == "on")
+        %}
+          timer.light_toilet
+        {% elif
+          (trigger.event.data.entity_id == 'timer.livingroom') and
+          (states('binary_sensor.6in1multisensor_2_118') == "on")
+        %}
+          timer.light_livingroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_kitchen') and
+          (states.binary_sensor.motion_sensor_158d000313d7c4.state == "on")
+        %}
+          timer.light_kitchen
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_upstairs') and
+          (states('binary_sensor.6in1multisensor_1_31') == "on")
+        %}
+          timer.light_upstairs
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_closet') and
+          (states.binary_sensor.ccamdevice_5_1_114.state == "on")
+        %}
+          timer.light_closet
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_bedroom') and
+          (states.binary_sensor.ccamdevice_4_1_111.state == "on") and
+          (states.input_boolean.lights_automate_bedrooms.state == "on")
+        %}
+          timer.light_bedroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_gameroom') and
+          (states.binary_sensor.ccamdevice_3_1_108.state == "on") and
+          (states.input_boolean.lights_automate_bedrooms.state == "on")
+        %}
+          timer.light_gameroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_bathroom') and
+          (states.binary_sensor.motion_sensor_158d00031b2923.state == "on")
+        %}
+          timer.light_bathroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_attic_lower') and
+          (states.binary_sensor.motion_sensor_158d0003138cca.state == "on")
+        %}
+          timer.light_attic_lower
+        {% endif %}
+  - service: timer.start
+    data:
+      entity_id: *reset_light_groups
+      duration: >
+        {{ states('input_number.lights_duration')|int|multiply(60)|timestamp_custom('%X',false) }}
+
+  ## When timer is finished, if sensor is "off", and not lights_keep_all_on, turn off light
+- alias: lights_timer finished light_groups
+  id: 'lights_timer_finished_light_groups'
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_entrance
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_downstairs
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_pantry
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_toilet
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_livingroom
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_kitchen
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_upstairs
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_closet
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_bedroom
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_gameroom
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_bathroom
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.light_attic_lower
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.lights_keep_all_on
+      state: "off"
+  #   - condition: state
+  #     entity_id: binary_sensor.ccamdevice_3_1_108
+  #     state: "off"
+  action:
+  # - service: notify.pushbullet
+  #   data:
+  #     message: 'debug {{ trigger.event.data.entity_id }} light off at {{now().strftime("%H:%M:%S")}}'
+  - service: timer.cancel
+    data:
+      entity_id: >
+        {% if
+          (trigger.event.data.entity_id == 'timer.light_entrance') and
+          (states.binary_sensor.ccamdevice_1_1_102.state == "off")
+        %}
+          timer.light_entrance
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_downstairs') and
+          (states.binary_sensor.ccamdevice_2_1_105.state == "off")
+        %}
+          timer.light_downstairs
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_pantry') and
+          (states.binary_sensor.motion_sensor_158d000302d045.state == "off")
+        %}
+          timer.light_pantry
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_toilet') and
+          (states.binary_sensor.motion_sensor_158d00031b00fc.state == "off")
+        %}
+          timer.light_toilet
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_livingroom') and
+          (states('binary_sensor.6in1multisensor_2_118') == "off")
+        %}
+          timer.light_livingroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_kitchen') and
+          (states.binary_sensor.motion_sensor_158d000313d7c4.state == "off")
+        %}
+          timer.light_kitchen
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_upstairs') and
+          (states('binary_sensor.6in1multisensor_1_31') == "off")
+        %}
+          timer.light_upstairs
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_closet') and
+          (states.binary_sensor.ccamdevice_5_1_114.state == "off")
+        %}
+          timer.light_closet
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_bedroom') and
+          (states.binary_sensor.ccamdevice_4_1_111.state == "off") and
+          (states.input_boolean.lights_automate_bedrooms.state == "on")
+        %}
+          timer.light_bedroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_gameroom') and
+          (states.binary_sensor.ccamdevice_3_1_108.state == "off") and
+          (states.input_boolean.lights_automate_bedrooms.state == "on")
+        %}
+          timer.light_gameroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_bathroom') and
+          (states.binary_sensor.motion_sensor_158d00031b2923.state == "off")
+        %}
+          timer.light_bathroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_attic_lower') and
+          (states.binary_sensor.motion_sensor_158d0003138cca.state == "off")
+        %}
+          timer.light_attic_lower
+        {% endif %}
+  - service: light.turn_off
+    data:
+      entity_id: >
+        {% if
+          (trigger.event.data.entity_id == 'timer.light_entrance') and
+          (states.binary_sensor.ccamdevice_1_1_102.state == "off")
+        %}
+          light.lights_entrance
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_downstairs') and
+          (states.binary_sensor.ccamdevice_2_1_105.state == "off")
+        %}
+          light.lights_downstairs
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_pantry') and
+          (states.binary_sensor.motion_sensor_158d000302d045.state == "off")
+        %}
+          light.lights_pantry
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_toilet') and
+          (states.binary_sensor.motion_sensor_158d00031b00fc.state == "off")
+        %}
+          light.lights_toilet
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_livingroom') and
+          (states('binary_sensor.6in1multisensor_2_118') == "off")
+        %}
+          light.lights_livingroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_kitchen') and
+          (states.binary_sensor.motion_sensor_158d000313d7c4.state == "off")
+        %}
+          light.lights_kitchen
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_upstairs') and
+          (states('binary_sensor.6in1multisensor_1_31') == "off")
+        %}
+          light.lights_upstairs
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_closet') and
+          (states.binary_sensor.ccamdevice_5_1_114.state == "off")
+        %}
+          light.lights_closet
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_bedroom') and
+          (states.binary_sensor.ccamdevice_4_1_111.state == "off") and
+          (states.input_boolean.lights_automate_bedrooms.state == "on")
+        %}
+          light.lights_bedroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_gameroom') and
+          (states.binary_sensor.ccamdevice_3_1_108.state == "off") and
+          (states.input_boolean.lights_automate_bedrooms.state == "on")
+        %}
+          light.lights_gameroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_bathroom') and
+          (states.binary_sensor.motion_sensor_158d00031b2923.state == "off")
+        %}
+          light.lights_bathroom
+        {% elif
+          (trigger.event.data.entity_id == 'timer.light_attic_lower') and
+          (states.binary_sensor.motion_sensor_158d0003138cca.state == "off")
+        %}
+          light.lights_attic_lower
+        {% endif %}

@@ -1,643 +1,838 @@
-########################
-### VIEWS # AKA TABS ###
-########################
+# ########################
+# ### VIEWS # AKA TABS ###
+# ########################
 
-  default_view:
-    view: yes
-    name: Home
-    icon: mdi:home
-    entities:
-      - !secret 6in1_sensor_temp_2
-      - sensor.temperature_158d00019ce72e
-      - !secret 6in1_sensor_temp_1
-      - sensor.temperature_158d00019ce5c7
-      - device_tracker.kareem_ot
-      - device_tracker.kareem_g6
-      - group.date_and_time
-      - group.environment_inside
-      - group.house_downstairs
-      - group.house_upstairs
-  weather:
-    view: yes
-    name: Weather
-    icon: mdi:weather-snowy-rainy
-    entities:
-      - group.travel_things
-      - group.weather_things
-      - group.monitor_things
-#  livingroom:
-#    view: yes
-#    name: Living Room
-#    icon: mdi:sofa
-#    entities:
-#      - group.livingroom_things
-#  bedroom:
-#    view: yes
-#    name: Bedroom
-#    icon: mdi:hotel
-#    entities:
-#      - group.bedroom_things
-  gameroom:
-    view: yes
-    name: Game Room
-    icon: mdi:floppy
-    entities:
-      - !secret coolcam_sensor_3
-      - !secret coolcam_motion_sensor_3
-      - device_tracker.optimus
-      - device_tracker.soundwave
-      - device_tracker.lj1320n
-      - group.optimus
-      - group.soundwave
-      - group.sharing_things
-      - group.unused_things
-  media:
-    view: yes
-    name: Media
-    icon: mdi:play-network
-    entities:
-      # - group.media_things
-      - media_player.plex_chromecast
-      - media_player.plex_chromecast_2
-      - media_player.plex_web_chrome
-      - media_player.plex_plex_web_chrome
-      - media_player.plex_chrome_3
-      - media_player.plex_galaxy_s6
-      - media_player.chromecast1
-      - media_player.chromecast2
-      - media_player.chromecast3
-      - media_player.livingroom_speaker
-      - media_player.bedroom_speaker
-      - media_player.gameroom_speaker
-      - media_player.mobile_speaker
-      - media_player.the_whole_house
-      - media_player.upstairs
-      - media_player.downstairs
-  metrics:
-    view: yes
-    name: Metrics
-    icon: mdi:trending-up
-    entities:
-      - group.pi_monitor
-      - group.kareem_status
-      - group.friends_status
-      - group.xiaomi_things
-      - group.vera_things
-      - group.alarm_things
-      - group.ring_things
-      - group.unused_things
-      - group.switch_things
-      - group.test_automations_scripts
-      - group.test_thermostat
-      - group.control_door
-      - group.motion_sensors
-      - group.motion_sensor_1
-      - group.motion_sensor_2
-      - group.motion_sensor_3
-      - group.motion_sensor_4
-      - group.motion_sensor_5
-      - group.motion_sensor_6
-      - group.motion_sensor_7
-      - group.environment_outside_weatherunderground
-      - group.environment_outside_yr
-      - group.zwave_things
+#   default_view:
+#     name: Home
+#     icon: mdi:home
+#     entities:
+#       # - !secret 6in1_sensor_temp_2 # Livingroom 6in1
+#       - sensor.temperature_158d00019ce72e # Livingroom Xiaomi
+#       # - !secret 6in1_sensor_temp_1 # Upstairs 6in1
+#       - sensor.temperature_158d00019ce5c7 # Upstairs Xiaomi
+#       - sensor.temperature_158d0002c8d912 # Attic Xiaomi
+#       # - sensor.temperature_158d0002c7c26a # Sensor 4
+#       # - sensor.temperature_158d0002c76c6f # Sensor 5
+#       # - sensor.temperature_158d0002c8e95f # Sensor 6
+#       - device_tracker.kareem_magnus4_lan
+#       - device_tracker.kareem_magnus4
+#       # - device_tracker.kyra_iphone
+#       # - device_tracker.sarah_iphone
+#       # - device_tracker.megan_iphone
+#       - group.date_and_time
+#       - media_player.spotify
+#       - group.quick_things # shortcuts
+#   lighting:
+#     name: Lighting
+#     icon: mdi:lightbulb-on-outline
+#     entities:
+#       - group.lights_all_downstairs
+#       - group.lights_all_upstairs
+#       - group.lights_entrance
+#       - group.lights_downstairs
+#       - group.lights_livingroom
+#       - group.lights_kitchen
+#       - group.lights_toilet
+#       - group.lights_pantry
+#       - group.lights_woodroom
+#       - group.lights_upstairs
+#       - group.lights_gameroom
+#       - group.lights_bedroom
+#       - group.lights_closet
+#       - group.lights_bathroom
+#       - group.lights_attic
+#   climate:
+#     name: Climate
+#     icon: mdi:weather-snowy-rainy
+#     entities:
+#       - group.air_quality
+#       - group.heating_controls
+#       - group.travel
+#       - group.deliveries
+#       - group.weather_outside
+#       - group.monitor_inside
+#       - group.monitor_outside
+#       - group.climate_inside
+#   gameroom:
+#     name: Gameroom
+#     icon: mdi:floppy
+#     entities:
+#       - !secret coolcam_motion_sensor_3
+#       - device_tracker.eject1
+#       - device_tracker.optimus
+#       - device_tracker.blaster_1
+#       - device_tracker.soundwave
+#       - device_tracker.lj1320n
+#       - group.computers
+#       - group.sharing_things
+#   media:
+#     name: Media
+#     icon: mdi:play-network
+#     entities:
+#       - group.google_homes
+#       - media_player.spotify
+#       - media_player.plex_playstation_4
+#       - media_player.chromecast_tv_1
+#       - media_player.chromecast_tv_2
+#       - media_player.chromecast_tv_3
+#       - media_player.chromecast_audio_1
+#       - media_player.livingroom_speaker
+#       - media_player.bedroom_speaker
+#       - media_player.gameroom_speaker
+#       - media_player.mobile_speaker
+#       - media_player.the_whole_house
+#       - media_player.upstairs
+#       - media_player.downstairs
+#       - media_player.plex_chromecast
+#       - media_player.plex_chromecast_2
+#       - media_player.plex_galaxy_s10
+#       - media_player.plex_galaxy_s6
+#       - media_player.plex_web_chrome
+#       - media_player.plex_plex_web_chrome
+#       - media_player.plex_chrome
+#       - media_player.plex_chrome_2
+#       - media_player.plex_chrome_3
+#   cameras:
+#     name: Cameras
+#     icon: mdi:cctv
+#     entities:
+#       - group.ring_things
+#       - group.cam_controls
+#   metrics:
+#     name: Metrics
+#     icon: mdi:chart-arc
+#     entities:
+#       # - device_tracker.kareem_magnus3_lan
+#       # - device_tracker.kareem_magnus3
+#       - group.pi_monitor
+#       - group.presence_kareem
+#       - group.presence_friends
+#       - group.leds
+#       - group.xiaomi_things
+#       - group.ikea_things
+#       - group.vera_things
+#       - group.sonoff_things
+#       - group.timer_things
+#       - group.slider_things
+#       - group.alarm_things
+#       - group.rf_things
+#       - group.control_door
+#       - group.motion_sensors
+#   testing:
+#     name: Testing
+#     icon: mdi:test-tube
+#     entities:
+#       - group.unused_things
+#       - group.environment_outside_weather
+#       - group.environment_outside_yr
+#       - group.zwave_things
+#       - group.motion_sensor_1
+#       - group.motion_sensor_2
+#       - group.motion_sensor_3
+#       - group.motion_sensor_4
+#       - group.motion_sensor_5
+#       - group.motion_sensor_6
+#       - group.motion_sensor_7
+#       - group.motion_sensor_8
+#       - group.motion_sensor_9
+#       - group.motion_sensor_10
+#       - group.motion_sensor_11
+#       - group.motion_sensor_12
+#       - group.motion_sensor_13
+#       - group.ir_controls
 
-##############################################
-### GROUPS OF ENTITIES # FOR REFERENCE USE ###
-##############################################
+# ##############################################
+# ### GROUPS OF ENTITIES # FOR REFERENCE USE ###
+# ##############################################
 
-  # tracker group for master
-  kareem_status:
-    view: no
-    entities:
-      - device_tracker.kareem_ot
-      - device_tracker.kareem_g6
-  # tracker group for guests
-  friends_status:
-    view: no
-    entities:
-      - device_tracker.lady_iphone_old
-      - device_tracker.lady_iphone
-  date_and_time:
-    view: no
-    name: Date and Time
-    entities:
-      - sun.sun
-      - sensor.date
-      - sensor.time
-      - sensor.pws_weather
-#      - group.weather_things
-#      - sensor.date__time
-#      - sensor.time__date
-#      - sensor.time_utc
-#      - sensor.internet_time
-  pi_monitor:
-    name: Pi Monitor
-    entities:
-      - sensor.last_boot
-      - sensor.since_last_boot
-      - sensor.disk_free
-      - sensor.disk_use
-      - sensor.disk_use_percent
-      - sensor.swap_free
-      - sensor.swap_use
-      - sensor.swap_use_percent
-      - sensor.memory_free
-      - sensor.memory_use
-      - sensor.memory_use_percent
-      - sensor.processor_use
-      - sensor.load_15m
-      - sensor.load_1m
-      - sensor.load_5m
-      - sensor.network_in_eth0
-      - sensor.network_out_eth0
-      - sensor.ipv4_address_eth0
-      - sensor.ipv6_address_eth0
-  house_downstairs:
-    view: no
-    name: House Downstairs
-    control: hidden
-    entities:
-      - group.control_door
-      - !secret light_entrance
-      - !secret light_downstairs
-      - !secret light_spots_1
-      - !secret light_table_1
-      - group.livingroom_things
-      - group.control_things
-      - automation.sw1_lights_out
-  house_upstairs:
-    view: no
-    name: House Upstairs
-    control: hidden
-    entities:
-      - !secret light_upstairs
-      - !secret light_gameroom_1
-      - !secret light_bedroom_1
-      - !secret light_closet
-      - !secret light_xiaomi_gateway
-      - group.bedroom_things
-  environment_inside:
-    view: no
-    name: Environment Inside
-    control: hidden
-    entities:
-      - input_select.house_presence
-      - input_boolean.friend_visiting
-      - input_boolean.kids_in_the_house
-      - input_boolean.vacation_mode
-      - climate.house_heating
-      - input_number.target_temp
-      - input_number.rest_temp
-      - input_number.away_temp
-  travel_things:
-    view: no
-    name: Travel Things
-    entities:
-      - sensor.travel_time_to_home_drive
-      - sensor.travel_home_to_work_drive
-      - sensor.travel_work_to_home_drive
-      - sensor.travel_time_to_home_public
-      - sensor.travel_home_to_work_public
-      - sensor.travel_work_to_home_public
-  weather_things:
-    view: no
-    name: Weather Things
-    entities:
-      - sensor.pws_weather
-      - sensor.pws_temp_c
-      - sensor.pws_feelslike_c
-      - sensor.pws_relative_humidity
-      - sensor.pws_uv
-  xiaomi_things:
-    view: no
-    name: Xiaomi Things
-    control: hidden
-    entities:
-      - !secret light_xiaomi_gateway
-      - sensor.illumination_34ce008bee96
-      - binary_sensor.switch_158d000186dbec
-      - binary_sensor.switch_158d00018726b8
-      - binary_sensor.switch_158d0001870a09
-      - binary_sensor.switch_158d0001870ad7
-      - binary_sensor.switch_158d000186e64a
-      - sensor.temperature_158d00019ce5c7
-      - sensor.humidity_158d00019ce5c7
-      - sensor.temperature_158d00019ce72e
-      - sensor.humidity_158d00019ce72e
-  vera_things:
-    view: no
-    name: Vera Things
-    control: hidden
-    entities:
-      - !secret button_red
-      - !secret button_red_sensor
-      - !secret 012501_strike
-      - !secret 012501_alarm
-      - !secret 012501_sensor
-      - !secret plug_1
-      - !secret plug_2
-      - !secret plug_3
-      - !secret plug_4
-      - !secret plug_5
-      - !secret plug_6
-      - !secret plug_7
-      - !secret plug_8
-      - !secret plug_9
-      - !secret plug_10
-      - !secret light_spots_1
-      - !secret light_table_1
-      - !secret light_bedroom_1
-      - !secret light_bedroom_2
-      - !secret light_gameroom_1
-      - !secret light_gameroom_2
-      - !secret vision_alarm_1
-      - !secret vision_sensor_1
-      - !secret vision_alarm_2
-      - !secret vision_sensor_2
-      - !secret 6in1_sensor_move_alarm_1
-      - !secret 6in1_sensor_move_1
-      - !secret 6in1_sensor_temp_1
-      - !secret 6in1_sensor_light_1
-      - !secret 6in1_sensor_humid_1
-      - !secret 6in1_sensor_uv_alarm_1
-      - !secret 6in1_sensor_uv_1
-      - !secret 6in1_sensor_move_alarm_2
-      - !secret 6in1_sensor_move_2
-      - !secret 6in1_sensor_temp_2
-      - !secret 6in1_sensor_light_2
-      - !secret 6in1_sensor_humid_2
-      - !secret 6in1_sensor_uv_alarm_2
-      - !secret 6in1_sensor_uv_2
-      - !secret coolcam_sensor_1
-      - !secret coolcam_light_sensor_1
-      - !secret coolcam_motion_sensor_alarm_1
-      - !secret coolcam_motion_sensor_1
-      - !secret coolcam_sensor_2
-      - !secret coolcam_light_sensor_2
-      - !secret coolcam_motion_sensor_alarm_2
-      - !secret coolcam_motion_sensor_2
-      - !secret coolcam_sensor_3
-      - !secret coolcam_light_sensor_3
-      - !secret coolcam_motion_sensor_alarm_3
-      - !secret coolcam_motion_sensor_3
-      - !secret coolcam_sensor_4
-      - !secret coolcam_light_sensor_4
-      - !secret coolcam_motion_sensor_alarm_4
-      - !secret coolcam_motion_sensor_4
-      - !secret coolcam_sensor_5
-      - !secret coolcam_light_sensor_5
-      - !secret coolcam_motion_sensor_alarm_5
-      - !secret coolcam_motion_sensor_5
-  alarm_things:
-    view: no
-    name: Alarm Things
-    entities:
-      - !secret vision_alarm_1
-      - !secret vision_alarm_2
-      - !secret coolcam_motion_sensor_alarm_1
-      - !secret coolcam_motion_sensor_alarm_2
-      - !secret coolcam_motion_sensor_alarm_3
-      - !secret coolcam_motion_sensor_alarm_4
-      - !secret coolcam_motion_sensor_alarm_5
-      - !secret 012501_alarm
-      - !secret 6in1_sensor_move_alarm_1
-      - !secret 6in1_sensor_uv_alarm_1
-      - !secret 6in1_sensor_move_alarm_2
-      - !secret 6in1_sensor_uv_alarm_2
-  ring_things:
-    view: no
-    name: Ring Things
-    control: hidden
-    entities:
-      - binary_sensor.ring_front_door_ding
-      - binary_sensor.ring_front_door_motion
-      - sensor.ring_front_door_battery
-      - sensor.ring_front_door_last_activity
-      - sensor.ring_front_door_last_ding
-      - sensor.ring_front_door_last_motion
-      - sensor.ring_front_door_volume
-      - sensor.ring_main_ringer_volume
-  unused_things:
-    view: no
-    name: Unused Things
-    control: hidden
-    entities:
-      - !secret plug_9
-  livingroom_things:
-    view: no
-    name: Livingroom Things
-    entities:
-      - !secret plug_6
-  bedroom_things:
-    view: no
-    name: Bedroom Things
-    entities:
-      - !secret plug_2
-      - !secret plug_3
-  optimus:
-    view: no
-    name: Optimus
-    entities:
-      - !secret plug_1
-      - switch.computer_optimus
-      - script.optimus_on
-      - script.optimus_off
-  soundwave:
-    view: no
-    name: Soundwave
-    entities:
-      - !secret plug_5
-      - switch.computer_soundwave
-  sharing_things:
-    view: no
-    name: Sharing Things
-    entities:
-      - sensor.sab_disk
-      - sensor.sab_disk_free
-      - sensor.sab_left
-      - sensor.sab_queue
-      - sensor.sab_queue_count
-      - sensor.sab_speed
-      - sensor.sab_status
-      - sensor.sab_total
-      - sensor.sab_daily_total
-      - sensor.sab_weekly_total
-      - sensor.sab_monthly_total
+#   unused_things:
+#     name: Unused Things
+#     entities:
+#       - !secret plug_4
+#       - !secret plug_5
+#       - !secret plug_8
+#       - !secret plug_9
+#       - !secret plug_10
+#       - switch.fgs211_1_14 # bedroom light
+#       - switch.fgs211_1_appliance_15 # bedroom light appliance?
+#       - switch.fgs211_2_17 # game room light
+#       - switch.fgs211_2_appliance_19 # bed room light appliance?
 
-  media_things:
-    view: no
-    name: media Things
-    entities:
-      - media_player.chromecast1
-      - media_player.chromecast2
-      - media_player.chromecast3
-      - media_player.livingroom_speaker
-      - media_player.bedroom_speaker
-      - media_player.gameroom_speaker
-      - media_player.mobile_speaker
-      - media_player.the_whole_house
-      - media_player.upstairs
-      - media_player.downstairs
-      - media_player.plex_chromecast
-      - media_player.plex_chromecast_2
-      - media_player.plex_galaxy_s6
-      - media_player.plex_web_chrome
-      - media_player.plex_plex_web_chrome
-  switch_things:
-    view: no
-    name: Switch Things
-    control: hidden
-    entities:
-      - !secret light_upstairs
-      - !secret light_downstairs
-      - !secret light_entrance
-      - !secret light_closet
-      - switch.computer_optimus
-      - switch.computer_soundwave
-      - !secret light_spots_1
-      - !secret light_table_1
-      - !secret light_bedroom_1
-      - !secret light_bedroom_2
-      - !secret light_gameroom_1
-      - !secret light_gameroom_2
-      - !secret plug_1
-      - !secret plug_2
-      - !secret plug_3
-      - !secret plug_4
-      - !secret plug_5
-      - !secret plug_6
-      - !secret plug_7
-      - !secret plug_8
-      - !secret plug_9
-      - !secret plug_10
-      - switch.pi_boiler_switch
-      - switch.pi_door_strike
-      - switch.pi_switch_3_4
-      - switch.pi_switch_4_17
-      - switch.rf_light_test1
-      - switch.rf_light_test2
-      - switch.rf_light_test3
-  test_automations_scripts:
-    view: no
-    name: Test Automations Scripts
-    control: hidden
-    entities:
-      - automation.ha_notification_new_nmap_device
-      - automation.ha_notification_shutdown
-      - automation.ha_notification_startup
-      - automation.ha_notification_there_is_an_intruder_downstairs
-      - automation.ha_notification_there_is_an_intruder_entrance
-      - automation.ha_notification_there_is_an_intruder_livingroom
-      - automation.ha_notification_there_is_an_intruder_upstairs
-      - automation.ha_notification_update_available
-      - automation.ha_purge_recorder
-      - automation.heating_detect_kareems_arrived
-      - automation.heating_detect_kareems_home_day
-      - automation.heating_detect_kareems_home_wakeup
-      - automation.heating_detect_kareems_leaving
-      - automation.heating_schedule_night
-      - automation.heating_slider_moved
-      - automation.kareems_home_alone
-      - automation.kareems_home_alone_detect_after_startup
-      - automation.kareems_leaving
-      - automation.guests_home_alone
-      - automation.nobody_home
-      - automation.pi_door_strike_reset
-      - automation.sw1_bedroom_things
-      - automation.sw1_gateway_nightlight
-      - automation.sw1_lights_out
-      - automation.sw2_disarm_alarm_system
-      - automation.sw2_door_strike
-      - automation.sw2_lock_doors
-      - automation.sw3_activate_optimus
-      - automation.sw3_deactivate_optimus
-      - automation.sw4_livingroom_things
-      - automation.turn_on_lights_when_there_is_movement_closet
-      - automation.turn_on_lights_when_there_is_movement_closet_at_night
-      - automation.turn_on_lights_when_there_is_movement_downstairs
-      - automation.turn_on_lights_when_there_is_movement_entrance
-      - automation.turn_on_lights_when_there_is_movement_upstairs
-      - automation.turn_on_lights_when_there_is_movement_upstairs_at_night
-      - automation.vacation_lights_at_sunset_when_vacation_mode_on
-      - automation.vacation_mode_off_when_home
-      - automation.vacation_mode_on_when_gone_24_hours
-      - automation.ziggo_router_reset
-      - script.after_dark_select_sequence
-      - script.timed_lamp_closet
-      - script.timed_lamp_closet_night
-      - script.timed_lamp_downstairs
-      - script.timed_lamp_entrance
-      - script.timed_lamp_upstairs
-      - script.timed_lamp_upstairs_night
-      - script.timer_off_closet
-      - script.timer_off_downstairs
-      - script.timer_off_entrance
-      - script.timer_off_upstairs
-      - script.vacation_lights_away_sequence
-      - script.vacation_lights_init
-      # - script.turn_everything_off
-  control_door:
-    view: no
-    name: Control Door
-    control: hidden
-    entities:
-      - switch.pi_door_strike
-      - !secret 012501_strike
-  control_things:
-    view: no
-    name: Control Things
-    control: hidden
-    entities:
-      - !secret plug_4
-      - !secret plug_8
-      - !secret plug_10
-  monitor_things:
-    view: no
-    name: Monitor Things
-    control: hidden
-    entities:
-      - !secret vision_sensor_1
-      - !secret vision_sensor_2
-      - !secret coolcam_motion_sensor_1
-      - !secret coolcam_motion_sensor_2
-      - !secret 6in1_sensor_move_2
-      - !secret 6in1_sensor_move_1
-      - !secret coolcam_motion_sensor_3
-      - !secret coolcam_motion_sensor_4
-      - !secret coolcam_motion_sensor_5
-      - !secret 6in1_sensor_temp_1
-      - !secret 6in1_sensor_humid_1
-      - !secret 6in1_sensor_uv_1
-      - !secret 6in1_sensor_temp_2
-      - !secret 6in1_sensor_humid_2
-      - !secret 6in1_sensor_uv_2
-  motion_sensor_1:
-    view: no
-    name: Motion Sensor 1
-    entities:
-      - !secret 6in1_sensor_move_alarm_1
-      - !secret 6in1_sensor_move_1
-      - !secret 6in1_sensor_temp_1
-      - !secret 6in1_sensor_light_1
-      - !secret 6in1_sensor_humid_1
-      - !secret 6in1_sensor_uv_alarm_1
-      - !secret 6in1_sensor_uv_1
-  motion_sensor_2:
-    view: no
-    name: Motion Sensor 2
-    entities:
-      - !secret 6in1_sensor_move_alarm_2
-      - !secret 6in1_sensor_move_2
-      - !secret 6in1_sensor_temp_2
-      - !secret 6in1_sensor_light_2
-      - !secret 6in1_sensor_humid_2
-      - !secret 6in1_sensor_uv_alarm_2
-      - !secret 6in1_sensor_uv_2
-  motion_sensor_3:
-    view: no
-    name: Motion Sensor 3
-    entities:
-      - !secret coolcam_sensor_1
-      - !secret coolcam_light_sensor_1
-      - !secret coolcam_motion_sensor_alarm_1
-      - !secret coolcam_motion_sensor_1
-  motion_sensor_4:
-    view: no
-    name: Motion Sensor 4
-    entities:
-      - !secret coolcam_sensor_2
-      - !secret coolcam_light_sensor_2
-      - !secret coolcam_motion_sensor_alarm_2
-      - !secret coolcam_motion_sensor_2
-  motion_sensor_5:
-    view: no
-    name: Motion Sensor 5
-    entities:
-      - !secret coolcam_sensor_3
-      - !secret coolcam_light_sensor_3
-      - !secret coolcam_motion_sensor_alarm_3
-      - !secret coolcam_motion_sensor_3
-  motion_sensor_6:
-    view: no
-    name: Motion Sensor 6
-    entities:
-      - !secret coolcam_sensor_4
-      - !secret coolcam_light_sensor_4
-      - !secret coolcam_motion_sensor_alarm_4
-      - !secret coolcam_motion_sensor_4
-  motion_sensor_7:
-    view: no
-    name: Motion Sensor 7
-    entities:
-      - !secret coolcam_sensor_5
-      - !secret coolcam_light_sensor_5
-      - !secret coolcam_motion_sensor_alarm_5
-      - !secret coolcam_motion_sensor_5
-  environment_outside_weatherunderground:
-    view: no
-    name: Environment Outside WeatherUnderground
-    entities:
-      - sensor.pws_alerts
-      - sensor.pws_dewpoint_c
-#      - sensor.pws_dewpoint_f
-      - sensor.pws_dewpoint_string
-      - sensor.pws_elevation
-      - sensor.pws_feelslike_c
-#      - sensor.pws_feelslike_f
-      - sensor.pws_feelslike_string
-      - sensor.pws_heat_index_c
-#      - sensor.pws_heat_index_f
-      - sensor.pws_heat_index_string
-      - sensor.pws_location
-      - sensor.pws_observation_time
-      - sensor.pws_precip_1hr_in
-      - sensor.pws_precip_1hr_metric
-      - sensor.pws_precip_1hr_string
-      - sensor.pws_precip_today_in
-      - sensor.pws_precip_today_metric
-      - sensor.pws_precip_today_string
-      - sensor.pws_pressure_in
-      - sensor.pws_pressure_mb
-      - sensor.pws_pressure_trend
-      - sensor.pws_relative_humidity
-      - sensor.pws_solarradiation
-      - sensor.pws_station_id
-      - sensor.pws_temp_c
-#      - sensor.pws_temp_f
-      - sensor.pws_temperature_string
-      - sensor.pws_uv
-      - sensor.pws_visibility_km
-      - sensor.pws_visibility_mi
-      - sensor.pws_weather
-      - sensor.pws_wind_degrees
-      - sensor.pws_wind_dir
-      - sensor.pws_wind_gust_kph
-      - sensor.pws_wind_gust_mph
-      - sensor.pws_wind_kph
-      - sensor.pws_wind_mph
-      - sensor.pws_wind_string
-  zwave_things:
-    view: no
-    name: ZWave Things
-    control: hidden
-    entities:
-      # - zwave._
-      - zwave.aeotec_zw090_zstick_gen5
-  environment_outside_yr:
-    view: no
-    name: Environment Outside Yr
-    entities:
-      - sensor.yr_symbol
-      - sensor.yr_temperature
-      - sensor.yr_humidity
-      - sensor.yr_pressure
-      - sensor.yr_precipitation
-      - sensor.yr_wind_direction
-      - sensor.yr_wind_speed
-      - sensor.yr_fog
-      - sensor.yr_dewpoint_temperature
-      - sensor.yr_cloudiness
-      - sensor.yr_low_clouds
-      - sensor.yr_medium_clouds
-      - sensor.yr_high_clouds
+#   presence_kareem:
+#     entities:
+#       - device_tracker.kareem_magnus4_lan
+#       - device_tracker.kareem_magnus4
+#   presence_friends:
+#     entities:
+#       - device_tracker.mom_iphone
+#       - device_tracker.maren_iphone
+#       - device_tracker.akiel_android
+#       - device_tracker.kyra_iphone
+#       # - device_tracker.sarah_iphone
+#       # - device_tracker.megan_iphone
+#   date_and_time:
+#     name: Date and Time
+#     entities:
+#       - sun.sun
+#       - sensor.date
+#       - sensor.time
+#       - sensor.dark_sky_summary
+# #      - sensor.date__time
+# #      - sensor.time__date
+# #      - sensor.time_utc
+# #      - sensor.internet_time
+#   quick_things:
+#     name: Quick Things
+#     entities:
+#       - input_select.presence_house
+#       - input_number.temp_target_home
+#       - input_boolean.lights_keep_all_on
+#       - input_boolean.friends_visiting
+#       - input_boolean.kids_in_the_house
+#       - input_boolean.vacation_mode
+#       - group.control_door
+#       - group.control_things
+#       - input_number.lights_duration
+#       - group.lights_all_downstairs
+#       - group.lights_all_upstairs
+#       - group.livingroom_things
+#       - group.bedroom_things
+#       # - automation.sw1_lights_out
+#   pi_monitor:
+#     name: Pi Monitor
+#     entities:
+#       - sensor.last_boot
+#       - sensor.since_last_boot
+#       - sensor.disk_free
+#       - sensor.disk_use
+#       - sensor.disk_use_percent
+#       - sensor.swap_free
+#       - sensor.swap_use
+#       - sensor.swap_use_percent
+#       - sensor.memory_free
+#       - sensor.memory_use
+#       - sensor.memory_use_percent
+#       - sensor.processor_use
+#       - sensor.load_15m
+#       - sensor.load_1m
+#       - sensor.load_5m
+#       - sensor.network_in_eth0
+#       - sensor.network_out_eth0
+#       - sensor.ipv4_address_eth0
+#       - sensor.ipv6_address_eth0
+#   air_quality:
+#     name: Air Quality
+#     entities:
+#       - fan.air_purifier_2s
+#       - input_number.purifier_fave_level
+#       - sensor.attribute_fan_filter_hours_used
+#       - sensor.attribute_fan_filter_life_remaining
+#       - history_graph.air_quality
+#   heating_controls:
+#     name: Heating Controls
+#     entities:
+#       - climate.house_heating
+#       - input_number.temp_target_home
+#       - input_number.temp_daytime
+#       - input_number.temp_morning
+#       - input_number.temp_night
+#       - input_number.temp_away
+#   travel:
+#     name: Travel
+#     entities:
+#       - sensor.travel_time_to_home_drive
+#       - sensor.travel_home_to_work_drive
+#       - sensor.travel_work_to_home_drive
+#       - sensor.travel_time_to_home_public
+#       - sensor.travel_home_to_work_public
+#       - sensor.travel_work_to_home_public
+#   deliveries:
+#     name: Deliveries
+#     entities:
+#       - sensor.postnl
+#       - automation.notification_packages_today
+#       - automation.notification_packages_delivered
+#   weather_outside:
+#     name: Weather Outside
+#     entities:
+#       - sensor.dark_sky_humidity
+#       - sensor.dark_sky_temperature
+#       - sensor.dark_sky_apparent_temperature
+#       - sensor.dark_sky_summary
+#       - sensor.dark_sky_daily_summary
+#       - sensor.dark_sky_hourly_summary
+#       - sensor.dark_sky_minutely_summary
+#       - sensor.dark_sky_cloud_coverage
+#       - sensor.dark_sky_pressure
+#       - sensor.dark_sky_uv_index
+#       - sensor.dark_sky_visibility
+#       - sensor.dark_sky_precip
+#       - sensor.dark_sky_precip_intensity
+#       - sensor.dark_sky_precip_probability
+#       - sensor.dark_sky_icon
+#       - sensor.dark_sky_wind_speed
+#       - sensor.dark_sky_wind_bearing
+#       - sensor.dark_sky_wind_gust
+#       - sensor.dark_sky_dew_point
+#       - sensor.dark_sky_nearest_storm_bearing
+#       - sensor.dark_sky_nearest_storm_distance
+#       - sensor.dark_sky_ozone
+#   google_homes:
+#     name: Google Homes
+#     entities:
+#       - input_number.google_home_volume_livingroom_player
+#       - input_number.google_home_volume_livingroom_speaker
+#       - input_number.google_home_volume_mobile_speaker
+#       - input_number.google_home_volume_gameroom_speaker
+#       - input_number.google_home_volume_bedroom_speaker
+#       - automation.google_set_volumes_daytime
+#       - automation.google_set_volumes_evening
+#       - automation.google_set_volumes_low
+#       - automation.google_set_volumes_working
+#   leds:
+#     name: LEDs
+#     entities:
+#       - light.strip_1_white
+#       - light.strip_1_bridge
+#       - light.strip_1_rgbw
+#       - light.strip_1_rgbww
+#       - light.strip_2_rgbw
+#       - light.strip_2_rgbww
+#       - light.strip_3_rgbw
+#       - light.strip_3_rgbww
+#       - light.strip_4_rgbw
+#       - light.strip_4_rgbww
+#   sonoff_things:
+#     name: Sonoff
+#     entities:
+#       - !secret sonoff_1
+#       - !secret sonoff_2
+#       - !secret sonoff_3
+#       - !secret sonoff_4
+#   xiaomi_things:
+#     name: Xiaomi Things
+#     entities:
+#       - light.gateway_light_34ce008bee96
+#       - sensor.illumination_34ce008bee96
+#       - light.yeelight_1
+#       - light.yeelight_2
+#       - light.yeelight_3
+#       - light.yeelight_4
+#       - fan.air_purifier_2s
+#       - binary_sensor.cube_158d00029a7923
+#       - binary_sensor.switch_158d000186dbec
+#       - binary_sensor.switch_158d00018726b8
+#       - binary_sensor.switch_158d0001870a09
+#       - binary_sensor.switch_158d0001870ad7
+#       - binary_sensor.switch_158d000186e64a
+#       - sensor.temperature_158d00019ce5c7
+#       - sensor.humidity_158d00019ce5c7
+#       - sensor.temperature_158d00019ce72e
+#       - sensor.humidity_158d00019ce72e
+#       - sensor.temperature_158d0002c8d912
+#       - sensor.humidity_158d0002c8d912
+#       - sensor.temperature_158d0002c7c26a
+#       - sensor.humidity_158d0002c7c26a
+#       - sensor.temperature_158d0002c76c6f
+#       - sensor.humidity_158d0002c76c6f
+#       - sensor.temperature_158d0002c8e95f
+#       - sensor.humidity_158d0002c8e95f
+#       - binary_sensor.motion_sensor_158d0003138cca
+#       - sensor.illumination_158d0003138cca
+#       - binary_sensor.motion_sensor_158d00031b00fc
+#       - sensor.illumination_158d00031b00fc
+#       - binary_sensor.motion_sensor_158d000302d045
+#       - sensor.illumination_158d000302d045
+#       - binary_sensor.motion_sensor_158d00031b2923
+#       - sensor.illumination_158d00031b2923
+#       - binary_sensor.motion_sensor_158d000313d7c4
+#       - sensor.illumination_158d000313d7c4
+#       - binary_sensor.motion_sensor_158d00031b0056
+#       - sensor.illumination_158d00031b0056
+#   ikea_things:
+#     name: IKEA Things
+#     entities:
+#       - sensor.tradfri_remote_control
+#       - sensor.tradfri_remote_control_2
+#       - sensor.tradfri_remote_control_3
+#       - sensor.tradfri_remote_control_4
+#       - sensor.tradfri_remote_control_5
+#       - light.tradfri_bulb_1
+#       - light.tradfri_bulb_2
+#       - light.tradfri_bulb_3
+#       - light.tradfri_bulb_4
+#       - light.tradfri_bulb_5
+#       - light.tradfri_bulb_6
+#       - light.tradfri_bulb_7
+#       - light.tradfri_bulb_8
+#       - light.tradfri_bulb_9
+#       - light.tradfri_bulb_10
+#       - light.tradfri_bulb_11
+#       - light.tradfri_bulb_12
+#       - light.tradfri_bulb_13
+#       - light.kitchen_led_driver
+#   vera_things:
+#     name: Vera Things
+#     entities:
+#       - !secret button_red
+#       - !secret button_red_sensor
+#       - !secret 012501_strike
+#       - !secret 012501_alarm
+#       - !secret 012501_sensor
+#       - !secret plug_1
+#       - !secret plug_2
+#       - !secret plug_3
+#       - !secret plug_4
+#       - !secret plug_5
+#       - !secret plug_6
+#       - !secret plug_7
+#       - !secret plug_8
+#       - !secret plug_9
+#       - !secret plug_10
+#       - light.fibaro_dimmer_2_1_8
+#       - light.fibaro_dimmer_2_2_11
+#       - !secret vision_alarm_1
+#       - !secret vision_sensor_1
+#       - !secret vision_alarm_2
+#       - !secret vision_sensor_2
+#       - !secret 6in1_sensor_move_alarm_1
+#       - binary_sensor.6in1multisensor_1_31
+#       - !secret 6in1_sensor_temp_1
+#       - !secret 6in1_sensor_light_1
+#       - !secret 6in1_sensor_humid_1
+#       - !secret 6in1_sensor_uv_alarm_1
+#       - !secret 6in1_sensor_uv_1
+#       - !secret 6in1_sensor_move_alarm_2
+#       - !secret 6in1_sensor_move_2
+#       - !secret 6in1_sensor_temp_2
+#       - !secret 6in1_sensor_light_2
+#       - !secret 6in1_sensor_humid_2
+#       - !secret 6in1_sensor_uv_alarm_2
+#       - !secret 6in1_sensor_uv_2
+#       - !secret coolcam_sensor_1
+#       - !secret coolcam_light_sensor_1
+#       - !secret coolcam_motion_sensor_alarm_1
+#       - !secret coolcam_motion_sensor_1
+#       - !secret coolcam_sensor_2
+#       - !secret coolcam_light_sensor_2
+#       - !secret coolcam_motion_sensor_alarm_2
+#       - !secret coolcam_motion_sensor_2
+#       - !secret coolcam_sensor_3
+#       - !secret coolcam_light_sensor_3
+#       - !secret coolcam_motion_sensor_alarm_3
+#       - !secret coolcam_motion_sensor_3
+#       - !secret coolcam_sensor_4
+#       - !secret coolcam_light_sensor_4
+#       - !secret coolcam_motion_sensor_alarm_4
+#       - !secret coolcam_motion_sensor_4
+#       - !secret coolcam_sensor_5
+#       - !secret coolcam_light_sensor_5
+#       - !secret coolcam_motion_sensor_alarm_5
+#       - !secret coolcam_motion_sensor_5
+#   alarm_things:
+#     name: Alarm Things
+#     entities:
+#       - !secret vision_alarm_1
+#       - !secret vision_alarm_2
+#       - !secret coolcam_motion_sensor_alarm_1
+#       - !secret coolcam_motion_sensor_alarm_2
+#       - !secret coolcam_motion_sensor_alarm_3
+#       - !secret coolcam_motion_sensor_alarm_4
+#       - !secret coolcam_motion_sensor_alarm_5
+#       - !secret 012501_alarm
+#       - !secret 6in1_sensor_move_alarm_1
+#       - !secret 6in1_sensor_uv_alarm_1
+#       - !secret 6in1_sensor_move_alarm_2
+#       - !secret 6in1_sensor_uv_alarm_2
+#   timer_things:
+#     name: Timer Things
+#     entities:
+#       - timer.light_entrance
+#       - timer.light_downstairs
+#       - timer.light_livingroom_spots
+#       - timer.light_livingroom_table
+#       - timer.light_upstairs_night
+#       - timer.light_upstairs
+#       - timer.light_closet_night
+#       - timer.light_closet
+#       - timer.light_toilet
+#       - timer.light_pantry
+#       - timer.light_kitchen
+#       - timer.light_bathroom
+#       - timer.temperature_boost
+#   slider_things:
+#     name: Slider Things
+#     entities:
+#       - input_number.google_home_volume_bedroom_speaker
+#       - input_number.google_home_volume_gameroom_speaker
+#       - input_number.google_home_volume_livingroom_player
+#       - input_number.google_home_volume_livingroom_speaker
+#       - input_number.google_home_volume_mobile_speaker
+#       - input_number.lights_duration
+#       - input_number.purifier_fave_level
+#       - input_number.temp_away
+#       - input_number.temp_daytime
+#       - input_number.temp_morning
+#       - input_number.temp_night
+#       - input_number.temp_target_home
+#   ring_things:
+#     name: Ring Things
+#     entities:
+#       - camera.front_door
+#       - device_tracker.ring_doorbell_1
+#       - device_tracker.ring_chime_1
+#       - binary_sensor.front_door_ding
+#       - binary_sensor.front_door_motion
+#       - sensor.front_door_last_activity
+#       - sensor.front_door_last_motion
+#       - sensor.front_door_last_ding
+#       - sensor.front_door_battery
+#       - sensor.front_door_volume
+#       - sensor.front_door_wifi_signal_strength
+#       - sensor.front_door_wifi_signal_category
+#       - sensor.main_ringer_volume
+#       - sensor.main_ringer_wifi_signal_strength
+#       - sensor.main_ringer_wifi_signal_category
+#   livingroom_things:
+#     name: Livingroom Things
+#     entities:
+#       - !secret plug_6
+#   bedroom_things:
+#     name: Bedroom Things
+#     entities:
+#       - !secret plug_2
+#       - !secret plug_3
+#   computers:
+#     name: Computers
+#     entities:
+#       - !secret plug_1
+#       - switch.optimus
+#       - script.optimus_on
+#       - script.optimus_off
+#       - !secret sonoff_3
+#       - switch.soundwave
+#   sharing_things:
+#     name: Sharing Things
+#     entities:
+#       - sensor.sabnzbd_status
+#       - sensor.sabnzbd_speed
+#       - sensor.sabnzbd_left
+#       - sensor.sabnzbd_queue
+#       - sensor.sabnzbd_queue_count
+#       - sensor.sabnzbd_disk
+#       - sensor.sabnzbd_disk_free
+#       - sensor.sabnzbd_daily_total
+#       - sensor.sabnzbd_monthly_total
+#       - sensor.sabnzbd_weekly_total
+#       - sensor.sabnzbd_total
+#   control_door:
+#     name: Control Door
+#     entities:
+#       - !secret 012501_strike
+#       - switch.pi_switch_2_18
+#       - binary_sensor.pi_switch_2_18
+
+#   control_things:
+#     name: Control Things
+#     entities:
+#       - !secret sonoff_1
+#       - !secret sonoff_2
+#       - !secret sonoff_3
+#       - !secret sonoff_4
+#   monitor_inside:
+#     name: Monitor Inside
+#     entities:
+#       - binary_sensor.front_door_motion             # front door ring
+#       - !secret vision_sensor_1                     # entrance door
+#       - !secret coolcam_motion_sensor_1             # entrance
+#       - !secret vision_sensor_2                     # downstairs door
+#       - !secret coolcam_motion_sensor_2             # downstairs
+#       - !secret 6in1_sensor_move_2                  # livingroom
+#       - binary_sensor.6in1multisensor_1_31          # upstairs
+#       - !secret coolcam_motion_sensor_3             # gameroom
+#       - !secret coolcam_motion_sensor_4             # bedroom
+#       - !secret coolcam_motion_sensor_5             # closet
+#       - binary_sensor.motion_sensor_158d0003138cca  # attic
+#       - binary_sensor.motion_sensor_158d00031b00fc  # toilet
+#       - binary_sensor.motion_sensor_158d000302d045  # pantry
+#       - binary_sensor.motion_sensor_158d00031b2923  # kitchen?
+#       - binary_sensor.motion_sensor_158d000313d7c4  # bathroom?
+#       - binary_sensor.motion_sensor_158d00031b0056  # woodroom?
+#       - sensor.battery_status
+#       - automation.battery_alert
+#   monitor_outside:
+#     name: Monitor Outside
+#     entities:
+#       - binary_sensor.front_door_ding
+#       - binary_sensor.front_door_motion
+#       - sensor.front_door_last_activity
+#       - sensor.front_door_last_ding
+#       - sensor.front_door_last_motion
+#   climate_inside:
+#     name: Climate Inside
+#     entities:
+#       - !secret 6in1_sensor_temp_1
+#       - !secret 6in1_sensor_humid_1
+#       - !secret 6in1_sensor_uv_1
+#       - !secret 6in1_sensor_temp_2
+#       - !secret 6in1_sensor_humid_2
+#       - !secret 6in1_sensor_uv_2
+#       - sensor.temperature_158d00019ce5c7
+#       - sensor.humidity_158d00019ce5c7
+#       - sensor.temperature_158d00019ce72e
+#       - sensor.humidity_158d00019ce72e
+#       - sensor.temperature_158d0002c8d912
+#       - sensor.humidity_158d0002c8d912
+#       - sensor.temperature_158d0002c7c26a
+#       - sensor.humidity_158d0002c7c26a
+#       - sensor.temperature_158d0002c76c6f
+#       - sensor.humidity_158d0002c76c6f
+#       - sensor.temperature_158d0002c8e95f
+#       - sensor.humidity_158d0002c8e95f
+#   motion_sensor_1:
+#     name: Motion Sensor 1
+#     entities:
+#       - !secret 6in1_sensor_move_alarm_1
+#       - !secret 6in1_sensor_uv_alarm_1
+#       - !secret 6in1_sensor_uv_1
+#       - !secret 6in1_sensor_temp_1
+#       - !secret 6in1_sensor_humid_1
+#       - binary_sensor.6in1multisensor_1_31
+#       - !secret 6in1_sensor_light_1
+#   motion_sensor_2:
+#     name: Motion Sensor 2
+#     entities:
+#       - !secret 6in1_sensor_move_alarm_2
+#       - !secret 6in1_sensor_uv_alarm_2
+#       - !secret 6in1_sensor_uv_2
+#       - !secret 6in1_sensor_temp_2
+#       - !secret 6in1_sensor_humid_2
+#       - !secret 6in1_sensor_move_2
+#       - !secret 6in1_sensor_light_2
+#   motion_sensor_3:
+#     name: Motion Sensor 3
+#     entities:
+#       - !secret coolcam_sensor_1
+#       - !secret coolcam_motion_sensor_alarm_1
+#       - !secret coolcam_motion_sensor_1
+#       - !secret coolcam_light_sensor_1
+#   motion_sensor_4:
+#     name: Motion Sensor 4
+#     entities:
+#       - !secret coolcam_sensor_2
+#       - !secret coolcam_motion_sensor_alarm_2
+#       - !secret coolcam_motion_sensor_2
+#       - !secret coolcam_light_sensor_2
+#   motion_sensor_5:
+#     name: Motion Sensor 5
+#     entities:
+#       - !secret coolcam_sensor_3
+#       - !secret coolcam_motion_sensor_alarm_3
+#       - !secret coolcam_motion_sensor_3
+#       - !secret coolcam_light_sensor_3
+#   motion_sensor_6:
+#     name: Motion Sensor 6
+#     entities:
+#       - !secret coolcam_sensor_4
+#       - !secret coolcam_motion_sensor_alarm_4
+#       - !secret coolcam_motion_sensor_4
+#       - !secret coolcam_light_sensor_4
+#   motion_sensor_7:
+#     name: Motion Sensor 7
+#     entities:
+#       - !secret coolcam_sensor_5
+#       - !secret coolcam_motion_sensor_alarm_5
+#       - !secret coolcam_motion_sensor_5
+#       - !secret coolcam_light_sensor_5
+#   motion_sensor_8:
+#     name: Motion Sensor 8
+#     entities:
+#       - binary_sensor.motion_sensor_158d0003138cca
+#       - sensor.illumination_158d0003138cca
+#   motion_sensor_9:
+#     name: Motion Sensor 9
+#     entities:
+#       - binary_sensor.motion_sensor_158d00031b00fc
+#       - sensor.illumination_158d00031b00fc
+#   motion_sensor_10:
+#     name: Motion Sensor 10
+#     entities:
+#       - binary_sensor.motion_sensor_158d000302d045
+#       - sensor.illumination_158d000302d045
+#   motion_sensor_11:
+#     name: Motion Sensor 11
+#     entities:
+#       - binary_sensor.motion_sensor_158d00031b2923
+#       - sensor.illumination_158d00031b2923
+#   motion_sensor_12:
+#     name: Motion Sensor 12
+#     entities:
+#       - binary_sensor.motion_sensor_158d000313d7c4
+#       - sensor.illumination_158d000313d7c4
+#   motion_sensor_13:
+#     name: Motion Sensor 13
+#     entities:
+#       - binary_sensor.motion_sensor_158d00031b0056
+#       - sensor.illumination_158d00031b0056
+#   # zwave_things:
+#   #   name: ZWave Things
+#   #   control: hidden
+#   #   entities:
+#   #     - zwave._
+#   #     - zwave.aeotec_zw090_zstick_gen5
+#   rf_things:
+#     name: RF Things
+#     entities:
+#       - binary_sensor.RF_Remote1_A
+#       - binary_sensor.RF_Remote1_B
+#       - binary_sensor.RF_Remote1_C
+#       - binary_sensor.RF_Remote1_D
+#       - binary_sensor.RF_Remote2_A
+#       - binary_sensor.RF_Remote2_B
+#       - binary_sensor.RF_Remote2_C
+#       - binary_sensor.RF_Remote2_D
+#       # - switch.rf_light_test1
+#       # - switch.rf_light_test2
+#       # - switch.rf_light_test3
+#   ir_controls:
+#     name: IR Controls
+#     entities:
+#       - script.ir_remote_tv_on_off
+#       - script.ir_remote_tv_source
+#       - script.ir_remote_tv_mute
+#       - script.ir_remote_tv_volume_up
+#       - script.ir_remote_tv_volume_down
+#       - script.ir_remote_tv_prog_up
+#       - script.ir_remote_tv_prog_down
+#   environment_outside_weather:
+#     name: Environment Outside Weather
+#     entities:
+#       - sensor.dark_sky_apparent_temperature
+#       - sensor.dark_sky_cloud_coverage
+#       - sensor.dark_sky_daily_summary
+#       - sensor.dark_sky_dew_point
+#       - sensor.dark_sky_hourly_summary
+#       - sensor.dark_sky_humidity
+#       - sensor.dark_sky_icon
+#       - sensor.dark_sky_minutely_summary
+#       - sensor.dark_sky_nearest_storm_bearing
+#       - sensor.dark_sky_nearest_storm_distance
+#       - sensor.dark_sky_ozone
+#       - sensor.dark_sky_precip
+#       - sensor.dark_sky_precip_intensity
+#       - sensor.dark_sky_precip_probability
+#       - sensor.dark_sky_pressure
+#       - sensor.dark_sky_summary
+#       - sensor.dark_sky_temperature
+#       - sensor.dark_sky_uv_index
+#       - sensor.dark_sky_visibility
+#       - sensor.dark_sky_wind_bearing
+#       - sensor.dark_sky_wind_gust
+#       - sensor.dark_sky_wind_speed
+#   environment_outside_yr:
+#     name: Environment Outside Yr
+#     entities:
+#       - sensor.yr_symbol
+#       - sensor.yr_temperature
+#       - sensor.yr_humidity
+#       - sensor.yr_pressure
+#       - sensor.yr_precipitation
+#       - sensor.yr_wind_direction
+#       - sensor.yr_wind_speed
+#       - sensor.yr_fog
+#       - sensor.yr_dewpoint_temperature
+#       - sensor.yr_cloudiness
+#       - sensor.yr_low_clouds
+#       - sensor.yr_medium_clouds
+#       - sensor.yr_high_clouds
+#   cam_controls:
+#     name: Cam Controls
+#     entities:
+#       - automation.notification_start_motion_detection_when_not_at_home
+#       - automation.notification_stop_motion_detection_when_at_home
+#   lights_all_downstairs:
+#     name: Lights All Downstairs
+#     entities:
+#       - light.tradfri_bulb_1
+#       - light.tradfri_bulb_2
+#       - light.fibaro_dimmer_2_1_8
+#       - light.fibaro_dimmer_2_2_11
+#       - light.tradfri_bulb_5
+#       - light.tradfri_bulb_6
+#       - light.tradfri_bulb_8
+#       - light.tradfri_bulb_12
+#       - light.yeelight_1
+#       - light.kitchen_led_driver
+#       - light.tradfri_bulb_13
+#   lights_all_upstairs:
+#     name: Lights All Upstairs
+#     entities:
+#       - light.tradfri_bulb_3
+#       - light.yeelight_5
+#       - light.yeelight_4
+#       - light.tradfri_bulb_4
+#       - light.tradfri_bulb_9
+#       - light.tradfri_bulb_10
+#       - light.yeelight_2
+#       - light.tradfri_bulb_11
+#       - light.tradfri_bulb_7
+#       # - !secret light_washroom
+#   lights_entrance:
+#     name: Lights Entrance
+#     entities:
+#       - light.tradfri_bulb_1
+#   lights_downstairs:
+#     name: Lights Downstairs
+#     entities:
+#       - light.tradfri_bulb_2
+#   lights_livingroom:
+#     name: Lights Livingroom
+#     entities:
+#       - light.fibaro_dimmer_2_1_8
+#       - light.tradfri_bulb_5
+#       - light.tradfri_bulb_6
+#       - light.fibaro_dimmer_2_2_11
+#   lights_kitchen:
+#     name: Lights Kitchen
+#     entities:
+#       - light.yeelight_1
+#       - light.kitchen_led_driver
+#   lights_toilet:
+#     name: Lights Toilet
+#     entities:
+#       - light.tradfri_bulb_8
+#   lights_pantry:
+#     name: Lights Pantry
+#     entities:
+#       - light.tradfri_bulb_12
+#   lights_woodroom:
+#     name: Lights Woodroom
+#     entities:
+#       - light.tradfri_bulb_13
+#   lights_upstairs:
+#     name: Lights Upstairs
+#     entities:
+#       - light.tradfri_bulb_3
+#   lights_gameroom:
+#     name: Lights Gameroom
+#     entities:
+#       - light.yeelight_4
+#   lights_bedroom:
+#     name: Lights Bedroom
+#     entities:
+#       - light.yeelight_5
+#   lights_closet:
+#     name: Lights Closet
+#     entities:
+#       - light.tradfri_bulb_4
+#   lights_bathroom:
+#     name: Lights bathroom
+#     entities:
+#       - light.tradfri_bulb_9
+#       - light.tradfri_bulb_10
+#       - light.yeelight_2
+#       - light.tradfri_bulb_11
+#   lights_attic:
+#     name: Lights Attic
+#     entities:
+#       - light.tradfri_bulb_7

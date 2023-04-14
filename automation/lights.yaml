@@ -1,0 +1,64 @@
+## Old light logic
+# sensor.x on -> Start script.timed_lamp_x
+# script -> turn_off script.timed_lamp_x
+#        -> turn_on light.x
+#        -> turn_on script.timer_off_x
+# script -> delay 5 mins
+#        -> turn_off light.x
+
+## New Light logic -> each config moved to a respective file!
+# sensor.x on -> cancel timer.light_x
+#             -> start timer.light_x
+# timer.x started -> turn_on light.x
+# timer.x finished, sensor on  -> cancel timer.light_x
+#                              -> start timer.light_x
+# timer.x finished, sensor off -> cancel timer.light_x
+#                              -> turn_off light.x
+
+## Detect lights to be kept on without automated off
+- id: notification_detect_automate_lights_disabled
+  alias: Notification Detect Automate Lights Disabled
+  trigger:
+    - platform: state
+      entity_id: input_boolean.lights_keep_all_on
+      from: "off"
+      to: "on"
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.lights_keep_all_on
+      state: "on"
+  action:
+  - service: homeassistant.turn_on
+    entity_id:
+    - script.lights_cancel_all_timers
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Home Assistant - Lights automation disabled"
+      message: "Lights will not automate!"
+
+## Detect lights should be automated in House
+- id: notification_detect_automate_lights_enabled
+  alias: Notification Detect Automate Lights Enabled
+  trigger:
+    - platform: state
+      entity_id: input_boolean.lights_keep_all_on
+      from: "on"
+      to: "off"
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.lights_keep_all_on
+      state: "off"
+  action:
+  - service: homeassistant.turn_on
+    entity_id:
+    - script.lights_cancel_all_timers
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Home Assistant - Lights automated"
+      message: "Lights will automatically automate!"

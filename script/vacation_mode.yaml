@@ -1,0 +1,119 @@
+#############################################
+## Copied from
+## https://github.com/ronmarco/home-assistant-config/blob/master/yaml_includes/script.yaml
+
+## Vacation mode lights
+
+## Turns lights on and off after sunset
+vacation_lights_init:
+  sequence:
+    ## wait X hours/minutes
+    - delay:
+        # hours: 1
+        minutes: 30
+    ## activate light sequence
+    - service: script.after_dark_select_sequence
+    ## wait X hours/mins more
+    - delay:
+        hours: 3
+    ## turn everything off
+    - service: homeassistant.turn_off
+      entity_id:
+      - switch.NeoCoolcamPlug12A_2_21 # bedroom lamp
+      - switch.NeoCoolcamPlug12A_3_22 # bedroom tv
+      - switch.neocoolcamplug12a_6_25 # livingroom tv
+    ## wait X hours/mins more
+    - delay:
+        hours: 2
+    ## activate light sequence
+    - service: script.after_dark_select_sequence
+    ## wait X hours/mins more
+    - delay:
+        minutes: 30
+    ## turn everything off
+    - service: homeassistant.turn_off
+      entity_id:
+      - switch.NeoCoolcamPlug12A_2_21 # bedroom lamp
+      - switch.NeoCoolcamPlug12A_3_22 # bedroom tv
+      - switch.neocoolcamplug12a_6_25 # livingroom tv
+
+## Turns on either one or both bulbs based on the brightness outside. Alternates which bulb by day of the month
+after_dark_select_sequence:
+  sequence:
+    - service_template: >
+        {% if is_state("sun.sun", "below_horizon") %}
+            script.vacation_lights_away_sequence
+        {% else %}
+            script.vacation_lights_away_sequence
+        {% endif %}
+
+## Sequence of on/off TV and lights
+vacation_lights_away_sequence:
+  sequence:
+    ## Notify
+    - service: notify.pushbullet
+      data:
+        target: !secret email_target_pushbullet
+        title: 'Vacation sequence begin'
+        message: "Vacation away sequence has activated at home!"
+    ## trigger entrance light
+    - service: homeassistant.turn_on
+      data:
+        entity_id: script.timed_lamp_entrance
+    ## trigger downstairs light
+    - service: homeassistant.turn_on
+      data:
+        entity_id: script.timed_lamp_downstairs
+    ## trigger upstairs light
+    - service: homeassistant.turn_on
+      data:
+        entity_id: script.timed_lamp_upstairs
+    ## turn on downstairs TV
+    - service: homeassistant.turn_on
+      data:
+        entity_id: switch.neocoolcamplug12a_6_25
+    ## wait X mins
+    - delay:
+        minutes: 43
+    ## turn off downstairs TV
+    - service: homeassistant.turn_off
+      data:
+        entity_id: switch.neocoolcamplug12a_6_25
+    ## trigger downstairs light
+    - service: homeassistant.turn_on
+      data:
+        entity_id: script.timed_lamp_downstairs
+    ## wait X mins
+    - delay:
+        minutes: 2
+    ## trigger upstairs light
+    - service: homeassistant.turn_on
+      data:
+        entity_id: script.timed_lamp_upstairs
+    ## wait X mins
+    - delay:
+        minutes: 2
+    ## turn on bedroom lamp
+    - service: homeassistant.turn_on
+      data:
+        entity_id: switch.NeoCoolcamPlug12A_2_21
+    ## wait X mins
+    - delay:
+        minutes: 4
+    ## turn on bedroom TV
+    - service: homeassistant.turn_on
+      data:
+        entity_id: switch.NeoCoolcamPlug12A_3_22
+    ## wait X mins
+    - delay:
+        minutes: 111
+    ## turn off bedroom TV
+    - service: homeassistant.turn_off
+      data:
+        entity_id: switch.NeoCoolcamPlug12A_3_22
+    ## Notify
+    - service: notify.pushbullet
+      data:
+        target: !secret email_target_pushbullet
+        title: 'Vacation sequence end'
+        message: "Vacation away sequence has finished at home!"

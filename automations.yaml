@@ -1,0 +1,204 @@
+- id: '1604350688310'
+  alias: HA Sync Tasmota states
+  trigger:
+  - platform: homeassistant
+    event: start
+  action:
+  - service: mqtt.publish
+    data:
+      topic: cmnd/tasmotas/state
+      payload: ''
+  - service: mqtt.publish
+    data:
+      topic: tasmotas/cmnd/state
+      payload: ''
+  initial_state: true
+  mode: single
+- id: '1604433533794'
+  alias: Entrance Light - Detect door, movement, bell -  then Light on
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.visiondoorsensor_1_77
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.visiondoorsensor_2_78
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.ring_front_door_motion
+    to: 'on'
+  condition:
+  - condition: and
+    conditions:
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+  action:
+  - service: timer.cancel
+    data: {}
+    entity_id: timer.light_entrance
+  - service: timer.start
+    data: {}
+    entity_id: timer.light_entrance
+    data_template:
+      duration: '{{ states(''input_number.lights_duration'')|int|multiply(60)|timestamp_custom(''%X'',false)
+        }}
+
+        '
+  mode: single
+- id: '1606139195650'
+  alias: HA Daily Backup
+  description: ''
+  trigger:
+  - platform: time
+    at: 05:00
+  condition: []
+  action:
+  - service: hassio.backup_full
+    data:
+      name: Automated Daily Backup {{ now() }}
+  mode: single
+- id: '1606839947332'
+  alias: HA Restart AutomatedMaintenanceTrigger
+  description: HA Restart Automated Maintenance on Monday@2pm
+  trigger:
+  - platform: time
+    at: '14:00'
+  condition:
+  - condition: time
+    weekday:
+    - mon
+  action:
+  - service: persistent_notification.create
+    data:
+      title: HA Weekly Maintenance Restarts BEGIN!
+      message: HA Weekly Maintenance Restarts BEGIN!
+      notification_id: ha_restart_start
+  - service: notify.pushbullet
+    data:
+      title: HA Weekly Maintenance Restarts BEGIN!
+      message: HA Weekly Maintenance Restarts BEGIN!
+  - service: automation.trigger
+    data: {}
+    entity_id: automation.ha_restart_sonoff1_hubs
+  - delay: 00:02:00
+  - service: persistent_notification.create
+    data:
+      title: Finished Hubs Restart
+      message: Finished Weekly Maintenance Hubs Restart, HA Restarting...
+      notification_id: ha_restart_finished
+  - service: notify.pushbullet
+    data:
+      title: HA restart in 5 mins!
+      message: HA restart in 5 mins!
+  - delay: 00:05:00
+  - service: automation.trigger
+    data: {}
+    entity_id: automation.ha_restart_auto
+  mode: single
+- id: '1609766379973'
+  alias: HA Restart HomeAssistant
+  description: Restart HA, every day, at 2pm
+  trigger:
+  - platform: state
+    entity_id: input_select.presence_house
+    to: Fake State
+  condition:
+  - condition: time
+    weekday:
+    - sun
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+  action:
+  - service: homeassistant.restart
+  mode: single
+- id: '1609767392469'
+  alias: HA Restart Sonoff2 AutoResetRouterOn
+  description: Reset router switch - Auto Back On!
+  trigger:
+  - platform: state
+    entity_id: switch.sonoff2
+    to: 'off'
+    for: 0:01:30
+  action:
+  - service: homeassistant.turn_on
+    entity_id: switch.sonoff2
+  - service: notify.pushbullet
+    data:
+      title: HA Router Reset - back on!
+      message: HA Router has been switched back on!
+  mode: single
+- id: '1609769025579'
+  alias: HA Restart Sonoff1 Hubs
+  description: HA Restart Sonoff1 Hubs
+  trigger: []
+  condition: []
+  action:
+  - service: persistent_notification.create
+    data:
+      title: Starting HA Hubs Restart
+      message: Starting Maintenance Restart - HA Hubs
+      notification_id: ha_restart_hubs_start
+  - service: notify.pushbullet
+    data:
+      title: Starting HA Hubs Restart
+      message: Starting Maintenance Restart - HA Hubs
+  - service: homeassistant.turn_off
+    entity_id: switch.sonoff1
+  - delay: 00:01:00
+  - service: homeassistant.turn_on
+    entity_id: switch.sonoff1
+  - delay: 00:01:00
+  - service: persistent_notification.create
+    data:
+      title: Finished HA Hubs Restart
+      message: Finished Maintenance Restart - HA Hubs
+      notification_id: ha_restart_hubs_finished
+  - service: notify.pushbullet
+    data:
+      title: Finished HA Hubs Restart
+      message: Finished Maintenance Restart - HA Hubs
+  mode: single
+- id: '1609769421249'
+  alias: HA Restart Sonoff2 Router
+  description: HA Restart Sonoff2 Router
+  trigger: []
+  condition: []
+  action:
+  - service: persistent_notification.create
+    data:
+      title: Starting HA Router Restart
+      message: Starting Maintenance Restart - HA Router
+      notification_id: ha_restart_router_start
+  - service: notify.pushbullet
+    data:
+      title: Starting HA Router Restart
+      message: Starting Maintenance Restart - HA Router
+  - service: homeassistant.turn_off
+    entity_id: switch.sonoff2
+  - delay: 00:01:00
+  - service: homeassistant.turn_on
+    entity_id: switch.sonoff2
+  - delay: 00:01:00
+  - service: persistent_notification.create
+    data:
+      title: Finished HA Router Restart
+      message: Finished Maintenance Restart - HA Router
+      notification_id: ha_restart_router_finished
+  - service: notify.pushbullet
+    data:
+      title: Finished HA Router Restart
+      message: Finished Maintenance Restart - HA Router
+  mode: single

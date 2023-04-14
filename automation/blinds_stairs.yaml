@@ -1,0 +1,71 @@
+## Test conditional - Blinds open (go up) in morning when movement in hallway
+- alias: blinds morning open when hallway movement
+  id: blinds_morning_open_when_hallway_movement
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.visiondoorsensor_1_77 # door sensor Entrance
+    - binary_sensor.visiondoorsensor_2_78 # door sensor Downstairs
+    - binary_sensor.ccamdevice_1_1_102 # entrance
+    - binary_sensor.ccamdevice_2_1_105 # downstairs
+    - binary_sensor.6in1multisensor_1_31 # upstairs
+    to: "on"
+  condition:
+    - condition: and
+      conditions:
+      - condition: time
+        before: "12:00:00"
+      - condition: state
+        entity_id: cover.tradfri_stairs_blinds
+        state: "closed"
+      - condition: sun
+        after: sunrise
+        after_offset: "-01:00:00" # 1hr before sunrise
+      - condition: sun
+        before: sunset
+        before_offset: "+02:00:00" # 2hrs before sunset
+  action:
+  - service: cover.open_cover
+    data:
+      entity_id: cover.tradfri_stairs_blinds
+  - service: notify.pushbullet
+    data:
+      message: 'Blinds opened at {{now().strftime("%H:%M:%S")}} by {{ trigger.entity_id }}'
+
+## Test conditional - Blinds open (go up) after sunrise
+- alias: blinds morning open when sunrise
+  id: blinds_morning_open_when_sunrise
+  trigger:
+  - platform: sun
+    event: sunrise # Possible values: sunset, sunrise
+    offset: "+02:00:00" # Optional time offset. This example will trigger 2 hours after sunrise.
+  condition:
+  - condition: state
+    entity_id: cover.tradfri_stairs_blinds
+    state: "closed"
+  action:
+  - service: cover.open_cover
+    data:
+      entity_id: cover.tradfri_stairs_blinds
+  - service: notify.pushbullet
+    data:
+      message: 'Blinds opened at {{now().strftime("%H:%M:%S")}}, 2h after sunrise'
+
+## Test conditional - Blinds close (go down) before sunset
+- alias: blinds evening close when sunset
+  id: blinds_evening_close_when_sunset
+  trigger:
+  - platform: sun
+    event: sunset # Possible values: sunset, sunrise
+    offset: "-02:00:00" # Optional time offset. This example will trigger 2 hours before sunset.
+  condition:
+  - condition: state
+    entity_id: cover.tradfri_stairs_blinds
+    state: "open"
+  action:
+  - service: cover.close_cover
+    data:
+      entity_id: cover.tradfri_stairs_blinds
+  - service: notify.pushbullet
+    data:
+      message: 'Blinds closed at {{now().strftime("%H:%M:%S")}}, 2h before sunset'

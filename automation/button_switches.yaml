@@ -2,7 +2,7 @@
 ### MANUAL AUTOMATIONS ###
 ##########################
 
-## Turn on bedroom things with button
+## Toggle bedroom things with button
 - id: sw1_bedroom_things
   alias: sw1 Bedroom Things
   trigger:
@@ -13,7 +13,9 @@
         click_type: single
   action:
     - service: homeassistant.toggle
-      entity_id: group.bedroom_things
+      entity_id:
+        - switch.neocoolcamplug12a_2_21 # bedroom lamp
+        - switch.neocoolcamplug12a_3_22 # bedroom tv
 
 ## Toggle nightlight with button double-click
 - id: sw1_gateway_nightlight
@@ -26,7 +28,7 @@
         click_type: double
   action:
     - service: homeassistant.toggle
-      entity_id: !secret light_xiaomi_gateway
+      entity_id: light.gateway_light_34ce008bee96
 
 ## Turn off all lights on long press
 - id: sw1_lights_out
@@ -39,35 +41,23 @@
         click_type: long_click_press
   action:
     - service: homeassistant.turn_off
+      entity_id: input_boolean.lights_automate_bedrooms
+    - service: homeassistant.turn_on
       entity_id:
-      - !secret light_upstairs
-      - !secret light_downstairs
-      - !secret light_entrance
-      - !secret light_closet
-      - !secret light_spots_1
-      - !secret light_table_1
-      - !secret light_bedroom_1
-      - !secret light_bedroom_2
-      - !secret light_gameroom_1
-      - !secret light_gameroom_2
+        - script.lights_cancel_all_timers
+    - service: homeassistant.turn_on
+      entity_id:
+        - script.lights_off_at_home
     - service: light.turn_on
       data:
-        entity_id: !secret light_xiaomi_gateway
+        entity_id: light.gateway_light_34ce008bee96
         brightness: 40
         transition: 2
         color_name: red
-    # - service: homeassistant.turn_on
-    #   entity_id:
-    #   - !secret light_xiaomi_gateway
-    # - service: notify.pushbullet
-    #   data: 
-    #     target: !secret email_target_pushbullet
-    #     title: 'Lights out!'
-    #     message: "All lights off!"
 
-## Lock doors
-- id: sw2_lock_doors
-  alias: sw2 lock doors
+## House Lockdown
+- id: sw2_lockdown_house
+  alias: sw2 Lockdown House
   trigger:
     - platform: event
       event_type: xiaomi_aqara.click
@@ -75,31 +65,13 @@
         entity_id: binary_sensor.switch_158d00018726b8
         click_type: single
   action:
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: '1 min to Arming Home!'
-        message: "1 min to Arming Home!"
-    - delay: 0:59
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.house_presence
-        option: 'Away'
-    ## placeholder for door locks
-    # - service: notify.pushbullet
-    #   data: 
-    #     target: !secret email_target_pushbullet
-    #     title: 'Doors locked!'
-    #     message: "Doors locked!"
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: 'Home Armed!'
-        message: "Home Armed!"
+  - service: homeassistant.turn_on
+    entity_id:
+      - script.home_lockdown_everything_off
 
-## Disarm Alarm system
-- id: sw2_disarm_alarm_system
-  alias: sw2 Disarm Alarm System
+## House Disarm
+- id: sw2_disarm_house
+  alias: sw2 Disarm House
   trigger:
     - platform: event
       event_type: xiaomi_aqara.click
@@ -107,15 +79,9 @@
         entity_id: binary_sensor.switch_158d00018726b8
         click_type: double
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.house_presence
-        option: 'Home'
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: 'Alarm Disarmed!'
-        message: "Alarm switch disarmed!"
+  - service: homeassistant.turn_on
+    entity_id:
+      - script.home_lockdown_disarm
 
 ## Open door strike long press
 - id: sw2_door_strike
@@ -129,16 +95,16 @@
   action:
     - service: homeassistant.toggle
       entity_id:
-        - switch.pi_door_strike
+        - switch.relay4c1_2
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: 'Door strike activated!'
+        title: 'Home Assistant - Door strike activated!'
         message: "Door Strike activated!"
 
-## Activate OPTIMUS single click
-- id: sw3_activate_optimus
-  alias: sw3 Activate OPTIMUS
+## Activate Workstation single click
+- id: sw3_activate_workstation
+  alias: sw3 Activate Workstation
   trigger:
     - platform: event
       event_type: xiaomi_aqara.click
@@ -146,18 +112,17 @@
         entity_id: binary_sensor.switch_158d0001870a09
         click_type: single
   action:
-      ## Turn on Triple Monitors
     - service: homeassistant.turn_on
-      entity_id: !secret plug_1
-      ## wait x seconds
-    - delay: 00:00:05
-      ## Turn on OPTIMUS
-    - service: homeassistant.turn_on
-      entity_id: switch.computer_optimus
+      entity_id:
+        - !secret plug_9 # gameroom lamp
+        - !secret plug_1 # gameroom monitors
+        - !secret plug_4 # gameroom fan
+        - light.shellyrgbw21 # shelly LED controller (need to move)
+        - light.shellyrgbw22 # shelly LED controller (need to move)
 
-## Turn off OPTIMUS double click
-- id: sw3_deactivate_optimus
-  alias: sw3 Deactivate OPTIMUS
+## Turn off Workstation double click
+- id: sw3_deactivate_workstation
+  alias: sw3 Deactivate Workstation
   trigger:
     - platform: event
       event_type: xiaomi_aqara.click
@@ -165,14 +130,13 @@
         entity_id: binary_sensor.switch_158d0001870a09
         click_type: double
   action:
-      ## Turn off OPTIMUS
     - service: homeassistant.turn_off
-      entity_id: switch.computer_optimus
-      ## wait x seconds
-    - delay: 00:00:05
-      ## Turn off Triple Monitors
-    - service: homeassistant.turn_off
-      entity_id: !secret plug_1
+      entity_id:
+        - !secret plug_9 # gameroom lamp
+        - !secret plug_1 # gameroom monitors
+        - !secret plug_4 # gameroom fan
+        - light.shellyrgbw21 # shelly LED controller (need to move)
+        - light.shellyrgbw22 # shelly LED controller (need to move)
 
 ## Toggle Gameroom Light with button long press
 - id: sw3_gameroom_light
@@ -185,7 +149,7 @@
         click_type: long_click_press
   action:
     - service: homeassistant.toggle
-      entity_id: !secret light_gameroom_1
+      entity_id: light.yeelight_4
 
 ## Turn on Livingroom things with button
 - id: sw4_livingroom_things
@@ -198,7 +162,8 @@
         click_type: single
   action:
     - service: homeassistant.toggle
-      entity_id: group.livingroom_things
+      entity_id:
+        - switch.neocoolcamplug12a_6_25 # livingroom tv
 
 ## Toggle Livingroom Spots with button long press
 - id: sw4_livingroom_spots
@@ -211,4 +176,59 @@
         click_type: long_click_press
   action:
     - service: homeassistant.toggle
-      entity_id: !secret light_spots_1
+      entity_id: light.fibaro_dimmer_2_1_8
+
+## Turn off monitors+lamp+fan+light on single click
+- id: sw5_bed_time_guest
+  alias: sw5 Bed Time Guest
+  trigger:
+    - platform: event
+      event_type: xiaomi_aqara.click
+      event_data:
+        entity_id: binary_sensor.switch_158d000186e64a
+        click_type: single
+  action:
+    - service: homeassistant.turn_off
+      entity_id: 
+        - !secret plug_9 # gameroom lamp
+        - !secret plug_1 # gameroom monitors
+        - !secret plug_4 # gameroom fan
+        - light.yeelight_4 # gameroom light
+        - light.shellyrgbw21 # shelly LED controller (need to move)
+        - light.shellyrgbw22 # shelly LED controller (need to move)
+
+## Toggle Gameroom Light with button long press
+- id: sw5_gameroom_lights_toggle
+  alias: sw5 Gameroom Lights Toggle
+  trigger:
+    - platform: event
+      event_type: xiaomi_aqara.click
+      event_data:
+        entity_id: binary_sensor.switch_158d000186e64a
+        click_type: long_click_press
+  action:
+    - service: homeassistant.toggle
+      entity_id:
+        - light.yeelight_4 # gameroom light
+
+## Fibaro button from Vera scene
+- alias: button_1_pressed
+  trigger:
+    platform: event
+    event_type: call_service
+    event_data:
+      service_data:
+        entity_id:
+          - scene.vera_button_1
+          - scene.vera_button_2
+          - scene.vera_button_3
+          - scene.vera_button_4
+          - scene.vera_button_5
+      domain: scene
+      service: turn_on
+  action:
+    - service: notify.pushbullet
+      data:
+        target: !secret email_target_pushbullet
+        title: 'Home Assistant - Button Pressed!'
+        message: "Button 1 pressed!"

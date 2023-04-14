@@ -1,27 +1,75 @@
-target_temp:
-  name: Target Temp
-  initial: 20
-  min: 14
-  max: 25
+# ## Recording number for heating boost automation
+# prev_temperature:
+#   name: Previous target temperature
+#   min: -100
+#   max: 200
+
+google_home_volume_livingroom_player:
+  name: Livingroom Player
+  initial: 0.20
+  min: 0
+  max: 1.00
+  step: 0.05
+  mode: slider
+  unit_of_measurement: "%"
+  icon: mdi:speaker
+
+google_home_volume_livingroom_speaker:
+  name: Livingroom Speaker
+  initial: 0.20
+  min: 0
+  max: 1.00
+  step: 0.05
+  mode: slider
+  unit_of_measurement: "%"
+  icon: mdi:google-home
+
+google_home_volume_mobile_speaker:
+  name: Mobile Speaker
+  initial: 0.20
+  min: 0
+  max: 1.00
+  step: 0.05
+  mode: slider
+  unit_of_measurement: "%"
+  icon: mdi:google-home
+
+google_home_volume_gameroom_speaker:
+  name: Gameroom Speaker
+  initial: 0.40
+  min: 0
+  max: 1.00
+  step: 0.05
+  mode: slider
+  unit_of_measurement: "%"
+  icon: mdi:google-home
+
+google_home_volume_bedroom_speaker:
+  name: Bedroom Speaker
+  initial: 0.40
+  min: 0
+  max: 1.00
+  step: 0.05
+  mode: slider
+  unit_of_measurement: "%"
+  icon: mdi:google-home
+
+purifier_fave_level:
+  name: Air Purifier 2S Level
+  initial: 5
+  min: 0
+  max: 15
   step: 1
   mode: slider
-  unit_of_measurement: °C  
-  icon: mdi:thermometer-lines
-rest_temp:
-  name: Rest Temp
-  initial: 17
-  min: 14
-  max: 25
-  step: 1
-  mode: slider
-  unit_of_measurement: °C  
-  icon: mdi:thermometer-lines
-away_temp:
-  name: Away Temp
-  initial: 14
-  min: 14
-  max: 25
-  step: 1
-  mode: slider
-  unit_of_measurement: °C  
-  icon: mdi:thermometer-lines
+  unit_of_measurement: level
+  icon: mdi:air-filter
+
+# attic_high_temp:
+#   name: Attic High Temperature
+#   initial: 34
+#   min: 0
+#   max: 40
+#   step: 1
+#   mode: slider
+#   unit_of_measurement: °C
+#   icon: mdi:air-filter

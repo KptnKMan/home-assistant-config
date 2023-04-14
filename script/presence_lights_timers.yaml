@@ -1,0 +1,123 @@
+## Automations for Presence, Lights and timer automations
+
+## Script to Lock down house
+home_lockdown_everything_off:
+  alias: "Lockdown - Turn off everything and stop services"
+  sequence:
+  # notify of pending sequence
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: '2 min to Arming Home!'
+      message: "2 mins to Arming Home!"
+  # wait 2 minutes
+  - delay: 1:59
+  # notify of sequence start
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      message: "House turning down!"
+  # stop music
+  - service: homeassistant.turn_on
+    entity_id: script.google_play_music_stop
+  # lights off
+  - service: homeassistant.turn_on
+    entity_id: script.lights_off_at_home
+  # cancel all timers
+  - service: homeassistant.turn_on
+    entity_id: script.lights_cancel_all_timers
+  # turn on alarms
+  - service: homeassistant.turn_on
+    entity_id:
+    - switch.visiondoorsensor_1_77
+    - switch.visiondoorsensor_2_78
+    - switch.ccamdevice_1_1_102
+    - switch.ccamdevice_2_1_105
+    - switch.ccamdevice_3_1_108
+    - switch.ccamdevice_4_1_111
+    - switch.ccamdevice_5_1_114
+    - switch.poppdoorsensor_1_7
+    - switch.6in1multisensor_1_31
+    - switch.6in1uvsensor_1_35
+    - switch.6in1multisensor_2_118
+    - switch.6in1uvsensor_2_122
+  # set house to Away
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.presence_house
+      option: Away
+  # notify of sequence end
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      message: "House Armed!"
+
+## Script to Disarm house
+home_lockdown_disarm:
+  alias: "Lockdown Disarm - Force Home"
+  sequence:
+  # turn off alarms
+  - service: homeassistant.turn_off
+    entity_id:
+    - switch.visiondoorsensor_1_77
+    - switch.visiondoorsensor_2_78
+    - switch.ccamdevice_1_1_102
+    - switch.ccamdevice_2_1_105
+    - switch.ccamdevice_3_1_108
+    - switch.ccamdevice_4_1_111
+    - switch.ccamdevice_5_1_114
+    - switch.poppdoorsensor_1_7
+    - switch.6in1multisensor_1_31
+    - switch.6in1uvsensor_1_35
+    - switch.6in1multisensor_2_118
+    - switch.6in1uvsensor_2_122
+  # set house to Home
+  # - service: input_select.select_option
+  #   data:
+  #     entity_id: input_select.presence_house
+  #     option: Home
+  # notify of sequence end
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      message: "House Disarmed!"
+
+## Lights off
+lights_off_at_home:
+  alias: "Lights off at home"
+  sequence:
+  - service: homeassistant.turn_off
+    entity_id:
+    # - light.lights_entrance
+    - light.lights_downstairs
+    - light.lights_pantry
+    - light.lights_toilet
+    - light.lights_woodroom
+    - light.lights_livingroom
+    - light.lights_kitchen
+    - light.lights_upstairs
+    - light.lights_closet
+    - light.lights_bedroom
+    - light.lights_gameroom
+    - light.lights_bathroom
+    - light.lights_attic_lower
+
+## Cancel all timers so that further automations can begin
+lights_cancel_all_timers:
+  alias: "Lights cancel all timers"
+  sequence:
+  - service: timer.cancel
+    entity_id:
+    - timer.light_entrance
+    - timer.light_downstairs
+    - timer.light_pantry
+    - timer.light_toilet
+    - timer.light_livingroom
+    - timer.light_kitchen
+    - timer.light_upstairs
+    - timer.light_closet
+    - timer.light_bedroom
+    - timer.light_gameroom
+    - timer.light_bathroom
+    - timer.light_attic_lower
+    # - timer.temperature_boost

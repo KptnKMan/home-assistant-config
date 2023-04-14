@@ -1,339 +1,176 @@
-########################
-#### HOUSE PRESENCE ####
-########################
+## HOUSE PRESENCE
 
-## Turn on light when movement upstairs at night
-- id: turn_on_lights_when_there_is_movement_upstairs_at_night
-  alias: Turn on lights when there is movement upstairs at night
-  trigger:
-    - platform: state
-      entity_id: !secret 6in1_sensor_move_1
-      from: 'off'
-      to: 'on'
-  condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: sun.sun
-      state: 'below_horizon'
-    - condition: time
-      after: '01:30:00'
-      before: '17:00:00'
-    - condition: state
-      entity_id: input_select.house_presence
-      state: 'Home'
-  action:
-    service: homeassistant.turn_on
-    entity_id: script.timed_lamp_upstairs_night
-
-## Turn on light when movement upstairs
-- id: turn_on_lights_when_there_is_movement_upstairs
-  alias: Turn on lights when there is movement upstairs
-  trigger:
-    - platform: state
-      entity_id: !secret 6in1_sensor_move_1
-      from: 'off'
-      to: 'on'
-  condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: sun.sun
-      state: 'below_horizon'
-    - condition: time
-      after: '17:00:00'
-      before: '01:30:00'
-    - condition: state
-      entity_id: input_select.house_presence
-      state: 'Home'
-  action:
-    service: homeassistant.turn_on
-    entity_id: script.timed_lamp_upstairs
-
-## Turn on light when movement downstairs
-- id: turn_on_lights_when_there_is_movement_downstairs
-  alias: Turn on lights when there is movement downstairs
-  trigger:
-    - platform: state
-      entity_id: !secret coolcam_motion_sensor_2
-      from: 'off'
-      to: 'on'
-  condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: sun.sun
-      state: 'below_horizon'
-    - condition: state
-      entity_id: input_select.house_presence
-      state: 'Home'
-  action:
-    service: homeassistant.turn_on
-    entity_id: script.timed_lamp_downstairs
-
-## Turn on light when movement Entrance
-- id: turn_on_lights_when_there_is_movement_entrance
-  alias: Turn on lights when there is movement Entrance
-  trigger:
-    - platform: state
-      entity_id: !secret coolcam_motion_sensor_1
-      from: 'off'
-      to: 'on'
-  condition:
-    condition: and
-    conditions:
-    # - condition: state
-    #   entity_id: sun.sun
-    #   state: 'below_horizon'
-    - condition: state
-      entity_id: input_select.house_presence
-      state: 'Home'
-  action:
-    service: homeassistant.turn_on
-    entity_id: script.timed_lamp_entrance
-
-## Turn on light when movement closet at night
-- id: turn_on_lights_when_there_is_movement_closet_at_night
-  alias: Turn on lights when there is movement closet at night
-  trigger:
-    - platform: state
-      entity_id: !secret coolcam_motion_sensor_5
-      from: 'off'
-      to: 'on'
-  condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: sun.sun
-      state: 'below_horizon'
-    - condition: time
-      after: '01:30:00'
-      before: '17:00:00'
-    - condition: state
-      entity_id: input_select.house_presence
-      state: 'Home'
-  action:
-    service: homeassistant.turn_on
-    entity_id: script.timed_lamp_closet_night
-
-## Turn on light when movement closet
-- id: turn_on_lights_when_there_is_movement_closet
-  alias: Turn on lights when there is movement closet
-  trigger:
-    - platform: state
-      entity_id: !secret coolcam_motion_sensor_5
-      from: 'off'
-      to: 'on'
-  condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: sun.sun
-      state: 'below_horizon'
-    - condition: time
-      after: '17:00:00'
-      before: '01:30:00'
-    - condition: state
-      entity_id: input_select.house_presence
-      state: 'Home'
-  action:
-    service: homeassistant.turn_on
-    entity_id: script.timed_lamp_closet
-
-## Kareems OUT! Nobody Home, set presence to 'Away'
-- id: nobody_home
-  alias: Nobody Home
-  trigger:
-    - platform: state
-      entity_id: group.kareem_status
-      to: 'away'
-    - platform: state
-      entity_id: group.friends_status
-      to: 'away'
-  condition:
-  - condition: and
-    conditions:
-    - condition: state
-      entity_id: group.kareem_status
-      state: 'away'
-    - condition: state
-      entity_id: group.friends_status
-      state: 'away'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.house_presence
-        option: 'Away'
-    # - service: notify.pushbullet
-    #   data:
-    #     target: !secret email_target_pushbullet
-    #     title: 'Nobody Home'
-    #     message: "Nobody Home!"
-
-## Turn stuff off when nobody is home
-- id: kareems_leaving
-  alias: Kareems LEAVING
-  trigger:
-    - platform: state
-      entity_id: input_select.house_presence
-      to: 'Away'
-      for:
-        minutes: 30
-  action:
-    - service: homeassistant.turn_off
-      entity_id:
-        ## Turn off OPTIMUS Triple Screens
-        - !secret plug_1
-        ## Turn off bedside Lamp
-        - !secret plug_2
-        ## Turn off Bedroom TV + Chromecast
-        - !secret plug_3
-        ## Turn off Livingroom TV + Chromecast
-        - !secret plug_6
-        # Turn off lights
-        - !secret light_upstairs
-        - !secret light_downstairs
-        - !secret light_entrance
-        - !secret light_spots_1
-        - !secret light_table_1
-        - !secret light_bedroom_1
-        - !secret light_closet
-        - !secret light_gameroom_1
-
-## Kareems HOME alone! set presence to 'Home' - DETECT after Home Assistant Startup
-- id: kareems_home_alone_detect_after_starup
-  alias: Kareems HOME alone DETECT after startup
+## Arriving HOME/Home Alone/Startup! set presence to "Home"
+- id: presence_detect_home_alone
+  alias: Detect Home Alone
   trigger:
     - platform: homeassistant
       event: start
-  condition:
-    condition: state
-    entity_id: group.kareem_status
-    state: 'home'
-  action:
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: 'Kareems HOME alone'
-        message: "Kareems HOME alone! (after startup)"
-    # - delay: 0:01
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.house_presence
-        option: 'Home'
-    - delay: 0:02
-    - service: homeassistant.turn_on
-      entity_id: 
-        - script.timed_lamp_entrance
-
-## Kareems HOME alone! set presence to 'Home'
-- id: kareems_home_alone
-  alias: Kareems HOME alone
-  trigger:
     - platform: state
-      entity_id: group.kareem_status
-      to: 'home'
-    - platform: state
-      entity_id: group.friends_status
-      to: 'away'
+      entity_id: person.kareem
+      to: "home"
   condition:
   - condition: and
     conditions:
     - condition: state
-      entity_id: group.kareem_status
-      state: 'home'
+      entity_id: person.kareem
+      state: "home"
     - condition: state
-      entity_id: group.friends_status
-      state: 'away'
+      entity_id: person.friends
+      state: "not_home"
+  action:
+  - service: timer.cancel
+    entity_id: timer.light_entrance
+  - service: timer.start
+    entity_id: timer.light_entrance
+  - service: homeassistant.turn_on
+    entity_id: script.home_lockdown_disarm
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.presence_house
+      option: Home
+
+## Home with guests! set presence to "Home Guests".
+- id: presence_detect_home_with_guests
+  alias: Detect Home with Friends
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: person.kareem
+      to: "home"
+    - platform: state
+      entity_id: person.friends
+      to: "home"
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: person.kareem
+      state: "home"
+    - condition: state
+      entity_id: person.friends
+      state: "home"
+  action:
+  - service: homeassistant.turn_on
+    entity_id: script.home_lockdown_disarm
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.presence_house
+      option: Home Guests
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Home Assistant - Home with Guests"
+      message: "Home with Guests!"
+
+## Home Alone! set presence to "Home"
+- id: presence_detect_home_without_guests
+  alias: Detect Guests Leaving
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: person.friends
+      to: "not_home"
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: person.kareem
+      state: "home"
+    - condition: state
+      entity_id: person.friends
+      state: "not_home"
+  action:
+  - service: homeassistant.turn_on
+    entity_id: script.home_lockdown_disarm
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.presence_house
+      option: Home
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Home Assistant - Home alone, guests left"
+      message: "Home alone, guests left!"
+
+## Guests are HOME ALONE! set presence to "Away Guests".
+- id: presence_detect_guests_home_alone
+  alias: Detect Guests Home Alone
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: person.kareem
+      to: "not_home"
+    - platform: state
+      entity_id: person.friends
+      to: "home"
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: person.kareem
+      state: "not_home"
+    - condition: state
+      entity_id: person.friends
+      state: "home"
+  action:
+  - service: homeassistant.turn_on
+    entity_id: script.home_lockdown_disarm
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.presence_house
+      option: Away Guests
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Home Assistant - Guests HOME ALONE"
+      message: "Guests HOME ALONE!"
+
+## Nobody Home, set presence to "Away"
+- id: presence_detect_leaving
+  alias: Detect Leaving
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: person.kareem
+      to: "not_home"
+    - platform: state
+      entity_id: person.friends
+      to: "not_home"
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: person.kareem
+      state: "not_home"
+    - condition: state
+      entity_id: person.friends
+      state: "not_home"
   action:
     - service: input_select.select_option
       data:
-        entity_id: input_select.house_presence
-        option: 'Home'
+        entity_id: input_select.presence_house
+        option: Away
+    - service: notify.pushbullet
+      data:
+        target: !secret email_target_pushbullet
+        title: "Home Assistant - Nobody Home"
+        message: "Nobody Home!"
+
+## Turn stuff off when nobody is home
+- id: presence_detect_nobody_home_lockdown_house
+  alias: Detect Nobody Home Lockdown House
+  trigger:
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Away
+      for:
+        minutes: 30
+  action:
     - service: homeassistant.turn_on
       entity_id:
-        - script.timed_lamp_entrance
-    # - service: notify.pushbullet
-    #   data: 
-    #     target: !secret email_target_pushbullet
-    #     title: 'Kareems HOME alone'
-    #     message: "Kareems HOME alone!"
-
-## Kareems comin' HOME! set presence to 'Warm House'
-# - id: kareems_coming_home
-#   alias: Kareems coming HOME
-#   trigger:
-#     - platform: state
-#       entity_id: group.kareem_status
-#       from: 'away'
-#       to: 'home'
-#   action:
-#     - service: input_select.select_option
-#       data:
-#         entity_id: input_select.house_presence
-#         option: 'Warm House'
-
-## Kareems HOME and guests! set presence to 'Lady and The Tramp'.
-# - id: kareems_home_with_lady
-#   alias: Kareems HOME with lady
-#   trigger:
-#     - platform: state
-#       entity_id: group.kareem_status
-#       to: 'home'
-#     - platform: state
-#       entity_id: group.friends_status
-#       to: 'home'
-#   condition:
-#   - condition: and
-#     conditions:
-#     - condition: state
-#       entity_id: group.kareem_status
-#       state: 'home'
-#     - condition: state
-#       entity_id: group.friends_status
-#       state: 'home'
-#   action:
-#     - service: input_select.select_option
-#       data:
-#         entity_id: input_select.house_presence
-#         option: 'Lady and The Tramp'
-#     - service: homeassistant.turn_on
-#       entity_id:
-#         - script.timed_lamp_entrance
-#     - service: notify.pushbullet
-#       data: 
-#         target: !secret email_target_pushbullet
-#         title: 'Lady Arrived'
-#         message: "Lady Arrived!"
-
-## Guests are HOME ALONE! set presence to 'Guests HOME ALONE'.
-- id: guests_home_alone
-  alias: Guests HOME ALONE
-  trigger:
-    - platform: state
-      entity_id: group.kareem_status
-      from: 'home'
-      to: 'away'
-    - platform: state
-      entity_id: group.friends_status
-      from: 'away'
-      to: 'home'
-  condition:
-  - condition: and
-    conditions:
-    - condition: state
-      entity_id: group.kareem_status
-      state: 'away'
-    - condition: state
-      entity_id: group.friends_status
-      state: 'home'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.house_presence
-        option: 'Guests ALONE'
-    - service: notify.pushbullet
-      data: 
-        target: !secret email_target_pushbullet
-        title: 'Guests HOME ALONE'
-        message: "Guests HOME ALONE!"
+        - script.home_lockdown_everything_off

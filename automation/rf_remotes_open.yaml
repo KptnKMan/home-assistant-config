@@ -1,0 +1,84 @@
+## Lockdown and Arm House when Remote1 button A pressed
+- id: rf_remote1_arm_house
+  alias: RF Remote1 Arm House
+  trigger:
+    platform: state
+    entity_id: binary_sensor.RF_Remote1_A
+    to: 'on'
+  action:
+  - service: homeassistant.turn_on
+    entity_id:
+      - script.home_lockdown_everything_off
+
+## Disarm House when Remote1 button B pressed
+- id: rf_remote1_disarm_house
+  alias: RF Remote1 Disarm House
+  trigger:
+    platform: state
+    entity_id: binary_sensor.RF_Remote1_B
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: person.kareem
+    state: "home"
+  action:
+  - service: homeassistant.turn_on
+    entity_id:
+      - script.home_lockdown_disarm
+
+## Activate door strike if kareem is "Home" when Remote1 button C pressed
+- id: rf_remote1_door_strike
+  alias: RF Remote1 Door Strike
+  trigger:
+    platform: state
+    entity_id: binary_sensor.RF_Remote1_C
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: person.kareem
+    state: "home"
+  action:
+  - service: homeassistant.turn_on
+    entity_id:
+      - switch.relay4c1_2
+
+## Activate door strike if kareem is "Home" when Remote1 button D pressed
+- id: rf_remote1_popp_lock
+  alias: RF Remote1 POPP Lock
+  trigger:
+    platform: state
+    entity_id: binary_sensor.RF_Remote1_D
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: person.kareem
+    state: "home"
+  action:
+  - service: lock.unlock
+    data:
+      entity_id: lock.poppdoorswitch_1_6
+
+## Activate door strike if "friends" is "Home" when Remote1 button C pressed
+- id: rf_remote2_door_strike
+  alias: RF Remote2 Door Strike
+  trigger:
+    platform: state
+    entity_id: binary_sensor.RF_Remote2_C
+    to: 'on'
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: person.friends
+      state: "home"
+    - condition: state
+      entity_id: input_boolean.friends_visiting
+      state: "on"
+  action:
+  - service: homeassistant.turn_on
+    entity_id:
+      - switch.relay4c1_2
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      message: "Friends activated door!"

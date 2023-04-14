@@ -1,0 +1,49 @@
+## Start Attic extractor when temperature is high
+- alias: Attic Extractor Start High temperature
+  id: attic_extractor_start_high_temperature
+  trigger:
+  - platform: homeassistant
+    event: start
+  - platform: numeric_state
+    entity_id: sensor.temperature_158d0002c8d912
+    above: input_number.temp_target_attic
+  - platform: state
+    entity_id: input_number.temp_target_attic
+  condition:
+    condition: and
+    conditions:
+    # - condition: numeric_state
+    #   entity_id: "sensor.temperature_158d0002c8d912"
+    #   above: input_number.temp_target_attic
+    - condition: template
+      value_template: >
+        {{ states('sensor.temperature_158d0002c8d912') > states('input_number.temp_target_attic') }}
+  action:
+    ## Turn on extractor
+    - service: switch.turn_on
+      entity_id: switch.NeoCoolcamPlug12A_10_29
+
+## Stop Attic extractor when temperature is low
+- alias: Attic Extractor Stop Low temperature
+  id: attic_extractor_stop_low_temperature
+  trigger:
+  - platform: homeassistant
+    event: start
+  - platform: numeric_state
+    entity_id: sensor.temperature_158d0002c8d912
+    below: input_number.temp_target_attic
+  - platform: state
+    entity_id: input_number.temp_target_attic
+  condition:
+    condition: and
+    conditions:
+    # - condition: numeric_state
+    #   entity_id: "sensor.temperature_158d0002c8d912"
+    #   below: input_number.temp_target_attic
+    - condition: template
+      value_template: >
+        {{ states('sensor.temperature_158d0002c8d912') < states('input_number.temp_target_attic') }}
+  action:
+    ## Turn on extractor
+    - service: switch.turn_off
+      entity_id: switch.NeoCoolcamPlug12A_10_29

@@ -1,0 +1,14 @@
+# ## NMAP tracking for devices in home
+# ## https://www.home-assistant.io/components/nmap_tracker/
+# - platform: nmap_tracker
+#   hosts: 192.168.178.1/24
+#   home_interval: 3 ## was 15 minutes, time between scans for devices already home
+#   scan_options: " --privileged -sP " ## default: " -F –host-timeout 5s "
+#   # sudo setcap cap_net_raw,cap_net_admin,cap_net_bind_service+eip /usr/bin/nmap
+
+#   ## global options (Device tracker will only look for the following global settings under the configuration of the first configured platform)
+#   ## https://www.home-assistant.io/integrations/device_tracker/
+#   interval_seconds: 30 ## seconds between each scan for new devices
+#   consider_home: 240 ## was 900 seconds, time for device to be considered not home after offline
+#   new_device_defaults:
+#     track_new_devices: true

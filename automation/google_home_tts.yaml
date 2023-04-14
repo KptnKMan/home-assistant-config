@@ -1,0 +1,234 @@
+## Google Home Voice TTS Welcome Home Livingroom
+- id: notification_google_tts_notify_welcome_home_message_livingroom
+  alias: Notification Google TTS Welcome Home Message Livingroom
+  trigger:
+    - platform: state
+      entity_id: !secret 6in1_sensor_move_2
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.welcome_home
+      state: 'on'
+    - condition: state
+      entity_id: person.kareem
+      state: "home"
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Home
+  action:
+    - service: homeassistant.turn_on
+      entity_id: script.google_tts_set_announcement_volumes
+    - delay:
+        seconds: 5
+    - service: tts.google_say
+      entity_id: media_player.livingroom_speaker
+      data:
+        message: 'Welcome Home! Warming up the house.'
+    - delay:
+        seconds: 10
+    - service: homeassistant.turn_on
+      entity_id: script.google_tts_reset_volumes
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.welcome_home
+
+## Google Home Voice TTS Welcome Home Gameroom
+- id: notification_google_tts_notify_welcome_home_message_gameroom
+  alias: Notification Google TTS Welcome Home Message Gameroom
+  trigger:
+    - platform: state
+      entity_id: !secret coolcam_motion_sensor_3
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: person.kareem
+      state: "home"
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Home
+    - condition: state
+      entity_id: input_boolean.welcome_home
+      state: 'on'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: script.google_tts_set_announcement_volumes
+    - delay:
+        seconds: 5
+    - service: tts.google_say
+      entity_id: media_player.gameroom_speaker
+      data:
+        message: 'Welcome Home! Time to do some work.'
+    - delay:
+        seconds: 10
+    - service: homeassistant.turn_on
+      entity_id: script.google_tts_reset_volumes
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.welcome_home
+
+## Google Home Voice TTS Welcome Home Bedroom
+- id: notification_google_tts_notify_welcome_home_message_bedroom
+  alias: Notification Google TTS Welcome Home Message bedroom
+  trigger:
+    - platform: state
+      entity_id: !secret coolcam_motion_sensor_4
+      from: "off"
+      to: "on"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: person.kareem
+      state: "home"
+    - condition: state
+      entity_id: input_select.presence_house
+      state: Home
+    - condition: state
+      entity_id: input_boolean.welcome_home
+      state: 'on'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: script.google_tts_set_announcement_volumes
+    - delay:
+        seconds: 5
+    - service: tts.google_say
+      entity_id: media_player.bedroom_speaker
+      data:
+        message: 'Welcome Home. Time to rest and relax?'
+    - delay:
+        seconds: 10
+    - service: homeassistant.turn_on
+      entity_id: script.google_tts_reset_volumes
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.welcome_home
+
+## Notify Guests that house is cooling for the night
+- id: notification_google_tts_notify_guests_heating_cool
+  alias: Notification Google TTS Notify Guests of Heating Cooling
+  trigger:
+    - platform: time
+      at: "21:50:00" # Run at 9:50, at 10pm volume is lowered.
+  condition:
+    condition: and # all are true
+    conditions:
+    # - condition: state
+    #   entity_id: person.kareem
+    #   state: "not_home"
+    - condition: or # one of these is true
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+    - condition: or # one of these is true
+      conditions:
+      - condition: state
+        entity_id: person.friends
+        state: "home"
+      - condition: state
+        entity_id: input_boolean.friends_visiting
+        state: "on"
+  action:
+    - service: homeassistant.turn_on
+      entity_id: script.google_tts_set_announcement_volumes
+    - delay:
+        seconds: 5
+    - service: tts.google_say
+      entity_id: media_player.the_whole_house
+      data_template:
+        message: "Attention guests. This is an automated house message. At 11pm the heating is cooling to {{ states('input_number.temp_night') }} degrees until 6am."
+    - delay:
+        seconds: 15
+    - service: homeassistant.turn_on
+      entity_id: script.google_tts_reset_volumes
+    - service: notify.pushbullet
+      data:
+        target: !secret email_target_pushbullet
+        title: "Home Assistant - Guests Notified about heating"
+        message: "Guests Notified about heating!"
+
+## Google Home notify guests Kareem is outside!
+- id: notification_google_tts_notify_guests_kareem_is_outside
+  alias: Notification Google TTS Notify Guests Kareem is outside
+  trigger:
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Away Guests Never # will never be triggered, state does not exist
+  action:
+    - service: homeassistant.turn_on
+      entity_id: script.google_tts_set_announcement_volumes
+    - delay:
+        seconds: 5
+    - service: tts.google_say
+      entity_id: media_player.the_whole_house
+      data_template:
+        message: "Attention Guests. This is an automated house message. Kareem is outside trying to enter the house. Someone please let him in."
+    - delay:
+        seconds: 15
+    - service: homeassistant.turn_on
+      entity_id: script.google_tts_reset_volumes
+    - service: notify.pushbullet
+      data:
+        target: !secret email_target_pushbullet
+        title: "Home Assistant - Guests Notified to let in Kareem"
+        message: "Guests Notified to let in Kareem"
+
+## Google Home Voice TTS Notify Guests of assistant
+- id: notification_google_tts_notify_guests_alone_in_house
+  alias: Notification Google TTS Notify Guests when alone in house
+  trigger:
+    - platform: state
+      entity_id: input_select.presence_house
+      to: Away Guests
+      for:
+        minutes: 10
+  condition:
+    condition: and # all are true
+    conditions:
+    - condition: state
+      entity_id: person.kareem
+      state: "not_home"
+    - condition: or # one of these is true
+      conditions:
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Home Guests
+      - condition: state
+        entity_id: input_select.presence_house
+        state: Away Guests
+    - condition: or # one of these is true
+      conditions:
+      - condition: state
+        entity_id: person.friends
+        state: "home"
+      - condition: state
+        entity_id: input_boolean.friends_visiting
+        state: "on"
+  action:
+    - service: homeassistant.turn_on
+      entity_id: script.google_tts_set_announcement_volumes
+    - delay:
+        seconds: 5
+    - service: tts.google_say
+      entity_id: media_player.the_whole_house
+      data:
+        message: "Hello Guests and Welcome. This is an automated house message from your friendly assistant. If you need anything I'm here. Just Say Hey Google or Ok Google to get my attention"
+    - delay:
+        seconds: 15
+    - service: homeassistant.turn_on
+      entity_id: script.google_tts_reset_volumes
+    - service: notify.pushbullet
+      data:
+        target: !secret email_target_pushbullet
+        title: "Home Assistant - Guests Notified about assistant"
+        message: "Guests Notified about assistant"
+
+## Google Home Voice TTS Welcome Home Guests
+
+## Play music on the whole House

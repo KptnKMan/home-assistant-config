@@ -1,0 +1,19 @@
+## Manual Fan control via slider
+- id: notification_fan_control_via_slider
+  alias: Notification Fan Control via slider
+  trigger:
+  - platform: state
+    entity_id: input_number.purifier_fave_level
+  action:
+  - service: fan.set_speed
+    data_template:
+      entity_id: fan.air_purifier_2s
+      speed: 'Favorite'
+  - service: xiaomi_miio.fan_set_favorite_level
+    data_template:
+      entity_id: fan.air_purifier_2s
+      level: '{{ states.input_number.purifier_fave_level.state | int }}'
+#   - service: notify.pushbullet
+#     data:
+#       target: !secret email_target_pushbullet
+#       message: "Fan favorite level changed!"

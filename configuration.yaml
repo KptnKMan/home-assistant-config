@@ -1,84 +1,284 @@
+################################
+## HOME ASSISTANT CORE
+## Core config for Home Assistant
+
 homeassistant:
   ## Name of the location where Home Assistant is running
-  name: Home
+  # name: Home
   ## Location required to calculate the time the sun rises and sets
-  latitude: !secret home_latitude
-  longitude: !secret home_longitude
+  # latitude: !secret home_latitude
+  # longitude: !secret home_longitude
   ## Impacts weather/sunrise data (altitude above sea level in meters)
-  elevation: !secret home_elevation
-  ## C for Celcius, F for Fahrenheit
-  temperature_unit: C
+  # elevation: !secret home_elevation
   ## metric for Metric, imperial for Imperial
-  unit_system: metric
+  # unit_system: metric
   ## Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  time_zone: !secret home_timezone
+  # time_zone: !secret home_timezone
   ## Device Customised names, icons, etc
-  customize: !include_dir_merge_named customize
-  ## Packages?
-  # packages: !include_dir_named packages
+  customize: !include customize.yaml
+  ## This adds custom externalised packages, like NotoriousBDG's 'Battery Alert'.
+  ## Battery Alert from: https://github.com/notoriousbdg/Home-AssistantConfig/blob/master/packages/battery_alert.yaml
+  packages: !include_dir_named packages
 
-## Show links to resources in log and frontend
-#introduction:
+################################
+## CORE PACKAGES
+## Packages configured standard in Home Assistant
 
-## Enables the frontend
-frontend:
-
-## Allows you to issue voice commands from the frontend in enabled browsers
-conversation:
-
-## View all events in a logbook
-logbook:
-
-## Enables support for tracking state changes over time.
-history:
+# Anable all default components
+default_config:
 
 ## Enable configure panel
 config:
 
-## Show map on UI
-map:
+## Allows you to issue voice commands from the frontend in enabled browsers
+# conversation:
 
 ## Discover some devices automatically
 discovery:
 
+## Downloader to download files
+## https://www.home-assistant.io/components/downloader
+downloader:
+  download_dir: downloads
+
+## Finds a compatible stream from a stream where possible
+media_extractor:
+
+## Enables the frontend
+frontend:
+
+## Enables support for tracking state changes over time.
+history:
+
+## HTTP Core Component
+## https://www.home-assistant.io/components/http/
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.178.1
+    - 172.17.0.1
+  # ssl_certificate: /ssl/fullchain.pem
+  # ssl_key: /ssl/privkey.pem
+  # ssl_certificate: /ssl/letsencrypt/live/straker-me/fullchain.pem
+  # ssl_key: /ssl/letsencrypt/live/straker-me/privkey.pem
+
+## Authentication Providers
+## https://www.home-assistant.io/docs/authentication/providers/
+# auth_providers:
+#   - type: legacy_api_password
+#     ## Uncomment this to add a password (recommended!)
+#     api_password: !secret http_api_password
+
+## View all events in a logbook
+logbook:
+
+## Setup logging for debugging
+logger:
+  default: warning
+  logs:
+    limitlessled: debug
+
+## Show map on UI
+map:
+
+## Iframes for local services
+## https://www.home-assistant.io/components/panel_iframe/
+# panel_iframe:
+#   configurator:
+#     title: 'zConfigurator'
+#     url: 'http://192.168.178.130:3218'
+#     icon: mdi:wrench
+#   router:
+#     title: 'zRouter'
+#     url: 'https://192.168.178.1'
+#     icon: mdi:wrench
+#   sonoff1:
+#     title: 'zSonoff1'
+#     url: 'http://192.168.178.31'
+#     icon: mdi:electric-switch
+#   sonoff2:
+#     title: 'zSonoff2'
+#     url: 'http://192.168.178.32'
+#     icon: mdi:electric-switch
+#   sonoff3:
+#     title: 'zSonoff3'
+#     url: 'http://192.168.178.33'
+#     icon: mdi:electric-switch
+#   sonoff4:
+#     title: 'zSonoff4'
+#     url: 'http://192.168.178.34'
+#     icon: mdi:electric-switch
+#   tasmoadmin:
+#     title: 'zSonWEB'
+#     url: 'http://192.168.178.130:9541'
+#     icon: mdi:lightbulb-on
+
+## Enables support for tracking
+## https://www.home-assistant.io/components/recorder
+recorder:
+#  db_url: !secret dburl_mariadb_addon  ## The URL which point to your database
+  auto_purge: true
+  purge_keep_days: 14
+
 ## Track the sun
 sun:
 
+## System Health Component
+## https://www.home-assistant.io/components/system_health
+system_health:
+
 ## Checks for available updates
-updater:
+## https://www.home-assistant.io/components/updater
+#updater:
 
-http:
-  ## Uncomment this to add a password (recommended!)
-  api_password: !secret api_password
-  # ssl_certificate: /ssl/fullchain.pem
-  # ssl_key: /ssl/privkey.pem
+################################
+## EXTERNALLY CONFIGURED PACKAGES
+## Not core to Home Assistant but configured here
 
-## Enables support for tracking
-recorder:
-  ## (days) Enable scheduled purge of older events and states
-  purge_interval: 1
-  ## (days) Specify number of history days to keep in recorder database after purge
-  ## You can use service call recorder.purge when needed
-  purge_keep_days: 7
-  ## The URL which point to your database
-  db_url: !secret dburl_mariadb_addon
-  ## Specify domains of metrics to keep
-  # include:
-  #   domains:
-  #     - sensor
-  #     - switch
-  #     - light
-  #     - device_tracker
-  #     - climate
-  #   entities:
-  #     - sun.sun
-  #     - input_number.target_temp
-  # exclude:
-  #   entities:
-  #     - sensor.date
-  #     - sensor.time
+## notify service for sending notifications
+notify:
+  ## Pushbullet Setup
+  ## https://www.home-assistant.io/components/notify.pushbullet/
+  - name: pushbullet
+    platform: pushbullet
+    api_key: !secret apikey_pushbullet
 
-# # Setup tracking using InfluxDB
+# ## Integrated MQTT Server
+# ## https://www.home-assistant.io/components/mqtt
+# mqtt:
+# #  broker: 127.0.0.1
+#   broker: !secret mqtt_host
+#   port: 1883
+#   client_id: home-assistant-1
+#   keepalive: 60
+#   username: !secret mqtt_username
+#   password: !secret mqtt_password
+#   discovery: true
+#   discovery_prefix: homeassistant
+# #  certificate: /home/paulus/dev/addtrustexternalcaroot.crt
+# #  protocol: 3.1
+#   birth_message:
+#     topic: 'hass/status'
+#     payload: 'online'
+#     qos: 1
+#     retain: true
+#   will_message:
+#     topic: 'hass/status'
+#     payload: 'offline'
+#     qos: 1
+#     retain: true
+
+## Owntracks via MQTT for mobile tracking
+## https://www.home-assistant.io/components/owntracks/
+owntracks:
+  max_gps_accuracy: 200
+  waypoints: true
+  mqtt_topic: "owntracks/#"
+  events_only: false
+#   track_new_devices: yes
+#   interval_seconds: 240
+#   consider_home: 600 ## was 900
+#   waypoint_whitelist:
+#     - kareem
+#     - magnus4
+#   region_mapping:
+#     cabin: home
+#     office: work
+
+## Open Z-Wave configuration!
+## https://www.home-assistant.io/components/zwave
+# zwave:
+#   usb_path: /dev/ttyACM0
+#   network_key: !secret zwave_networkkey
+#   config_path: /srv/hass/src/python-openzwave/openzwave/config
+
+## Vera gateway for Z-Wave & Zigbee
+## https://www.home-assistant.io/components/vera
+vera:
+  vera_controller_url: http://192.168.178.103:3480/
+
+## IKEA Tradfri for Zigbee
+## https://www.home-assistant.io/components/tradfri/
+tradfri:
+  host: 192.168.178.107
+
+## Xiaomi component for Zigbee temp sensors and buttons
+## https://www.home-assistant.io/components/xiaomi_aqara
+# xiaomi_aqara:
+#   discovery_retry: 10
+#   gateways:
+#   - mac: !secret xiaomi_mac_address
+#     key: !secret xiaomi_password
+#     host: '192.168.178.104'
+#     disable: false
+
+## Cover/Blinds
+## https://www.home-assistant.io/integrations/cover/
+cover:
+    ## Cover/Blinds Groups
+    ## https://www.home-assistant.io/integrations/cover.group/
+  - platform: group
+    name: TRADFRI Stairs Blinds
+    entities:
+    - cover.tradfri_blind
+    - cover.tradfri_blind_2
+
+## Enable fans/air filters
+## https://www.home-assistant.io/integrations/fan/
+# fan:
+#     ## Xiaomi Air Purifier 2S setup
+#     ## https://www.home-assistant.io/components/fan.xiaomi_miio/
+#   - platform: xiaomi_miio
+#     name: "air_purifier_2s"
+#     host: 192.168.178.109
+#     token: !secret xiaomi_access_token_europe
+
+## Enable Xiaomi Mi Remote(s)
+remote:
+    ## https://www.home-assistant.io/integrations/remote.xiaomi_miio
+    ## https://www.home-assistant.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token
+    ## https://github.com/Maxmudjon/com.xiaomi-miio/blob/master/docs/obtain_token.md
+    ## https://android-apk.org/com.xiaomi.smarthome/43397902-mi-home/
+  - platform: xiaomi_miio
+    name: "livingroom_ir_remote"
+    host: 192.168.178.176
+    token: !secret xiaomi_access_token_mi_remote_1
+    commands:
+      tv_on_off:
+        command:
+          - raw:mUznMwlk2mEwlkxmM3AIWazYAcpiAgYDLTUAcprOAEDAEIBkwIXAp+WTWagQeAPMwgA=
+      tv_source:
+        command:
+          - raw:mUznMwlk1nEwlkxmIBBTaYAGEAg8ymIBCzWagMEAWYDHgITMgENAH8Ac5hAA
+      tv_mute:
+        command:
+          - raw:mUznMwlk1nAAZAD9MZlMgCCm4CHgU+AwcxAEKbTEBjwA6APKYQA=
+      tv_volume_up:
+        command:
+          - raw:mUznMwlk1nAAZADtMZiAQU2mACEgMRMpiAg02AgIAswGPAx8CiABymEA
+      tv_volume_down:
+        command:
+          - raw:mUznMwlk1nEwlkxmUxAIaYgIlNpgAYoAdgQwAHE2AoIBMpjMQDCAIOaglsAPAFFTCAA=
+      tv_prog_up:
+        command:
+          - raw:mU0mEwlk1m4AZTkAMpwAP4A7APlMZlMgENAgcBhQQfAH6YQA
+      tv_prog_down:
+        command:
+          - raw:mUznMwlk1nEwlkxmUxAIWagIMAP8xmIAhTYCQwGPmUyAx8Af5hLJhAA=
+
+## Enable Text-To-Speech, used by Google Assistant
+tts:
+  ## TTS for Google Assistant
+  ## https://www.home-assistant.io/components/google_translate/
+  - platform: google_translate
+    language: 'en'
+    cache: true
+    cache_dir: /config/tts
+    time_memory: 300
+    service_name: google_say # default google_translate_say
+
+## Setup tracking using InfluxDB
+## https://www.home-assistant.io/components/influxdb
 # influxdb:
 #   host: !secret dburl_influxdb
 #   port: !secret dburl_influxdb_port
@@ -93,180 +293,57 @@ recorder:
 #    instance: prod
 #    source: hass
 
-# # Open Z-Wave configuration!
-# zwave:
-#   usb_path: /dev/ttyACM0
-#   network_key: !secret zwave_networkkey
-#   config_path: /srv/hass/src/python-openzwave/openzwave/config
-
-mqtt:
-#  broker: 127.0.0.1
-  broker: 192.168.178.130
-  port: 1883
-  client_id: home-assistant-1
-  keepalive: 60
-  username: !secret mqtt_username
-  password: !secret mqtt_password
-#  certificate: /home/paulus/dev/addtrustexternalcaroot.crt
-#  protocol: 3.1
-  birth_message:
-    topic: 'hass/status'
-    payload: 'online'
-    qos: 1
-    retain: true
-  will_message:
-    topic: 'hass/status'
-    payload: 'offline'
-    qos: 1
-    retain: true
-
-## Ring.com doorbell
-ring:
-  username: !secret ring_username
-  password: !secret ring_password
-
-## Vera gateway for Z-Wave & Zigbee
-vera:
-  vera_controller_url: http://192.168.178.22:3480/
-
-## Xiaomi component for Zigbee temp sensors and buttons
-xiaomi_aqara:
-  discovery_retry: 10
-  gateways:
-   - mac: !secret xiaomi_mac_address
-     key: !secret xiaomi_password
-     host: '192.168.178.23'
-     disable: false
-
-## Pushbullet Token/API setup (Disabled in January)
-notify:
-  - name: pushbullet
-    platform: pushbullet
-    api_key: !secret apikey_pushbullet
-
-## Enable Google Assistant API
-google_assistant:
-  project_id: !secret google_assistant_project_id
-  # client_id: !secret google_assistant_client_id
-  # access_token: !secret google_assistant_access_token
-  # agent_user_id: google_assistant_agent_user_id
-  api_key: google_assistant_api_key
-  exposed_domains:
-     - group
-    #  - input_boolean
-     - scene
-     - script
-     - switch
-    #  - fan
-     - light
-    #  - cover
-     - media_player
-     - climate
-  entity_config:
-    group.bedroom_things:
-      name: Bedroom Things
-      aliases:
-        - Bedroom Stuff
-    group.livingroom_things:
-      name: Livingroom Things
-      aliases:
-        - Livingroom Stuff
-        - Living room Stuff
-    # switch.pi_door_strike:
-    #   name: Door Strike
-    #   aliases:
-    #     - Buzz the door
-    # group.optimus:
-    #   name: optimus
-    #   aliases:
-    #     - workstation
-    #     - the key to vector sigma
-    # group.soundwave:
-    #   name: soundwave
-    #   aliases:
-    #     - server
-    #     - the tape deck
-
 ## Sabnzbd download manager
-sabnzbd:
-  api_key: !secret apikey_sabnzbd
-  host: 192.168.178.103
-  name: sab
-  port: 8080
-  ssl: false
-  sensors:
-    - current_status
-    - speed
-    - queue_size
-    - queue_remaining
-    - disk_size
-    - disk_free
-    - queue_count
-    - day_size
-    - week_size
-    - month_size
-    - total_size
+## https://www.home-assistant.io/components/sabnzbd
+# sabnzbd:
+#   api_key: !secret apikey_sabnzbd
+#   host: 192.168.178.11
+#   name: SABnzbd
+#   port: 8080
+#   ssl: false
+#   sensors:
+#     - current_status
+#     - speed
+#     - queue_size
+#     - queue_remaining
+#     - disk_size
+#     - disk_free
+#     - queue_count
+#     - day_size
+#     - week_size
+#     - month_size
+#     - total_size
 
-media_player:
-  # - platform: cast
-  - platform: plex
-    entity_namespace: 'plex'
-    include_non_clients: true
-    scan_interval: 5
-    show_all_controls: false
-    use_custom_entity_ids: false
-    use_episode_art: true
-    remove_unavailable_clients: false
-    client_remove_interval: 600
+## Spotify custom_component for playing to Chromecast/Google Home
+## https://github.com/fondberg/spotcast
+spotcast:
+  sp_dc: !secret sp_dc
+  sp_key: !secret sp_key
 
-climate:
-  - platform: generic_thermostat
-    name: House Heating
-    heater: switch.pi_boiler_switch
-    target_sensor: !secret xiaomi_temp_2
-    min_temp: 10
-    max_temp: 25
-    target_temp: 21
-    cold_tolerance: 0.3
-    hot_tolerance: 0
-    icon: mdi:guage
-    min_cycle_duration:
-      minutes: 1
-
-binary_sensor:
-  - platform: ring
-    monitored_conditions:
-      - ding
-      - motion
-
-# Front Page Input States and Options, used for Automation
-input_select:
-  house_presence:
-    name: Who's Home?
-    options:
-      - Home
-      - Away
-      # - Night
-      # - Vacation
-      - Guests Home
-      - Guests ALONE
-      # - Guests Kids
-      # - Warm House
-      # - Open Door!
-      # - Intruder!
-      # - Emergency!
-    initial: Away
-    icon: mdi:home-map-marker
-
-## Setup lights (Yeelight, MiLight, etc)
-light: !include_dir_merge_list light
+################################
+## EXTERNALISED PACKAGES
+## Packages that are in sub_dirs of the main configuration
+## Mixed core components and external components
 
 ## Automation programs
 automation: !include automations.yaml
 automation old: !include_dir_merge_list automation
 
-## Device Tracker module
+## Digital return value (0 or 1) sensors
+binary_sensor: !include_dir_merge_list binary_sensor
+
+## Cameras
+camera: !include_dir_merge_list camera
+
+## Device Tracker module - Manage tracked devices
+## https://www.home-assistant.io/components/device_tracker/
 device_tracker: !include_dir_merge_list device_tracker
+
+## Enable Google Assistant API
+## https://www.home-assistant.io/components/google_assistant
+# google_assistant: !include_dir_merge_named google_assistant
+## Entry to enable the cloud component
+cloud:
 
 ## Views (Tabs) and Groups
 group: !include_dir_merge_named group
@@ -276,6 +353,15 @@ input_boolean: !include_dir_merge_named input_boolean
 
 ## Virtual input number sliders
 input_number: !include_dir_merge_named input_number
+
+## Front Page Input States and Options, used for Automation
+input_select: !include_dir_merge_named input_select
+
+## Setup lights (MiLight, etc)
+light: !include_dir_merge_list light
+
+## Media Player (Plex, Spotify, etc)
+media_player: !include_dir_merge_list media_player
 
 ## Scene setups
 # scene: !include_dir_merge_list scene
@@ -294,3 +380,5 @@ switch: !include_dir_merge_list switch
 
 ## Zones using GPS
 zone: !include_dir_merge_list zone
+
+websocket_api:

@@ -1,0 +1,34 @@
+# Coming HOME/Startup! Trigger Welcome Home Timer Switch
+- id: welcome_home_automation
+  alias: Welcome Home Automation
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: person.kareem
+      to: "home"
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: person.kareem
+      state: "home"
+    - condition: time
+      after: "06:00:00"
+      before: "22:00:00"
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.welcome_home
+
+## Deactivate Welcome Home after Timeout, if not triggered
+- id: welcome_home_automation_timeout
+  alias: Welcome Home Automation Timeout
+  trigger:
+    - platform: state
+      entity_id: input_boolean.welcome_home
+      to: "on"
+      for:
+        seconds: 300 # 5 mins
+  action:
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.welcome_home

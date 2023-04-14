@@ -2,50 +2,107 @@
 #### NOTIFICATION AUTOMATIONS ####
 ##################################
 
+## Tell me when a device is online
+- id: notification_device_online
+  alias: Notification Device Online
+  trigger:
+  - platform: state
+    entity_id:
+    - person.kareem
+    - person.friends
+    - device_tracker.hotrod_local_lan_lan1
+    - device_tracker.hotrod_local_lan_lan2
+    to: "home"
+  action:
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Home Assistant - Device Online!"
+      message: "Device ID: {{ trigger.entity_id }}, name: {{ trigger.to_state.name }}, is now {{ trigger.to_state.state }}!"
+
+## Tell me when a device is offline
+- id: notification_device_offline
+  alias: Notification Device Offline
+  trigger:
+  - platform: state
+    entity_id:
+    - person.kareem
+    - person.friends
+    - person.hotrod
+    - person.blaster
+    - person.soundwave
+    - person.eject1
+    - person.flipsides1
+    - person.major_lj1320n
+    # - device_tracker.hotrod_local_lan_lan1
+    # - device_tracker.hotrod_local_lan_lan2
+    # - device_tracker.shockwave1
+    # - device_tracker.shockwave2
+    # - device_tracker.shockwave3
+    # - device_tracker.blaster_1
+    # - device_tracker.blaster_2
+    # - device_tracker.blaster_3
+    # - device_tracker.soundwave_1
+    # - device_tracker.soundwave_2
+    # - device_tracker.soundwave_3
+    # - device_tracker.optimus
+    - device_tracker.ring_doorbell_1
+    - device_tracker.ring_chime_1
+    # - device_tracker.vera1
+    # - device_tracker.vera2
+    # - device_tracker.ikea_tradfri_gateway
+    # - device_tracker.xiaomi_gateway
+    # - device_tracker.xiaomi_airpurifier2s_1
+    to: "not_home"
+  action:
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Home Assistant - Device Offline!"
+      message: "{{ trigger.to_state.name }} is now {{ trigger.to_state.state }}! Device ID: {{ trigger.entity_id }}"
+
 ## Tell me when Home Assistant starts/restarts
-- id: ha_notification_startup
-  alias: HA Notification Startup
+- id: notification_ha_startup
+  alias: Notification HA Startup
   trigger:
     - platform: homeassistant
-      # Event can also be 'shutdown'
       event: start
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: 'Home Assistant Started!'
+        title: "Home Assistant - Started!"
         message: "Home Assistant started and available!"
 
 ## Tell me when Home Assistant Stopping/Shutdown
-- id: ha_notification_shutdown
-  alias: HA Notification Shutdown
+- id: notification_ha_shutdown
+  alias: Notification HA Shutdown
   trigger:
     - platform: homeassistant
       event: shutdown
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: 'Home Assistant Stopping!'
+        title: "Home Assistant - Stopping!"
         message: "Home Assistant shutting down!"
 
 ## Tell me when Home Assistant update available
-- id: ha_notification_available
-  alias: HA Notification Update Available
+- id: notification_ha_available
+  alias: Notification HA Update Available
   trigger:
     - platform: state
       entity_id: updater.updater
   action:
     - service: notify.pushbullet
-      data: 
-        #target: 'YOUR_TARGET_HERE' #See Pushbullet component for usage
+      data:
         target: !secret email_target_pushbullet
-        title: 'New Home Assistant Release'
+        title: "Home Assistant - New Release"
         message: "Home Assistant  {{ states.updater.updater.state }}  is now available."
 
 ## Tell me when new devices detected on network
-- id: ha_notification_new_nmap_device
-  alias: HA Notification New NMAP Device
+- id: notification_ha_new_nmap_device
+  alias: Notification HA New NMAP Device
   trigger:
     - platform: event
       event_type: device_tracker_new_device
@@ -53,93 +110,240 @@
     - service: notify.pushbullet
       data:
         target: !secret email_target_pushbullet
-        title: 'New Device detected!'
-        message: "New unknown NMAP device detected!"
-#        message: "New unknown NMAP device detected! > {{ states.updater.updater.state }}"
+        title: "Home Assistant - New Device detected!"
+        message: "New unknown NMAP device detected! ID: {{ trigger.entity_id }}, MAC: {{ device_tracker_new_device.mac }}"
+    - service: persistent_notification.create
+      data:
+        title: "New Device detected!"
+        message: "New unknown NMAP device detected! ID: {{ trigger.entity_id }}, MAC: {{ device_tracker_new_device.mac }}"
+        notification_id: new_nmap
 
-## Tell me there is an intruder ## entrance
-- id: ha_notification_there_is_an_intruder_entrance
-  alias: HA Notification There is an intruder ENTRANCE
+## Tell me door is open ## entrance
+- id: notification_entrance_door_is_open
+  alias: Notification Entrance Door is Open!
   trigger:
     - platform: state
-      entity_id: !secret coolcam_motion_sensor_1
-      from: 'off'
-      to: 'on'
+      entity_id: !secret vision_sensor_1
+      to: "on"
   condition:
     condition: and
     conditions:
     - condition: state
-      entity_id: input_select.house_presence
-      state: 'Away'
+      entity_id: !secret vision_sensor_1
+      state: "on"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: 'ALERT! Movement at Home!'
-        message: "Movement has been detected at ENTRANCE!"
+        title: "Home Assistant - ALERT! Door Open!"
+        message: "ENTRANCE door open!"
 
-## Tell me there is an intruder ## downstairs
-- id: ha_notification_there_is_an_intruder_downstairs
-  alias: HA Notification There is an intruder DOWNSTAIRS
+## Tell me door is open for longer ## entrance
+- id: notification_entrance_door_is_open_still
+  alias: Notification Entrance Door is Open STILL!
   trigger:
     - platform: state
-      entity_id: !secret coolcam_motion_sensor_2
-      from: 'off'
-      to: 'on'
+      entity_id: !secret vision_sensor_1
+      to: "on"
+      for:
+        minutes: 5
+    - platform: time_pattern
+      minutes: '/5'
   condition:
     condition: and
     conditions:
     - condition: state
-      entity_id: input_select.house_presence
-      state: 'Away'
+      entity_id: !secret vision_sensor_1
+      state: "on"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: 'ALERT! Movement at Home!'
-        message: "Movement has been detected DOWNSTAIRS!"
+        title: "Home Assistant - ALERT! Door left Open!"
+        message: "ENTRANCE door is left open!"
 
-## Tell me there is an intruder ## upstairs
-- id: ha_notification_there_is_an_intruder_upstairs
-  alias: HA Notification There is an intruder UPSTAIRS
+## Tell me door is closed ## entrance
+- id: notification_entrance_door_is_closed
+  alias: Notification Entrance Door is Closed!
   trigger:
     - platform: state
-      entity_id: !secret 6in1_sensor_move_1
-      from: 'off'
-      to: 'on'
+      entity_id: !secret vision_sensor_1
+      to: "off"
   condition:
     condition: and
     conditions:
     - condition: state
-      entity_id: input_select.house_presence
-      state: 'Away'
+      entity_id: !secret vision_sensor_1
+      state: "off"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: 'ALERT! Movement at Home!'
-        message: "Movement has been detected UPSTAIRS!"
+        title: "Home Assistant - ALERT! Door Closed!"
+        message: "ENTRANCE door closed!"
 
-## Tell me there is an intruder ## living room
-- id: ha_notification_there_is_an_intruder_livingroom
-  alias: HA Notification There is an intruder LIVINGROOM
+## Tell me door is open ## downstairs
+- id: notification_downstairs_door_is_open
+  alias: Notification Downstairs Door is Open!
   trigger:
     - platform: state
-      entity_id: !secret 6in1_sensor_move_2
-      from: 'off'
-      to: 'on'
+      entity_id: !secret vision_sensor_2
+      to: "on"
   condition:
     condition: and
     conditions:
     - condition: state
-      entity_id: input_select.house_presence
-      state: 'Away'
+      entity_id: !secret vision_sensor_2
+      state: "on"
   action:
     - service: notify.pushbullet
-      data: 
+      data:
         target: !secret email_target_pushbullet
-        title: 'ALERT! Movement at Home!'
-        message: "Movement has been detected at LIVINGROOM!"
+        title: "Home Assistant - ALERT! Door Open!"
+        message: "DOWNSTAIRS door open!"
+
+## Notify Door Strike reset activated
+- id: notification_ha_door_strike_active
+  alias: Notification HA Door Strike active
+  trigger:
+    - platform: state
+      entity_id: switch.relay4c1_2
+      to: "on"
+    - platform: state
+      entity_id: lock.poppdoorswitch_1_6
+      to: "unlocked"
+  action:
+    - service: notify.pushbullet
+      data:
+        target: !secret email_target_pushbullet
+        message: "Door Strike activated!"
+
+## Door Strike reset after 4 seconds
+- id: notification_ha_rl_door_strike_reset
+  alias: Notification HA RL Door Strike reset
+  trigger:
+    - platform: state
+      entity_id: switch.relay4c1_2
+      to: "on"
+      for:
+        seconds: 4
+  action:
+    - service: homeassistant.turn_off
+      entity_id:
+        - switch.relay4c1_2
+    - service: notify.pushbullet
+      data:
+        target: !secret email_target_pushbullet
+        message: "RL Door Strike reset!"
+
+## Door Strike reset after 4 seconds
+- id: notification_ha_zw_door_strike_reset
+  alias: Notification HA ZW Door Strike reset
+  trigger:
+    - platform: state
+      entity_id: lock.poppdoorswitch_1_6
+      to: "locked"
+  action:
+    - service: notify.pushbullet
+      data:
+        target: !secret email_target_pushbullet
+        message: "ZW Door Strike reset!"
+
+# ## Notify that you have package(s) today!
+# - id: notification_packages_today
+#   alias: Notification Packages Today!
+#   trigger:
+#     - platform: homeassistant
+#       event: start
+#     - platform: numeric_state
+#       entity_id: sensor.postnl
+#       above: 0
+#     - platform: time
+#       at: "08:00:00" # at 8am
+#     - platform: time
+#       at: "14:00:00" # at 2pm
+#     - platform: state
+#       entity_id: person.kareem
+#       to: "home"
+#   condition:
+#     condition: and
+#     conditions:
+#     - condition: numeric_state
+#       entity_id: 'sensor.postnl'
+#       above: 0
+#   action:
+#     - service: notify.pushbullet
+#       data:
+#         target: !secret email_target_pushbullet
+#         message: "You have POSTNL package(s) today!!!"
+
+# ## Notify that all packages marked delivered
+# - id: notification_packages_delivered
+#   alias: Notification Packages Delivered
+#   trigger:
+#     # - platform: numeric_state
+#     #   entity_id: sensor.postnl
+#     #   below: 1
+#     - platform: state
+#       entity_id: sensor.postnl
+#       to: '0'
+#   condition:
+#     condition: and
+#     conditions:
+#     - condition: numeric_state
+#       entity_id: 'sensor.postnl'
+#       below: 1
+#   action:
+#     - service: notify.pushbullet
+#       data:
+#         target: !secret email_target_pushbullet
+#         message: "All POSTNL packages marked delivered."
+
+# - id: notification_upon_failed_login_attempt
+#   alias: "Notification upon failed login attempt"
+#   trigger:
+#     - platform: state
+#       entity_id: persistent_notification.httplogin
+#   condition:
+#     - condition: template
+#       value_template: "{{ trigger.to_state.state != off }}"
+#   action:
+#     - service: notify.pushbullet
+#       data:
+#         target: !secret email_target_pushbullet
+#         title: "Debug failed login!"
+#         message: "Debug failed login!"
+#     - service: notify.pushbullet
+#       data_template:
+#         title: "Home Assistant - Failed login attempt!"
+#         message: "{{ trigger.to_state.state }}"
+#         data:
+#           url: http://www.ip-tracker.org/locator/ip-lookup.php?ip={{ states.persistent_notification.httplogin.state.split ("from ") [1]}}
+
+# - id: Notification Forward persistent notifications
+#   alias: notification_forward_persistent_notifications
+#   initial_state: 'on'
+#   trigger:
+#     - platform: event
+#       event_type: call_service
+#       event_data:
+#         domain: persistent_notification
+#         service: create
+#   action:
+#     - service: notify.pushbullet
+#       data:
+#         target: !secret email_target_pushbullet
+#         title: "Home Assistant - Debug failed login!"
+#         message: "Debug failed login!"
+#     - service: notify.pushbullet
+#       data_template:
+#         message: >-
+#           {% set message = trigger.event.data.service_data.message %}
+#           {% if 'invalid authentication' in message or 'login attempts' in message %}
+#             {{ message }}: http://www.ip-tracker.org/locator/ip-lookup.php?ip={{ message.split('from ')[1] }}
+#           {% else %}
+#             {{ message }}
+#           {% endif %}
 
 ## Tell me there is an emergency
 #tbc
