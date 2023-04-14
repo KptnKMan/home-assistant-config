@@ -3,6 +3,7 @@
 # Kareems home-assistant-config
 
 Configuration for Kareem's [HomeAssistant](https://home-assistant.io).
+
 Note that the "[kareem](https://github.com/KptnKMan/home-assistant-config/tree/kareem)" (Dev) branch is usually more updated.
 
 ## Introduction
