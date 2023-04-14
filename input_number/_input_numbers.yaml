@@ -64,12 +64,12 @@ purifier_fave_level:
   unit_of_measurement: level
   icon: mdi:air-filter
 
-attic_high_temp:
-  name: Attic High Temperature
-  initial: 34
-  min: 0
-  max: 40
-  step: 1
-  mode: slider
-  unit_of_measurement: °C
-  icon: mdi:air-filter
+# attic_high_temp:
+#   name: Attic High Temperature
+#   initial: 34
+#   min: 0
+#   max: 40
+#   step: 1
+#   mode: slider
+#   unit_of_measurement: °C
+#   icon: mdi:air-filter

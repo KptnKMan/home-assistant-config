@@ -88,9 +88,9 @@ entity_config:
     expose: false
     name: Reset Server
     room: All House
-  !secret plug_6: # livingroom tv and chromecast/steamlink
+  !secret plug_6: # christmas tree - livingroom tv and chromecast/steamlink
     expose: true
-    name: Livingroom TV
+    name: Christmas Tree
     room: Livingroom
   !secret plug_7: # display cabinet
     expose: true
@@ -109,19 +109,19 @@ entity_config:
     name: Reset HA
     room: All House
   
-  !secret sonoff_1: # Reset HA
+  !secret sonoff_1: # home automation cabinet
     expose: true
     name: Reset HA
     room: All House
-  !secret sonoff_2: # router reset
+  !secret sonoff_2: # ziggo router
     expose: true
     name: Reset Router
     room: All House
-  !secret sonoff_3: # server/soundwave
+  !secret sonoff_3: # unused
     expose: true
     name: Reset Server
     room: All House
-  !secret sonoff_4: # Bathroom Extractor
+  !secret sonoff_4: # bathroom extractor
     expose: true
     name: Bathroom Extractor
     room: Bathroom

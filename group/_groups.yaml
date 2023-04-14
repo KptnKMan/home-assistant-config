@@ -185,7 +185,7 @@
 #     name: Quick Things
 #     entities:
 #       - input_select.presence_house
-#       - input_number.temp_target
+#       - input_number.temp_target_home
 #       - input_boolean.lights_keep_all_on
 #       - input_boolean.friends_visiting
 #       - input_boolean.kids_in_the_house
@@ -232,7 +232,7 @@
 #     name: Heating Controls
 #     entities:
 #       - climate.house_heating
-#       - input_number.temp_target
+#       - input_number.temp_target_home
 #       - input_number.temp_daytime
 #       - input_number.temp_morning
 #       - input_number.temp_night
@@ -474,7 +474,7 @@
 #       - input_number.temp_daytime
 #       - input_number.temp_morning
 #       - input_number.temp_night
-#       - input_number.temp_target
+#       - input_number.temp_target_home
 #   ring_things:
 #     name: Ring Things
 #     entities:

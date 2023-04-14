@@ -39,8 +39,8 @@ home_lockdown_everything_off:
     - switch.poppdoorsensor_1_7
     - switch.6in1multisensor_1_31
     - switch.6in1uvsensor_1_35
-    - switch.6in1multisensor_2_45
-    - switch.6in1uvsensor_2_49
+    - switch.6in1multisensor_2_118
+    - switch.6in1uvsensor_2_122
   # set house to Away
   - service: input_select.select_option
     data:
@@ -69,8 +69,8 @@ home_lockdown_disarm:
     - switch.poppdoorsensor_1_7
     - switch.6in1multisensor_1_31
     - switch.6in1uvsensor_1_35
-    - switch.6in1multisensor_2_45
-    - switch.6in1uvsensor_2_49
+    - switch.6in1multisensor_2_118
+    - switch.6in1uvsensor_2_122
   # set house to Home
   # - service: input_select.select_option
   #   data:
