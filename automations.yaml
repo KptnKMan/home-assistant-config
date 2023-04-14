@@ -62,7 +62,7 @@
     at: 05:00
   condition: []
   action:
-  - service: hassio.snapshot_full
+  - service: hassio.backup_full
     data:
       name: Automated Daily Backup {{ now() }}
   mode: single

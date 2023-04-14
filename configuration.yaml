@@ -24,6 +24,9 @@ homeassistant:
 ## CORE PACKAGES
 ## Packages configured standard in Home Assistant
 
+# Anable all default components
+default_config:
+
 ## Enable configure panel
 config:
 
@@ -126,7 +129,7 @@ system_health:
 
 ## Checks for available updates
 ## https://www.home-assistant.io/components/updater
-updater:
+#updater:
 
 ################################
 ## EXTERNALLY CONFIGURED PACKAGES
@@ -192,12 +195,12 @@ owntracks:
 ## Vera gateway for Z-Wave & Zigbee
 ## https://www.home-assistant.io/components/vera
 vera:
-  vera_controller_url: http://192.168.178.22:3480/
+  vera_controller_url: http://192.168.178.103:3480/
 
 ## IKEA Tradfri for Zigbee
 ## https://www.home-assistant.io/components/tradfri/
 tradfri:
-  host: 192.168.178.27
+  host: 192.168.178.107
 
 ## Xiaomi component for Zigbee temp sensors and buttons
 ## https://www.home-assistant.io/components/xiaomi_aqara
@@ -206,7 +209,7 @@ tradfri:
 #   gateways:
 #   - mac: !secret xiaomi_mac_address
 #     key: !secret xiaomi_password
-#     host: '192.168.178.23'
+#     host: '192.168.178.104'
 #     disable: false
 
 ## Cover/Blinds
@@ -227,7 +230,7 @@ cover:
 #     ## https://www.home-assistant.io/components/fan.xiaomi_miio/
 #   - platform: xiaomi_miio
 #     name: "air_purifier_2s"
-#     host: 192.168.178.175
+#     host: 192.168.178.109
 #     token: !secret xiaomi_access_token_europe
 
 ## Enable Xiaomi Mi Remote(s)
@@ -311,12 +314,6 @@ tts:
 #     - month_size
 #     - total_size
 
-## Spotify Media Player
-## https://www.home-assistant.io/integrations/spotify/
-spotify:
-  client_id: !secret spotify_client_id
-  client_secret: !secret spotify_client_secret
-
 ## Spotify custom_component for playing to Chromecast/Google Home
 ## https://github.com/fondberg/spotcast
 spotcast:
@@ -344,7 +341,9 @@ device_tracker: !include_dir_merge_list device_tracker
 
 ## Enable Google Assistant API
 ## https://www.home-assistant.io/components/google_assistant
-google_assistant: !include_dir_merge_named google_assistant
+# google_assistant: !include_dir_merge_named google_assistant
+## Entry to enable the cloud component
+cloud:
 
 ## Views (Tabs) and Groups
 group: !include_dir_merge_named group

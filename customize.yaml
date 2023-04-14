@@ -19,108 +19,108 @@
 #   assumed_state: false
 #   sensor_class: opening
 
-# Kareem GS6 Owntracks
-device_tracker.kareem_magnus3:
-  # friendly_name: Kareem GS6 OT
-  entity_picture: /local/kareem.jpg
+## Kareem GS6 Owntracks
+# device_tracker.kareem_magnus3:
+#   friendly_name: Kareem GS6 OT
+#   entity_picture: /local/kareem.jpg
 
-# Kareem GS10 Owntracks
-device_tracker.kareem_magnus4:
-  # friendly_name: Kareem GS10 OT
-  entity_picture: /local/kareem.jpg
+## Kareem GS10 Owntracks
+# device_tracker.kareem_magnus4:
+#   friendly_name: Kareem GS10 OT
+#   entity_picture: /local/kareem.jpg
 
 ## Chromecasts
-media_player.chromecast_audio_1:
-  friendly_name: Livingroom Player
-  icon: mdi:cast
+# media_player.chromecast_audio_1:
+#   friendly_name: Livingroom Player
+#   icon: mdi:cast
 # media_player.chromecast_audio_2:
 #   friendly_name: Bedroom Player?
 #   icon: mdi:cast
-media_player.chromecast_tv_1:
-  friendly_name: Gameroom TV
-  icon: mdi:cast
-media_player.chromecast_tv_2:
-  friendly_name: Livingroom TV
-  icon: mdi:cast
-media_player.chromecast_tv_3:
-  friendly_name: Bedroom TV
-  icon: mdi:cast
+# media_player.chromecast_tv_1:
+#   friendly_name: Gameroom TV
+#   icon: mdi:cast
+# media_player.chromecast_tv_2:
+#   friendly_name: Livingroom TV
+#   icon: mdi:cast
+# media_player.chromecast_tv_3:
+#   friendly_name: Bedroom TV
+#   icon: mdi:cast
 
 ## Remote Pi Switches
-switch.pi_switch_1_17:
-  friendly_name: Boiler Switch
-  icon: mdi:speedometer
-switch.pi_switch_2_18:
-  friendly_name: Door Strike
-  icon: mdi:key
-switch.pi_switch_3_22:
-  friendly_name: Switch 3-22
-  icon: mdi:electric-switch
-switch.pi_switch_4_23:
-  friendly_name: Switch 4-23
-  icon: mdi:electric-switch
-binary_sensor.pi_switch_1_17:
-  friendly_name: Boiler Switch Sensor
-  icon: mdi:speedometer
-binary_sensor.pi_switch_2_18:
-  friendly_name: Door Strike Sensor
-  icon: mdi:key
-binary_sensor.pi_switch_3_22:
-  friendly_name: Switch 3-22 Sensor
-  icon: mdi:electric-switch
-binary_sensor.pi_switch_4_23:
-  friendly_name: Switch 4-23 Sensor
-  icon: mdi:electric-switch
+# switch.pi_switch_1_17:
+#   friendly_name: Boiler Switch
+#   icon: mdi:speedometer
+# switch.pi_switch_2_18:
+#   friendly_name: Door Strike
+#   icon: mdi:key
+# switch.pi_switch_3_22:
+#   friendly_name: Switch 3-22
+#   icon: mdi:electric-switch
+# switch.pi_switch_4_23:
+#   friendly_name: Switch 4-23
+#   icon: mdi:electric-switch
+# binary_sensor.pi_switch_1_17:
+#   friendly_name: Boiler Switch Sensor
+#   icon: mdi:speedometer
+# binary_sensor.pi_switch_2_18:
+#   friendly_name: Door Strike Sensor
+#   icon: mdi:key
+# binary_sensor.pi_switch_3_22:
+#   friendly_name: Switch 3-22 Sensor
+#   icon: mdi:electric-switch
+# binary_sensor.pi_switch_4_23:
+#   friendly_name: Switch 4-23 Sensor
+#   icon: mdi:electric-switch
 
 ## Switch aliases
 ## Wake on LAN
-switch.optimus:
-  icon: mdi:lan-connect
-switch.soundwave:
-  icon: mdi:lan-connect
+# switch.optimus:
+#   icon: mdi:lan-connect
+# switch.soundwave:
+#   icon: mdi:lan-connect
 
 ## Sonoff WiFi plugs
-switch.sonoff1:
-  friendly_name: Reset HA
-  icon: mdi:power-socket-eu
-switch.sonoff2:
-  friendly_name: Reset Router
-  icon: mdi:power-socket-eu
-switch.sonoff3:
-  friendly_name: Reset Soundwave
-  icon: mdi:power-socket-eu
-switch.sonoff4:
-  friendly_name: Bathroom Extractor
-  icon: mdi:power-socket-eu
+# switch.sonoff1:
+#   friendly_name: Reset HA
+#   icon: mdi:power-socket-eu
+# switch.sonoff2:
+#   friendly_name: Reset Router
+#   icon: mdi:power-socket-eu
+# switch.sonoff3:
+#   friendly_name: Reset Soundwave
+#   icon: mdi:power-socket-eu
+# switch.sonoff4:
+#   friendly_name: Bathroom Extractor
+#   icon: mdi:power-socket-eu
 
 ## Weather sensors
-sensor.yr_symbol:
-  friendly_name: Outside Weather
-sensor.yr_temperature:
-  friendly_name: Outside Temperature
-sensor.yr_humidity:
-  friendly_name: Outside Humidity
-  icon: mdi:water-percent
-sensor.yr_pressure:
-  friendly_name: Outside Air Pressure
-sensor.yr_precipitation:
-  friendly_name: Outside Rain level
-sensor.yr_wind_direction:
-  friendly_name: Outside Wind Direction
-sensor.yr_wind_speed:
-  friendly_name: Outside Wind Speed
-sensor.yr_fog:
-  friendly_name: Outside Fog?
-sensor.yr_dewpoint_temperature:
-  friendly_name: Outside Dew Point Temperature
-sensor.yr_cloudiness:
-  friendly_name: Outside Cloudiness
-sensor.yr_low_clouds:
-  friendly_name: Outside Clouds (Low)
-sensor.yr_medium_clouds:
-  friendly_name: Outside Clouds (Medium)
-sensor.yr_high_clouds:
-  friendly_name: Outside Clouds (High)
+# sensor.yr_symbol:
+#   friendly_name: Outside Weather
+# sensor.yr_temperature:
+#   friendly_name: Outside Temperature
+# sensor.yr_humidity:
+#   friendly_name: Outside Humidity
+#   icon: mdi:water-percent
+# sensor.yr_pressure:
+#   friendly_name: Outside Air Pressure
+# sensor.yr_precipitation:
+#   friendly_name: Outside Rain level
+# sensor.yr_wind_direction:
+#   friendly_name: Outside Wind Direction
+# sensor.yr_wind_speed:
+#   friendly_name: Outside Wind Speed
+# sensor.yr_fog:
+#   friendly_name: Outside Fog?
+# sensor.yr_dewpoint_temperature:
+#   friendly_name: Outside Dew Point Temperature
+# sensor.yr_cloudiness:
+#   friendly_name: Outside Cloudiness
+# sensor.yr_low_clouds:
+#   friendly_name: Outside Clouds (Low)
+# sensor.yr_medium_clouds:
+#   friendly_name: Outside Clouds (Medium)
+# sensor.yr_high_clouds:
+#   friendly_name: Outside Clouds (High)
 # sensor.pws_temp_c:
 #   friendly_name: Outside Temp
 # sensor.pws_feelslike_c:
