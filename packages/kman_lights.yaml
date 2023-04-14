@@ -272,7 +272,7 @@ automation:
     - binary_sensor.ccamdevice_2_1_105 # downstairs
     - binary_sensor.motion_sensor_158d000302d045 # pantry
     - binary_sensor.motion_sensor_158d00031b00fc # toilet
-    - binary_sensor.6in1multisensor_2_45 # livingroom
+    - binary_sensor.6in1multisensor_2_118 # livingroom
     - binary_sensor.motion_sensor_158d000313d7c4 # kitchen
     - binary_sensor.6in1multisensor_1_31 # upstairs
     - binary_sensor.ccamdevice_5_1_114 # closet
@@ -340,7 +340,7 @@ automation:
         %}
           timer.light_toilet
         {% elif
-          (trigger.entity_id == 'binary_sensor.6in1multisensor_2_45')
+          (trigger.entity_id == 'binary_sensor.6in1multisensor_2_118')
         %}
           timer.light_livingroom
         {% elif
@@ -648,7 +648,7 @@ automation:
           timer.light_toilet
         {% elif
           (trigger.event.data.entity_id == 'timer.livingroom') and
-          (states('binary_sensor.6in1multisensor_2_45') == "on")
+          (states('binary_sensor.6in1multisensor_2_118') == "on")
         %}
           timer.light_livingroom
         {% elif
@@ -785,7 +785,7 @@ automation:
           timer.light_toilet
         {% elif
           (trigger.event.data.entity_id == 'timer.light_livingroom') and
-          (states('binary_sensor.6in1multisensor_2_45') == "off")
+          (states('binary_sensor.6in1multisensor_2_118') == "off")
         %}
           timer.light_livingroom
         {% elif
@@ -851,7 +851,7 @@ automation:
           light.lights_toilet
         {% elif
           (trigger.event.data.entity_id == 'timer.light_livingroom') and
-          (states('binary_sensor.6in1multisensor_2_45') == "off")
+          (states('binary_sensor.6in1multisensor_2_118') == "off")
         %}
           light.lights_livingroom
         {% elif

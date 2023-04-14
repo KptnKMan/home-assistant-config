@@ -15,9 +15,9 @@ climate:
   name: House Heating
   heater: switch.relay4c1_1 # operate this switch for heating on/of
   target_sensor: sensor.temperature_158d00019ce72e # sensor to monitor to determine switch
-  min_temp: 10
-  max_temp: 25
-  target_temp: 20 # don't forget to also set input_number.temp_target
+  min_temp: 14
+  max_temp: 24
+  target_temp: 18 # don't forget to also set initial for input_number.temp_target_home & input_number.temp_daytime
   cold_tolerance: 0.3
   hot_tolerance: 0
   min_cycle_duration:
@@ -30,21 +30,21 @@ input_boolean:
     icon: mdi:guage
 
 input_number:
-  temp_target:
-    name: Target Temp
-    initial: 14
-    min: 14
-    max: 25
+  temp_target_attic:
+    name: Target Temp Attic
+    initial: 34
+    min: 20
+    max: 40
     step: 1
     mode: slider
     unit_of_measurement: °C
-    icon: mdi:thermometer-lines
+    icon: mdi:air-filter
 
-  temp_target_attic:
-    name: Target Temp Attic
-    initial: 26
-    min: 20
-    max: 30
+  temp_target_home:
+    name: Target Temp Home
+    initial: 14
+    min: 14
+    max: 24
     step: 1
     mode: slider
     unit_of_measurement: °C
@@ -52,9 +52,9 @@ input_number:
 
   temp_daytime:
     name: Temp Daytime
-    initial: 21
+    initial: 20
     min: 14
-    max: 25
+    max: 24
     step: 1
     mode: slider
     unit_of_measurement: °C
@@ -64,7 +64,7 @@ input_number:
     name: Temp Morning
     initial: 18
     min: 14
-    max: 25
+    max: 24
     step: 1
     mode: slider
     unit_of_measurement: °C
@@ -74,7 +74,7 @@ input_number:
     name: Temp Night
     initial: 16
     min: 14
-    max: 25
+    max: 24
     step: 1
     mode: slider
     unit_of_measurement: °C
@@ -84,7 +84,7 @@ input_number:
     name: Temp Away
     initial: 14
     min: 14
-    max: 25
+    max: 24
     step: 1
     mode: slider
     unit_of_measurement: °C
@@ -135,10 +135,10 @@ automation:
     # - service: climate.set_temperature
     #   entity_id: climate.house_heating
     #   data_template:
-    #     temperature: "{{ states('input_number.temp_target') }}"
+    #     temperature: "{{ states('input_number.temp_target_home') }}"
     - service: input_number.set_value
       data_template:
-        entity_id: input_number.temp_target
+        entity_id: input_number.temp_target_home
         value: "{{ states('input_number.temp_daytime') }}"
     # - service: notify.pushbullet
     #   data:
@@ -186,7 +186,7 @@ automation:
   action:
     - service: input_number.set_value
       data_template:
-        entity_id: input_number.temp_target
+        entity_id: input_number.temp_target_home
         value: "{{ states('input_number.temp_morning') }}"
     # - service: climate.set_temperature
     #   entity_id: climate.house_heating
@@ -234,7 +234,7 @@ automation:
   action:
     - service: input_number.set_value
       data_template:
-        entity_id: input_number.temp_target
+        entity_id: input_number.temp_target_home
         value: "{{ states('input_number.temp_night') }}"
 #    - service: climate.set_temperature
 #      entity_id: climate.house_heating
@@ -263,7 +263,7 @@ automation:
   action:
     - service: input_number.set_value
       data_template:
-        entity_id: input_number.temp_target
+        entity_id: input_number.temp_target_home
         value: "{{ states('input_number.temp_away') }}"
 #    - service: climate.set_temperature
 #      entity_id: climate.house_heating
@@ -278,18 +278,18 @@ automation:
 ## This should be the only entity to change heating
 
 ## MASTER Heating control via slider
-- id: heating_temp_target_slider_moved
+- id: heating_temp_target_home_slider_moved
   alias: Heating temp_arget slider moved
   trigger:
     - platform: state
-      entity_id: input_number.temp_target
+      entity_id: input_number.temp_target_home
   action:
     - service: climate.set_temperature
       entity_id: climate.house_heating
       data_template:
-        temperature: "{{ states('input_number.temp_target') }}"
+        temperature: "{{ states('input_number.temp_target_home') }}"
 
-## Detecting Climate 'temperature' change, set temp_target
+## Detecting Climate 'temperature' change, set temp_target_home
 - id: heating_climate_slider_moved_anytime
   alias: heating climate slider moved anytime
   trigger:
@@ -303,14 +303,14 @@ automation:
   action:
     - service: input_number.set_value
       data_template:
-        entity_id: input_number.temp_target
+        entity_id: input_number.temp_target_home
         value: "{{ trigger.to_state.attributes.temperature }}"
     - service: notify.pushbullet
       data:
         title: "Home Assistant - Climate Temp Changed"
         message: >
           "Climate changed at {{now().strftime("%H:%M:%S")}},
-          adjusted temp_target to {{ states.climate.house_heating.attributes.temperature }},
+          adjusted temp_target_home to {{ states.climate.house_heating.attributes.temperature }},
           currently {{ states.climate.house_heating.attributes.current_temperature }}"
 
 ## Manual Heating control via slider
@@ -318,7 +318,7 @@ automation:
   alias: Heating Daytime slider moved
   trigger:
     - platform: state
-      entity_id: input_number.temp_target
+      entity_id: input_number.temp_target_home
   condition:
     condition: and
     conditions:
@@ -340,14 +340,14 @@ automation:
     - service: input_number.set_value
       data_template:
         entity_id: input_number.temp_daytime
-        value: "{{ states('input_number.temp_target') }}"
+        value: "{{ states('input_number.temp_target_home') }}"
 
 ## Manual Heating control via slider
 - id: heating_climate_set_changed_morning
   alias: Heating Morning slider moved
   trigger:
     - platform: state
-      entity_id: input_number.temp_target
+      entity_id: input_number.temp_target_home
   condition:
     condition: and
     conditions:
@@ -369,14 +369,14 @@ automation:
     - service: input_number.set_value
       data_template:
         entity_id: input_number.temp_morning
-        value: "{{ states('input_number.temp_target') }}"
+        value: "{{ states('input_number.temp_target_home') }}"
 
 ## Manual Heating control via slider
 - id: heating_climate_set_changed_night
   alias: Heating Night slider moved
   trigger:
     - platform: state
-      entity_id: input_number.temp_target
+      entity_id: input_number.temp_target_home
   condition:
     condition: and
     conditions:
@@ -398,14 +398,14 @@ automation:
     - service: input_number.set_value
       data_template:
         entity_id: input_number.temp_night
-        value: "{{ states('input_number.temp_target') }}"
+        value: "{{ states('input_number.temp_target_home') }}"
 
 ## Manual Heating control via slider
 - id: heating_climate_set_changed_away
   alias: Heating Away slider moved
   trigger:
     - platform: state
-      entity_id: input_number.temp_target
+      entity_id: input_number.temp_target_home
   condition:
     condition: and
     conditions:
@@ -416,4 +416,4 @@ automation:
     - service: input_number.set_value
       data_template:
         entity_id: input_number.temp_away
-        value: "{{ states('input_number.temp_target') }}"
+        value: "{{ states('input_number.temp_target_home') }}"
