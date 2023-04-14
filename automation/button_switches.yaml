@@ -2,7 +2,7 @@
 ### MANUAL AUTOMATIONS ###
 ##########################
 
-## Turn on bedroom things with button
+## Toggle bedroom things with button
 - id: sw1_bedroom_things
   alias: sw1 Bedroom Things
   trigger:
@@ -14,8 +14,8 @@
   action:
     - service: homeassistant.toggle
       entity_id:
-      - switch.neocoolcamplug12a_2_21 # lamp
-      - switch.neocoolcamplug12a_3_22 # tv
+        - switch.neocoolcamplug12a_2_21 # bedroom lamp
+        - switch.neocoolcamplug12a_3_22 # bedroom tv
 
 ## Toggle nightlight with button double-click
 - id: sw1_gateway_nightlight
@@ -44,10 +44,10 @@
       entity_id: input_boolean.lights_automate_bedrooms
     - service: homeassistant.turn_on
       entity_id:
-      - script.lights_cancel_all_timers
+        - script.lights_cancel_all_timers
     - service: homeassistant.turn_on
       entity_id:
-      - script.lights_off_at_home
+        - script.lights_off_at_home
     - service: light.turn_on
       data:
         entity_id: light.gateway_light_34ce008bee96
@@ -102,9 +102,9 @@
         title: 'Home Assistant - Door strike activated!'
         message: "Door Strike activated!"
 
-## Activate OPTIMUS single click
-- id: sw3_activate_optimus
-  alias: sw3 Activate OPTIMUS
+## Activate Workstation single click
+- id: sw3_activate_workstation
+  alias: sw3 Activate Workstation
   trigger:
     - platform: event
       event_type: xiaomi_aqara.click
@@ -112,21 +112,17 @@
         entity_id: binary_sensor.switch_158d0001870a09
         click_type: single
   action:
-    # ## Turn on desk lamp
-    # - service: switch.turn_on
-    #   entity_id: !secret sonoff_4
-      ## Turn on Triple Monitors
     - service: homeassistant.turn_on
-      entity_id: !secret plug_1
-      ## wait x seconds
-    - delay: 00:00:05
-      ## Turn on OPTIMUS
-    - service: homeassistant.turn_on
-      entity_id: switch.optimus
+      entity_id:
+        - !secret plug_9 # gameroom lamp
+        - !secret plug_1 # gameroom monitors
+        - !secret plug_4 # gameroom fan
+        - light.shellyrgbw21 # shelly LED controller (need to move)
+        - light.shellyrgbw22 # shelly LED controller (need to move)
 
-## Turn off OPTIMUS double click
-- id: sw3_deactivate_optimus
-  alias: sw3 Deactivate OPTIMUS
+## Turn off Workstation double click
+- id: sw3_deactivate_workstation
+  alias: sw3 Deactivate Workstation
   trigger:
     - platform: event
       event_type: xiaomi_aqara.click
@@ -134,17 +130,13 @@
         entity_id: binary_sensor.switch_158d0001870a09
         click_type: double
   action:
-      ## Turn off OPTIMUS
     - service: homeassistant.turn_off
-      entity_id: switch.optimus
-      ## wait x seconds
-    - delay: 00:00:05
-      ## Turn off Triple Monitors
-    - service: homeassistant.turn_off
-      entity_id: !secret plug_1
-    # ## Turn off desk lamp
-    # - service: switch.turn_off
-    #   entity_id: !secret sonoff_4
+      entity_id:
+        - !secret plug_9 # gameroom lamp
+        - !secret plug_1 # gameroom monitors
+        - !secret plug_4 # gameroom fan
+        - light.shellyrgbw21 # shelly LED controller (need to move)
+        - light.shellyrgbw22 # shelly LED controller (need to move)
 
 ## Toggle Gameroom Light with button long press
 - id: sw3_gameroom_light
@@ -171,7 +163,7 @@
   action:
     - service: homeassistant.toggle
       entity_id:
-      - switch.neocoolcamplug12a_6_25 # livingroom tv
+        - switch.neocoolcamplug12a_6_25 # livingroom tv
 
 ## Toggle Livingroom Spots with button long press
 - id: sw4_livingroom_spots
@@ -186,9 +178,9 @@
     - service: homeassistant.toggle
       entity_id: light.fibaro_dimmer_2_1_8
 
-## Activate monitors+lamp on single click
-- id: sw5_workiva_time
-  alias: sw5 Workiva Time
+## Turn off monitors+lamp+fan+light on single click
+- id: sw5_bed_time_guest
+  alias: sw5 Bed Time Guest
   trigger:
     - platform: event
       event_type: xiaomi_aqara.click
@@ -196,31 +188,28 @@
         entity_id: binary_sensor.switch_158d000186e64a
         click_type: single
   action:
-    # ## Turn on desk lamp
-    # - service: switch.turn_on
-    #   entity_id: !secret sonoff_4
-      ## Turn on Triple Monitors
-    - service: switch.turn_on
-      entity_id: !secret plug_1
+    - service: homeassistant.turn_off
+      entity_id: 
+        - !secret plug_9 # gameroom lamp
+        - !secret plug_1 # gameroom monitors
+        - !secret plug_4 # gameroom fan
+        - light.yeelight_4 # gameroom light
+        - light.shellyrgbw21 # shelly LED controller (need to move)
+        - light.shellyrgbw22 # shelly LED controller (need to move)
 
-## Deactivate monitors+lamp off long press click
-- id: sw5_workiva_done
-  alias: sw5 Workiva Done
+## Toggle Gameroom Light with button long press
+- id: sw5_gameroom_lights_toggle
+  alias: sw5 Gameroom Lights Toggle
   trigger:
     - platform: event
       event_type: xiaomi_aqara.click
       event_data:
         entity_id: binary_sensor.switch_158d000186e64a
-        click_type: double
+        click_type: long_click_press
   action:
-      ## Turn off Triple Monitors
-    - service: switch.turn_off
-      entity_id: !secret plug_1
-    #   ## wait x seconds
-    # - delay: 00:00:10
-    # ## Turn off desk lamp
-    # - service: switch.turn_off
-    #   entity_id: !secret sonoff_4
+    - service: homeassistant.toggle
+      entity_id:
+        - light.yeelight_4 # gameroom light
 
 ## Fibaro button from Vera scene
 - alias: button_1_pressed

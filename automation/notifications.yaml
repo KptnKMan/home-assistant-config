@@ -6,60 +6,60 @@
 - id: notification_device_online
   alias: Notification Device Online
   trigger:
-    - platform: state
-      entity_id:
-      - person.kareem
-      - person.friends
-      - device_tracker.hotrod_local_lan_lan1
-      - device_tracker.hotrod_local_lan_lan2
-      to: "home"
+  - platform: state
+    entity_id:
+    - person.kareem
+    - person.friends
+    - device_tracker.hotrod_local_lan_lan1
+    - device_tracker.hotrod_local_lan_lan2
+    to: "home"
   action:
-    - service: notify.pushbullet
-      data:
-        target: !secret email_target_pushbullet
-        title: "Home Assistant - Device Online!"
-        message: "Device ID: {{ trigger.entity_id }}, name: {{ trigger.to_state.name }}, is now {{ trigger.to_state.state }}!"
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Home Assistant - Device Online!"
+      message: "Device ID: {{ trigger.entity_id }}, name: {{ trigger.to_state.name }}, is now {{ trigger.to_state.state }}!"
 
 ## Tell me when a device is offline
 - id: notification_device_offline
   alias: Notification Device Offline
   trigger:
-    - platform: state
-      entity_id:
-      - person.kareem
-      - person.friends
-      - person.hotrod
-      - person.blaster
-      - person.soundwave
-      - person.eject1
-      - person.flipsides1
-      - person.major_lj1320n
-      # - device_tracker.hotrod_local_lan_lan1
-      # - device_tracker.hotrod_local_lan_lan2
-      # - device_tracker.shockwave1
-      # - device_tracker.shockwave2
-      # - device_tracker.shockwave3
-      # - device_tracker.blaster_1
-      # - device_tracker.blaster_2
-      # - device_tracker.blaster_3
-      # - device_tracker.soundwave_1
-      # - device_tracker.soundwave_2
-      # - device_tracker.soundwave_3
-      # - device_tracker.optimus
-      - device_tracker.ring_doorbell_1
-      - device_tracker.ring_chime_1
-      # - device_tracker.vera1
-      # - device_tracker.vera2
-      # - device_tracker.ikea_tradfri_gateway
-      # - device_tracker.xiaomi_gateway
-      # - device_tracker.xiaomi_airpurifier2s_1
-      to: "not_home"
+  - platform: state
+    entity_id:
+    - person.kareem
+    - person.friends
+    - person.hotrod
+    - person.blaster
+    - person.soundwave
+    - person.eject1
+    - person.flipsides1
+    - person.major_lj1320n
+    # - device_tracker.hotrod_local_lan_lan1
+    # - device_tracker.hotrod_local_lan_lan2
+    # - device_tracker.shockwave1
+    # - device_tracker.shockwave2
+    # - device_tracker.shockwave3
+    # - device_tracker.blaster_1
+    # - device_tracker.blaster_2
+    # - device_tracker.blaster_3
+    # - device_tracker.soundwave_1
+    # - device_tracker.soundwave_2
+    # - device_tracker.soundwave_3
+    # - device_tracker.optimus
+    - device_tracker.ring_doorbell_1
+    - device_tracker.ring_chime_1
+    # - device_tracker.vera1
+    # - device_tracker.vera2
+    # - device_tracker.ikea_tradfri_gateway
+    # - device_tracker.xiaomi_gateway
+    # - device_tracker.xiaomi_airpurifier2s_1
+    to: "not_home"
   action:
-    - service: notify.pushbullet
-      data:
-        target: !secret email_target_pushbullet
-        title: "Home Assistant - Device Offline!"
-        message: "{{ trigger.to_state.name }} is now {{ trigger.to_state.state }}! Device ID: {{ trigger.entity_id }}"
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Home Assistant - Device Offline!"
+      message: "{{ trigger.to_state.name }} is now {{ trigger.to_state.state }}! Device ID: {{ trigger.entity_id }}"
 
 ## Tell me when Home Assistant starts/restarts
 - id: notification_ha_startup

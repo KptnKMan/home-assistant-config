@@ -3,7 +3,7 @@
 ## manual boost function at any time
 ## disable heating schedules
 ## set timer, 1hr
-## set temp_target
+## set temp_target_home
 ## announce heating boost on
 ## wait
 ## re-enable heating schedules
@@ -47,5 +47,5 @@
 #     #     temperature: "{{ states('input_number.prev_temperature') }}"
 #     - service: input_number.set_value
 #       data_template:
-#         entity_id: input_number.temp_target
+#         entity_id: input_number.temp_target_home
 #         value: "{{ states('input_number.prev_temperature') }}"

@@ -6,18 +6,18 @@
     event: start
   - platform: numeric_state
     entity_id: sensor.temperature_158d0002c8d912
-    above: input_number.attic_high_temp
+    above: input_number.temp_target_attic
   - platform: state
-    entity_id: input_number.attic_high_temp
+    entity_id: input_number.temp_target_attic
   condition:
     condition: and
     conditions:
     # - condition: numeric_state
     #   entity_id: "sensor.temperature_158d0002c8d912"
-    #   above: input_number.attic_high_temp
+    #   above: input_number.temp_target_attic
     - condition: template
       value_template: >
-        {{ states('sensor.temperature_158d0002c8d912') > states('input_number.attic_high_temp') }}
+        {{ states('sensor.temperature_158d0002c8d912') > states('input_number.temp_target_attic') }}
   action:
     ## Turn on extractor
     - service: switch.turn_on
@@ -31,18 +31,18 @@
     event: start
   - platform: numeric_state
     entity_id: sensor.temperature_158d0002c8d912
-    below: input_number.attic_high_temp
+    below: input_number.temp_target_attic
   - platform: state
-    entity_id: input_number.attic_high_temp
+    entity_id: input_number.temp_target_attic
   condition:
     condition: and
     conditions:
     # - condition: numeric_state
     #   entity_id: "sensor.temperature_158d0002c8d912"
-    #   below: input_number.attic_high_temp
+    #   below: input_number.temp_target_attic
     - condition: template
       value_template: >
-        {{ states('sensor.temperature_158d0002c8d912') < states('input_number.attic_high_temp') }}
+        {{ states('sensor.temperature_158d0002c8d912') < states('input_number.temp_target_attic') }}
   action:
     ## Turn on extractor
     - service: switch.turn_off

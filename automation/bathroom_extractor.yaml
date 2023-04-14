@@ -15,7 +15,7 @@
       above: 70
   action:
     ## Turn on extractor
-    - service: switch.turn_on
+    - service: homeassistant.turn_on
       entity_id: !secret sonoff_4
 
 ## Stop Bathroom extractor when humidity is low
@@ -34,6 +34,6 @@
       entity_id: 'sensor.humidity_158d0002c8e95f'
       below: 70
   action:
-    ## Turn on extractor
-    - service: switch.turn_off
+    ## Turn off extractor
+    - service: homeassistant.turn_off
       entity_id: !secret sonoff_4
