@@ -4,6 +4,8 @@
 
 Configuration for Kareem's [HomeAssistant](https://home-assistant.io).
 
+Note that the "[kareem](https://github.com/KptnKMan/home-assistant-config/tree/kareem)" (Dev) branch is usually more updated.
+
 ## Introduction
 
 This is the project of my Home Automation journey.
@@ -82,40 +84,53 @@ This diagram is likely not 100% accurate, as sometimes changes are made to the s
 Here is a best-effort list (With links where to buy) of all the current hardware I use.
 I try to keep this list updated, and it will likely be more recent than the diagram above.
 
-- Vera Plus Z-Wave Hub
-  - 10x Neo Coolcam Smart Plug (EU)
-  - 5x Neo Coolcam PIR Sensor
-  - 2x Vision Door/Window Sensor
-  - 5x Fibaro Switch
-  - 2x Fibaro Dimmer
-  - 2x Aeotec Multisensor 6
-  - 1x POPP Door Strike
-  - 1x Fibaro "The button" (Red)
-  - 2x Z-Wave Key Remote
-- IKEA TRADFRI Zigbee Hub
-  - 1x LED Driver/Controller
-  - 5x GU11 Spot lights
-  - 1x LED RGB Bulb 800lm
-  - 7x LED White Bulb 1000lm
-  - 1x GL-C-007 Bulb
-  - 2x FYRTUR Blinds
-- Mii-Light LED Bridge (Mostly unused)
-  - 2x Mii-Light LED RGBW Controller (Unused)
-- Xiaomi Gateway II Zigbee Hub
-- Xiaomi Gateway III Zigbee Hub (Mostly unused)
-- Sonoff RF Hub (Running Tasmota)
-  - 2x RF Key Remote
-- Sonoff Zigbee Hub (Running Tasmota)
-
-- 3x Xiaomi "Yeelight Ceiling Light"
-- 2x Xiaomi "Yeelight Ceiling Light (Jiaoyue 480/650)"
-
+Google:
 - 3x Google Chromecast (Ultra 4k, 2nd Gen, 1st Gen)
 - 2x Google Chromecast Audio
 - 4x Google Home Mini
 
+Amazon/Ring:
+- Ring Doorbell Pro (WiFi)
+
+HomeWizard:
+- 2x Wi-Fi kWh meter 1-phase MID (1 for Mains, 1 for Solar Panels) (WiFi)
+- 6x Energy Socket EU (WiFi)
+
+Vera Plus (Z-Wave + Zigbee Hub):
+- 10x Neo Coolcam Smart Plug (EU)
+- 5x Neo Coolcam PIR Sensor
+- 2x Vision Door/Window Sensor
+- 5x Fibaro Switch
+- 2x Fibaro Dimmer
+- 2x Aeotec Multisensor 6
+- 1x POPP Door Strike
+- 1x Fibaro "The button" (Red)
+- 2x Z-Wave Key Remote
+
+IKEA TRADFRI (Zigbee Hub):
+- 1x LED Driver/Controller
+- 5x GU11 Spot lights
+- 1x LED RGB Bulb 800lm
+- 7x LED White Bulb 1000lm
+- 1x GL-C-007 Bulb
+- 2x FYRTUR Blinds
+
+Xiaomi:
+- Mii-Light LED Bridge (Mostly unused)
+  - 2x Mii-Light LED RGBW Controller (Unused)
+- Xiaomi Gateway II Zigbee Hub
+- Xiaomi Gateway III Zigbee Hub (Mostly unused)
+- 3x Xiaomi "Yeelight Ceiling Light" (WiFi)
+- 2x Xiaomi "Yeelight Ceiling Light (Jiaoyue 480/650)" (WiFi)
+
+Sonoff:
 - 4x Sonoff Basic (Running Tasmota)
-- 2x Sonoff POW2 (Running Tasmota)
+- 4x Sonoff POW2 (Running Tasmota)
+- Sonoff RF Hub (Running Tasmota)
+  - 2x RF Key Remote
+- Sonoff Zigbee Hub (Running Tasmota)
+
+Misc Items:
 - 2x Shelley RGBW2 (Running Tasmota)
 - 2x LC Technology 5V 4 Channel Relay (Running Tasmota)
 
@@ -164,9 +179,11 @@ When enbarking on this, I made sure to make clear a set of taks that I wanted to
     - when batteries are low, at a configurable threshold
     - which devices have low batteries
     - what level are the low batteries
-- [ ] Power/Electricity monitoring
-  - I want a summary of electricity usage, of particular items/systems
+- [x] Power/Electricity/Solar monitoring
+  - I want a summary of electricity usage
+  - I want a breakdown of particular items/systems in the house
   - I want to see an approximate electricity cost calculation
+  - I want to see Solar Panel yield
 - [ ] plant watering
   - The plants should be watered automatically
     - based on schedule or moisture level
