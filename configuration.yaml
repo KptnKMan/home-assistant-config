@@ -168,6 +168,9 @@ notify:
 #     qos: 1
 #     retain: true
 
+## Front Page Input States and Options, used for Automation
+mqtt: !include_dir_merge_list mqtt
+
 ## Owntracks via MQTT for mobile tracking
 ## https://www.home-assistant.io/components/owntracks/
 owntracks:

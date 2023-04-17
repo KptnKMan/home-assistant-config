@@ -1,0 +1,166 @@
+## switches for using via MQTT
+switch:
+
+  # MQTT switches for ESP01v4s etc
+
+  # - name: "ESP01v41_1"
+  #   state_topic: "stat/ESP01v41/POWER1"
+  #   value_template: "{{ value_json.POWER1 }}"
+  #   command_topic: "cmnd/ESP01v41/POWER1"
+  #   availability_topic: "tele/ESP01v41/LWT"
+  #   qos: 1
+  #   payload_on: "ON"
+  #   payload_off: "OFF"
+  #   payload_available: "Online"
+  #   payload_not_available: "Offline"
+  #   retain: false
+
+  # MQTT switches for Relay4Cs etc
+
+  # - name: "Relay4C1_1"
+  #   state_topic: "stat/Relay4C1/POWER1"
+  #   value_template: "{{ value_json.POWER1 }}"
+  #   command_topic: "cmnd/Relay4C1/POWER1"
+  #   availability_topic: "tele/Relay4C1/LWT"
+  #   qos: 1
+  #   payload_on: "ON"
+  #   payload_off: "OFF"
+  #   payload_available: "Online"
+  #   payload_not_available: "Offline"
+  #   retain: false
+
+  # - name: "Relay4C1_2"
+  #   state_topic: "stat/Relay4C1/POWER2"
+  #   value_template: "{{ value_json.POWER2 }}"
+  #   command_topic: "cmnd/Relay4C1/POWER2"
+  #   availability_topic: "tele/Relay4C1/LWT"
+  #   qos: 1
+  #   payload_on: "ON"
+  #   payload_off: "OFF"
+  #   payload_available: "Online"
+  #   payload_not_available: "Offline"
+  #   retain: false
+
+  # - name: "Relay4C1_3"
+  #   state_topic: "stat/Relay4C1/POWER3"
+  #   value_template: "{{ value_json.POWER3 }}"
+  #   command_topic: "cmnd/Relay4C1/POWER3"
+  #   availability_topic: "tele/Relay4C1/LWT"
+  #   qos: 1
+  #   payload_on: "ON"
+  #   payload_off: "OFF"
+  #   payload_available: "Online"
+  #   payload_not_available: "Offline"
+  #   retain: false
+
+  # - name: "Relay4C1_4"
+  #   state_topic: "stat/Relay4C1/POWER4"
+  #   value_template: "{{ value_json.POWER4 }}"
+  #   command_topic: "cmnd/Relay4C1/POWER4"
+  #   availability_topic: "tele/Relay4C1/LWT"
+  #   qos: 1
+  #   payload_on: "ON"
+  #   payload_off: "OFF"
+  #   payload_available: "Online"
+  #   payload_not_available: "Offline"
+  #   retain: false
+
+  ## switches for using RF_Bridge via MQTT
+
+  - name: "RFRelay15"
+    command_topic: cmnd/RF_Bridge/rfcode
+    availability_topic: "tele/RF_Bridge/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    payload_on: "#555533"
+    payload_off: "#555433"
+    optimistic: true
+
+  - name: "RFRelay15_Program"
+    command_topic: cmnd/RF_Bridge/rfcode
+    availability_topic: "tele/RF_Bridge/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    payload_on: "#555433"
+    payload_off: "#555533"
+    optimistic: true
+
+  - name: "RFRelay1"
+    command_topic: cmnd/RF_Bridge/rfcode
+    availability_topic: "tele/RF_Bridge/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    payload_on: "#555503"
+    payload_off: "#555403"
+    optimistic: true
+
+  - name: "RFRelay1_Program"
+    command_topic: cmnd/RF_Bridge/rfcode
+    availability_topic: "tele/RF_Bridge/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    payload_on: "#555403"
+    payload_off: "#555503"
+    optimistic: true
+
+  # MQTT switches for Sonoffs etc
+
+  # – name: “sonoff1795”
+  #   state_topic: “stat/sonoff-1795/RESULT”
+  #   value_template: ‘{{ value_json[“POWER1”] }}’
+  #   command_topic: “cmnd/sonoff-1795/POWER1”
+  #   availability_topic: “tele/sonoff-1795/LWT”
+  #   qos: 1
+  #   payload_on: “ON”
+  #   payload_off: “OFF”
+  #   payload_available: “Online”
+  #   payload_not_available: “Offline”
+  #   retain: true 
+
+  # - name: "sonoff1"
+  #   state_topic: "stat/sonoff1/POWER1"
+  #   value_template: "{{ value_json.POWER1 }}"
+  #   command_topic: "cmnd/sonoff1/POWER1"
+  #   availability_topic: "tele/sonoff1/LWT"
+  #   qos: 1
+  #   payload_on: "ON"
+  #   payload_off: "OFF"
+  #   payload_available: "Online"
+  #   payload_not_available: "Offline"
+  #   retain: false
+
+  # - name: "sonoff2"
+  #   state_topic: "stat/sonoff2/POWER1"
+  #   value_template: "{{ value_json.POWER1 }}"
+  #   command_topic: "cmnd/sonoff2/POWER1"
+  #   availability_topic: "tele/sonoff2/LWT"
+  #   qos: 1
+  #   payload_on: "ON"
+  #   payload_off: "OFF"
+  #   payload_available: "Online"
+  #   payload_not_available: "Offline"
+  #   retain: false
+
+  # - name: "sonoff3"
+  #   state_topic: "stat/sonoff3/POWER1"
+  #   value_template: "{{ value_json.POWER1 }}"
+  #   command_topic: "cmnd/sonoff3/POWER1"
+  #   availability_topic: "tele/sonoff3/LWT"
+  #   qos: 1
+  #   payload_on: "ON"
+  #   payload_off: "OFF"
+  #   payload_available: "Online"
+  #   payload_not_available: "Offline"
+  #   retain: false
+
+  # - name: "sonoff4"
+  #   state_topic: "stat/sonoff4/POWER1"
+  #   value_template: "{{ value_json.POWER1 }}"
+  #   command_topic: "cmnd/sonoff4/POWER1"
+  #   availability_topic: "tele/sonoff4/LWT"
+  #   qos: 1
+  #   payload_on: "ON"
+  #   payload_off: "OFF"
+  #   payload_available: "Online"
+  #   payload_not_available: "Offline"
+  #   retain: false
