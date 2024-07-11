@@ -45,7 +45,7 @@ entity_config:
   light.tradfri_bulb_2:
     expose: true
     room: All House
-  light.tradfri_bulb_1:
+  light.yeelight_3:
     expose: true
     room: All House
   light.tradfri_bulb_4:

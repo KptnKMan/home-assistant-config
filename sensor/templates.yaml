@@ -5,6 +5,35 @@
 
 - platform: template
   sensors:
+    ## Sensor to track the House Heating HVAC Configuration
+    ## Required for "History Stats" and "Utility Meter"
+    house_heating_activity:
+      friendly_name: 'House Heating Activity'
+      value_template: "{{ state_attr('climate.house_heating', 'hvac_action') }}"
+
+# - platform: template
+#   sensors:
+#     ## Sensor to track the Non-Smart Analogue Main Grid Meter
+#     ## Required for "History Stats" and "Utility Meter"
+#     analogue_meter_tracker_kwh:
+#       friendly_name: 'Analogue Meter Tracker kWh'
+#       value_template: "{{ state_attr('climate.house_heating', 'hvac_action') }}"
+#       unit_of_measurement:  kWh
+
+#     analogue_meter_tracker_w_test:
+#       unique_id: analogue_meter_tracker_w_test
+#       friendly_name: 'Analogue Meter Tracker W Test'
+#       value_template: "{{ states.sensor.hwwifimeter_grid_active_power.state }}"
+#       unit_of_measurement:  W
+
+#     analogue_meter_tracker_kwh_test:
+#       unique_id: analogue_meter_tracker_kwh_test
+#       friendly_name: 'Analogue Meter Tracker kWh Test'
+#       value_template: "{{ states.switch.neocoolcamplug12a_1_125.attributes.current_energy_kwh }}"
+#       unit_of_measurement:  kWh
+
+- platform: template
+  sensors:
     # ## Battery sensors
     # ## https://github.com/arsaboo/homeassistant-config/blob/master/sensor.yaml#L184
     # battery_status:
@@ -66,12 +95,12 @@
     attribute_neocoolcamplug12a_1_current_power_w:
       unique_id: attribute_neocoolcamplug12a_1_current_power_w
       friendly_name: "NeoCoolCam Plug 12a 1_20 Current Power"
-      value_template: "{{ states.switch.neocoolcamplug12a_1_20.attributes.current_power_w }}"
+      value_template: "{{ states.switch.neocoolcamplug12a_1_125.attributes.current_power_w }}"
       unit_of_measurement:  W
     attribute_neocoolcamplug12a_1_current_energy_kwh:
       unique_id: attribute_neocoolcamplug12a_1_current_energy_kwh
       friendly_name: "NeoCoolCam Plug 12a 1_20 Current Energy"
-      value_template: "{{ states.switch.neocoolcamplug12a_1_20.attributes.current_energy_kwh }}"
+      value_template: "{{ states.switch.neocoolcamplug12a_1_125.attributes.current_energy_kwh }}"
       unit_of_measurement:  kWh
 
     attribute_neocoolcamplug12a_2_current_power_w:
@@ -99,23 +128,23 @@
     attribute_neocoolcamplug12a_4_current_power_w:
       unique_id: attribute_neocoolcamplug12a_4_current_power_w
       friendly_name: "NeoCoolCam Plug 12a 4_23 Current Power"
-      value_template: "{{ states.switch.neocoolcamplug12a_4_23.attributes.current_power_w }}"
+      value_template: "{{ states.switch.neocoolcamplug12a_4_126.attributes.current_power_w }}"
       unit_of_measurement:  W
     attribute_neocoolcamplug12a_4_current_energy_kwh:
       unique_id: attribute_neocoolcamplug12a_4_current_energy_kwh
       friendly_name: "NeoCoolCam Plug 12a 4_23 Current Energy"
-      value_template: "{{ states.switch.neocoolcamplug12a_4_23.attributes.current_energy_kwh }}"
+      value_template: "{{ states.switch.neocoolcamplug12a_4_126.attributes.current_energy_kwh }}"
       unit_of_measurement:  kWh
 
     attribute_neocoolcamplug12a_5_current_power_w:
       unique_id: attribute_neocoolcamplug12a_5_current_power_w
       friendly_name: "NeoCoolCam Plug 12a 5_24 Current Power"
-      value_template: "{{ states.switch.neocoolcamplug12a_5_24.attributes.current_power_w }}"
+      value_template: "{{ states.switch.neocoolcamplug12a_5_29.attributes.current_power_w }}"
       unit_of_measurement:  W
     attribute_neocoolcamplug12a_5_current_energy_kwh:
       unique_id: attribute_neocoolcamplug12a_5_current_energy_kwh
       friendly_name: "NeoCoolCam Plug 12a 5_24 Current Energy"
-      value_template: "{{ states.switch.neocoolcamplug12a_5_24.attributes.current_energy_kwh }}"
+      value_template: "{{ states.switch.neocoolcamplug12a_5_29.attributes.current_energy_kwh }}"
       unit_of_measurement:  kWh
 
     attribute_neocoolcamplug12a_6_current_power_w:
@@ -153,24 +182,13 @@
 
     attribute_neocoolcamplug12a_9_current_power_w:
       unique_id: attribute_neocoolcamplug12a_9_current_power_w
-      friendly_name: "NeoCoolCam Plug 12a 9_117 Current Power"
-      value_template: "{{ states.switch.neocoolcamplug12a_9_117.attributes.current_power_w }}"
+      friendly_name: "NeoCoolCam Plug 12a 9_124 Current Power"
+      value_template: "{{ states.switch.neocoolcamplug12a_9_127.attributes.current_power_w }}"
       unit_of_measurement:  W
     attribute_neocoolcamplug12a_9_current_energy_kwh:
       unique_id: attribute_neocoolcamplug12a_9_current_energy_kwh
-      friendly_name: "NeoCoolCam Plug 12a 9_117 Current Energy"
-      value_template: "{{ states.switch.neocoolcamplug12a_9_117.attributes.current_energy_kwh }}"
-      unit_of_measurement:  kWh
-
-    attribute_neocoolcamplug12a_10_current_power_w:
-      unique_id: attribute_neocoolcamplug12a_10_current_power_w
-      friendly_name: "NeoCoolCam Plug 12a 10_29 Current Power"
-      value_template: "{{ states.switch.neocoolcamplug12a_10_29.attributes.current_power_w }}"
-      unit_of_measurement:  W
-    attribute_neocoolcamplug12a_10_current_energy_kwh:
-      unique_id: attribute_neocoolcamplug12a_10_current_energy_kwh
-      friendly_name: "NeoCoolCam Plug 12a 10_29 Current Energy"
-      value_template: "{{ states.switch.neocoolcamplug12a_10_29.attributes.current_energy_kwh }}"
+      friendly_name: "NeoCoolCam Plug 12a 9_124 Current Energy"
+      value_template: "{{ states.switch.neocoolcamplug12a_9_127.attributes.current_energy_kwh }}"
       unit_of_measurement:  kWh
 
     # Sensor for all current power draw

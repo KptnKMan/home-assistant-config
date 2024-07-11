@@ -21,7 +21,7 @@
   action:
     ## Turn on extractor
     - service: switch.turn_on
-      entity_id: switch.NeoCoolcamPlug12A_10_29
+      entity_id: switch.neocoolcamplug12a_5_29
 
 ## Stop Attic extractor when temperature is low
 - alias: Attic Extractor Stop Low temperature
@@ -46,4 +46,4 @@
   action:
     ## Turn on extractor
     - service: switch.turn_off
-      entity_id: switch.NeoCoolcamPlug12A_10_29
+      entity_id: switch.neocoolcamplug12a_5_29

@@ -403,15 +403,15 @@
 #   icon: mdi:motion-sensor
 
 # ## Smart Plugs
-# switch.neocoolcamplug12a_1_20:
+# switch.neocoolcamplug12a_1_125:
 #   icon: mdi:monitor-multiple
 # switch.neocoolcamplug12a_2_21:
 #   icon: mdi:lamp
 # switch.neocoolcamplug12a_3_22:
 #   icon: mdi:television
-# switch.neocoolcamplug12a_4_23:
+# switch.neocoolcamplug12a_4_126:
 #   icon: mdi:power-socket-eu
-# switch.neocoolcamplug12a_5_24:
+# switch.neocoolcamplug12a_5_29:
 #   icon: mdi:power-socket-eu
 # switch.neocoolcamplug12a_6_25:
 #   icon: mdi:television
@@ -419,7 +419,5 @@
 #   icon: mdi:power-socket-eu
 # switch.neocoolcamplug12a_8_27:
 #   icon: mdi:power-socket-eu
-# switch.neocoolcamplug12a_9_101:
-#   icon: mdi:power-socket-eu
-# switch.neocoolcamplug12a_10_29:
+# switch.neocoolcamplug12a_9_127:
 #   icon: mdi:power-socket-eu

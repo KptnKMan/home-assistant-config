@@ -74,7 +74,7 @@ light:
 - platform: group
   name: Lights All Downstairs
   entities:
-  - light.tradfri_bulb_1
+  - light.yeelight_3
   - light.tradfri_bulb_2
   - light.fibaro_dimmer_2_1_8
   - light.fibaro_dimmer_2_2_11
@@ -102,7 +102,7 @@ light:
 - platform: group
   name: Lights Entrance
   entities:
-  - light.tradfri_bulb_1
+  - light.yeelight_3
   # downstairs
 - platform: group
   name: Lights Downstairs

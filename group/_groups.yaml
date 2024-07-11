@@ -318,6 +318,7 @@
 #       - light.yeelight_2
 #       - light.yeelight_3
 #       - light.yeelight_4
+#       - light.yeelight_5
 #       - fan.air_purifier_2s
 #       - binary_sensor.cube_158d00029a7923
 #       - binary_sensor.switch_158d000186dbec
@@ -753,7 +754,7 @@
 #   lights_all_downstairs:
 #     name: Lights All Downstairs
 #     entities:
-#       - light.tradfri_bulb_1
+#       - light.yeelight_3
 #       - light.tradfri_bulb_2
 #       - light.fibaro_dimmer_2_1_8
 #       - light.fibaro_dimmer_2_2_11
@@ -780,7 +781,7 @@
 #   lights_entrance:
 #     name: Lights Entrance
 #     entities:
-#       - light.tradfri_bulb_1
+#       - light.yeelight_3
 #   lights_downstairs:
 #     name: Lights Downstairs
 #     entities:

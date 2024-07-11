@@ -61,7 +61,7 @@
     state: 'Gameroom'
   action:
   - service: switch.turn_off
-    entity_id: switch.neocoolcamplug12a_9_117
+    entity_id: switch.neocoolcamplug12a_9_127
   - service: light.turn_off
     entity_id: light.yeelight_4
 
@@ -79,7 +79,7 @@
     state: 'Gameroom'
   action:
   - service: switch.turn_on
-    entity_id: switch.neocoolcamplug12a_9_117
+    entity_id: switch.neocoolcamplug12a_9_127
   - service: light.turn_on
     entity_id: light.yeelight_4
 

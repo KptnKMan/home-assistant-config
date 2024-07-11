@@ -50,7 +50,7 @@
 #   action:
 #   - service: light.turn_on
 #     data:
-#       entity_id: light.tradfri_bulb_1
+#       entity_id: light.yeelight_3
 #       transition: 2
 #       brightness: 255
 #       kelvin: 3000
@@ -103,4 +103,4 @@
 #     entity_id: timer.light_entrance
 #   - service: light.turn_off
 #     data:
-#       entity_id: light.tradfri_bulb_1
+#       entity_id: light.yeelight_3
