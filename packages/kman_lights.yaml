@@ -211,51 +211,51 @@ automation:
       - light.yeelight_2
       transition: 2
       ## set brightness based on sunset/time
-      brightness: >
+      brightness_pct: >
         {% if (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "18:00") and
-            (states.sensor.time.state < "20:00") %}
-          200
+            (states.sensor.time.state < "19:59") %}
+          80
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "20:00") and
-            (states.sensor.time.state < "22:00") %}
-          160
+            (states.sensor.time.state < "21:59") %}
+          70
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "22:00") and
-            (states.sensor.time.state < "00:00") %}
-          130
+            (states.sensor.time.state < "23:59") %}
+          50
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "00:00") and
-            (states.sensor.time.state < "03:00") %}
-          100
+            (states.sensor.time.state < "02:59") %}
+          40
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "03:00") and
-            (states.sensor.time.state < "06:00") %}
-          130
+            (states.sensor.time.state < "05:59") %}
+          60
         {% else %}
-          255
+          85
         {% endif %}
       ## TODO set kelvin based on sunset/time
-      kelvin: >
+      color_temp_kelvin: >
         {% if (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "18:00") and
-            (states.sensor.time.state < "20:00") %}
+            (states.sensor.time.state < "19:59") %}
           3000
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "20:00") and
-            (states.sensor.time.state < "22:00") %}
+            (states.sensor.time.state < "21:59") %}
           3000
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "22:00") and
-            (states.sensor.time.state < "00:00") %}
+            (states.sensor.time.state < "23:59") %}
           3000
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "00:00") and
-            (states.sensor.time.state < "03:00") %}
+            (states.sensor.time.state < "02:59") %}
           3000
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "03:00") and
-            (states.sensor.time.state < "06:00") %}
+            (states.sensor.time.state < "05:59") %}
           3000
         {% else %}
           3000
@@ -293,7 +293,7 @@ automation:
       conditions:
       # - condition: time
       #   after: "06:00:00"
-      #   before: "01:00:00"
+      #   before: "00:59:59"
       - condition: or
         conditions:
         # - condition: state
@@ -493,51 +493,51 @@ automation:
         {% endif %}
       transition: 2
       ## set brightness based on sunset/time
-      brightness: >
+      brightness_pct: >
         {% if (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "18:00") and
-            (states.sensor.time.state < "20:00") %}
-          200
+            (states.sensor.time.state < "19:59") %}
+          80
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "20:00") and
-            (states.sensor.time.state < "22:00") %}
-          160
+            (states.sensor.time.state < "21:59") %}
+          70
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "22:00") and
-            (states.sensor.time.state < "00:00") %}
-          130
+            (states.sensor.time.state < "23:59") %}
+          50
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "00:00") and
-            (states.sensor.time.state < "03:00") %}
-          100
+            (states.sensor.time.state < "02:59") %}
+          40
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "03:00") and
-            (states.sensor.time.state < "06:00") %}
-          130
+            (states.sensor.time.state < "05:59") %}
+          60
         {% else %}
-          255
+          85
         {% endif %}
       ## TODO set kelvin based on sunset/time
-      kelvin: >
+      color_temp_kelvin: >
         {% if (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "18:00") and
-            (states.sensor.time.state < "20:00") %}
+            (states.sensor.time.state < "19:59") %}
           3000
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "20:00") and
-            (states.sensor.time.state < "22:00") %}
+            (states.sensor.time.state < "21:59") %}
           3000
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "22:00") and
-            (states.sensor.time.state < "00:00") %}
+            (states.sensor.time.state < "23:59") %}
           3000
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "00:00") and
-            (states.sensor.time.state < "03:00") %}
+            (states.sensor.time.state < "02:59") %}
           3000
         {% elif (states.sun.sun.state == "below_horizon") and
           (states.sensor.time.state > "03:00") and
-            (states.sensor.time.state < "06:00") %}
+            (states.sensor.time.state < "05:59") %}
           3000
         {% else %}
           3000
