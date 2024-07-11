@@ -18,7 +18,7 @@ climate:
   min_temp: 14
   max_temp: 24
   target_temp: 18 # don't forget to also set initial for input_number.temp_target_home & input_number.temp_daytime
-  cold_tolerance: 0.3
+  cold_tolerance: 0.5
   hot_tolerance: 0
   min_cycle_duration:
     minutes: 1
@@ -32,7 +32,7 @@ input_boolean:
 input_number:
   temp_target_attic:
     name: Target Temp Attic
-    initial: 34
+    initial: 32
     min: 20
     max: 40
     step: 1
