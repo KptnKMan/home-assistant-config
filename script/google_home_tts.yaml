@@ -195,7 +195,7 @@ google_tts_notify_heating_summary:
 google_tts_set_announcement_volumes:
   alias: Google TTS Speaker Volumes Announcement
   sequence:
-  - service: homeassistant.turn_on
+  - service: script.turn_on
     entity_id: script.google_play_music_stop
   - service: input_number.set_value
     data_template:
@@ -234,5 +234,5 @@ google_tts_reset_volumes:
   #TODO make action to resume music if was playing
   # - check switch/sensor for if music was playing
   #start/resume music
-  # - service: homeassistant.turn_on
+  # - service: script.turn_on
   #   entity_id: script.radio_change_spotify_speakers # script from Radio package

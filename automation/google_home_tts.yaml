@@ -19,7 +19,7 @@
       entity_id: input_select.presence_house
       state: Home
   action:
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id: script.google_tts_set_announcement_volumes
     - delay:
         seconds: 5
@@ -29,9 +29,9 @@
         message: 'Welcome Home! Warming up the house.'
     - delay:
         seconds: 10
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id: script.google_tts_reset_volumes
-    - service: homeassistant.turn_off
+    - service: input_boolean.turn_off
       entity_id: input_boolean.welcome_home
 
 ## Google Home Voice TTS Welcome Home Gameroom
@@ -55,7 +55,7 @@
       entity_id: input_boolean.welcome_home
       state: 'on'
   action:
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id: script.google_tts_set_announcement_volumes
     - delay:
         seconds: 5
@@ -65,9 +65,9 @@
         message: 'Welcome Home! Time to do some work.'
     - delay:
         seconds: 10
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id: script.google_tts_reset_volumes
-    - service: homeassistant.turn_off
+    - service: input_boolean.turn_off
       entity_id: input_boolean.welcome_home
 
 ## Google Home Voice TTS Welcome Home Bedroom
@@ -91,7 +91,7 @@
       entity_id: input_boolean.welcome_home
       state: 'on'
   action:
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id: script.google_tts_set_announcement_volumes
     - delay:
         seconds: 5
@@ -101,9 +101,9 @@
         message: 'Welcome Home. Time to rest and relax?'
     - delay:
         seconds: 10
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id: script.google_tts_reset_volumes
-    - service: homeassistant.turn_off
+    - service: input_boolean.turn_off
       entity_id: input_boolean.welcome_home
 
 ## Notify Guests that house is cooling for the night
@@ -135,7 +135,7 @@
         entity_id: input_boolean.friends_visiting
         state: "on"
   action:
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id: script.google_tts_set_announcement_volumes
     - delay:
         seconds: 5
@@ -145,7 +145,7 @@
         message: "Attention guests. This is an automated house message. At 11pm the heating is cooling to {{ states('input_number.temp_night') }} degrees until 6am."
     - delay:
         seconds: 15
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id: script.google_tts_reset_volumes
     - service: notify.pushbullet
       data:
@@ -161,7 +161,7 @@
       entity_id: input_select.presence_house
       to: Away Guests Never # will never be triggered, state does not exist
   action:
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id: script.google_tts_set_announcement_volumes
     - delay:
         seconds: 5
@@ -171,7 +171,7 @@
         message: "Attention Guests. This is an automated house message. Kareem is outside trying to enter the house. Someone please let him in."
     - delay:
         seconds: 15
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id: script.google_tts_reset_volumes
     - service: notify.pushbullet
       data:
@@ -211,7 +211,7 @@
         entity_id: input_boolean.friends_visiting
         state: "on"
   action:
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id: script.google_tts_set_announcement_volumes
     - delay:
         seconds: 5
@@ -221,7 +221,7 @@
         message: "Hello Guests and Welcome. This is an automated house message from your friendly assistant. If you need anything I'm here. Just Say Hey Google or Ok Google to get my attention"
     - delay:
         seconds: 15
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id: script.google_tts_reset_volumes
     - service: notify.pushbullet
       data:

@@ -133,7 +133,7 @@
     to: 'off'
     for: 0:01:30
   action:
-  - service: homeassistant.turn_on
+  - service: switch.turn_on
     entity_id: switch.sonoff2
   - service: notify.pushbullet
     data:
@@ -155,10 +155,10 @@
     data:
       title: Starting HA Hubs Restart
       message: Starting Maintenance Restart - HA Hubs
-  - service: homeassistant.turn_off
+  - service: switch.turn_off
     entity_id: switch.sonoff1
   - delay: 00:01:00
-  - service: homeassistant.turn_on
+  - service: switch.turn_on
     entity_id: switch.sonoff1
   - delay: 00:01:00
   - service: persistent_notification.create
@@ -186,10 +186,10 @@
     data:
       title: Starting HA Router Restart
       message: Starting Maintenance Restart - HA Router
-  - service: homeassistant.turn_off
+  - service: switch.turn_off
     entity_id: switch.sonoff2
   - delay: 00:01:00
-  - service: homeassistant.turn_on
+  - service: switch.turn_on
     entity_id: switch.sonoff2
   - delay: 00:01:00
   - service: persistent_notification.create

@@ -12,7 +12,7 @@
         entity_id: binary_sensor.switch_158d000186dbec
         click_type: single
   action:
-    - service: homeassistant.toggle
+    - service: switch.toggle
       entity_id:
         - switch.neocoolcamplug12a_2_21 # bedroom lamp
         - switch.neocoolcamplug12a_3_22 # bedroom tv
@@ -27,7 +27,7 @@
         entity_id: binary_sensor.switch_158d000186dbec
         click_type: double
   action:
-    - service: homeassistant.toggle
+    - service: light.toggle
       entity_id: light.gateway_light_34ce008bee96
 
 ## Turn off all lights on long press
@@ -40,12 +40,12 @@
         entity_id: binary_sensor.switch_158d000186dbec
         click_type: long_click_press
   action:
-    - service: homeassistant.turn_off
+    - service: input_boolean.turn_off
       entity_id: input_boolean.lights_automate_bedrooms
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id:
         - script.lights_cancel_all_timers
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id:
         - script.lights_off_at_home
     - service: light.turn_on
@@ -65,7 +65,7 @@
         entity_id: binary_sensor.switch_158d00018726b8
         click_type: single
   action:
-  - service: homeassistant.turn_on
+  - service: script.turn_on
     entity_id:
       - script.home_lockdown_everything_off
 
@@ -79,7 +79,7 @@
         entity_id: binary_sensor.switch_158d00018726b8
         click_type: double
   action:
-  - service: homeassistant.turn_on
+  - service: script.turn_on
     entity_id:
       - script.home_lockdown_disarm
 
@@ -93,7 +93,7 @@
         entity_id: binary_sensor.switch_158d00018726b8
         click_type: long_click_press
   action:
-    - service: homeassistant.toggle
+    - service: switch.toggle
       entity_id:
         - switch.relay4c1_2
     - service: notify.pushbullet
@@ -112,7 +112,7 @@
         entity_id: binary_sensor.switch_158d0001870a09
         click_type: single
   action:
-    - service: homeassistant.turn_on
+    - service: switch.turn_on
       entity_id:
         - !secret plug_9 # gameroom lamp
         - !secret plug_1 # gameroom monitors
@@ -130,13 +130,13 @@
         entity_id: binary_sensor.switch_158d0001870a09
         click_type: double
   action:
-    - service: homeassistant.turn_off
+    - service: switch.turn_off
       entity_id:
         - !secret plug_9 # gameroom lamp
         - !secret plug_1 # gameroom monitors
         - !secret plug_4 # gameroom fan
-        - light.shellyrgbw21 # shelly LED controller (need to move)
-        - light.shellyrgbw22 # shelly LED controller (need to move)
+        # - light.shellyrgbw21 # shelly LED controller (need to move)
+        # - light.shellyrgbw22 # shelly LED controller (need to move)
 
 ## Toggle Gameroom Light with button long press
 - id: sw3_gameroom_light

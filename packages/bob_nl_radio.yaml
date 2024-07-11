@@ -248,7 +248,7 @@ automation:
   - platform: state
     entity_id: input_text.radio_stream_url
   action:
-  - service: homeassistant.turn_on
+  - service: script.turn_on
     entity_id: script.radio_stop
   - service: media_extractor.play_media
     data_template:
@@ -262,7 +262,7 @@ automation:
   - platform: state
     entity_id: input_text.radio_spotify_id
   action:
-  - service: homeassistant.turn_on
+  - service: script.turn_on
     entity_id: script.radio_stop
   - service: spotcast.start
     data_template:
@@ -316,7 +316,7 @@ script:
   radio_change_radio_speakers:
     alias: Change/Resume Radio
     sequence:
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id: script.radio_stop
     - service: media_player.play_media
       data_template:
@@ -325,7 +325,7 @@ script:
   radio_change_spotify_speakers:
     alias: Change/Resume Spotify
     sequence:
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       entity_id: script.radio_stop
     - service: spotcast.start
       data_template:

@@ -60,9 +60,9 @@
     entity_id: input_select.cube_mode
     state: 'Gameroom'
   action:
-  - service: homeassistant.turn_off
+  - service: switch.turn_off
     entity_id: switch.neocoolcamplug12a_9_117
-  - service: homeassistant.turn_off
+  - service: light.turn_off
     entity_id: light.yeelight_4
 
 # Gameroom Mode - Turn off Gameroom Lights
@@ -78,9 +78,9 @@
     entity_id: input_select.cube_mode
     state: 'Gameroom'
   action:
-  - service: homeassistant.turn_on
+  - service: switch.turn_on
     entity_id: switch.neocoolcamplug12a_9_117
-  - service: homeassistant.turn_on
+  - service: light.turn_on
     entity_id: light.yeelight_4
 
 # Music mode - Play Spotify Music
@@ -96,7 +96,7 @@
     entity_id: input_select.cube_mode
     state: 'Music'
   action:
-  - service: homeassistant.turn_on
+  - service: script.turn_on
     entity_id: script.radio_change_spotify_speakers # script from Radio package
   - service: notify.pushbullet
     data:
@@ -116,7 +116,7 @@
     entity_id: input_select.cube_mode
     state: 'Music'
   action:
-  - service: homeassistant.turn_on
+  - service: script.turn_on
     entity_id: script.radio_stop # script from Radio package
   - service: notify.pushbullet
     data:
@@ -136,7 +136,7 @@
     entity_id: input_select.cube_mode
     state: 'Music'
   action:
-  - service: homeassistant.turn_on
+  - service: script.turn_on
     entity_id: script.radio_next_track # script from Radio package
   - service: notify.pushbullet
     data:
@@ -156,7 +156,7 @@
     entity_id: input_select.cube_mode
     state: 'Music'
   action:
-  - service: homeassistant.turn_on
+  - service: script.turn_on
     entity_id: script.radio_previous_track # script from Radio package
   - service: notify.pushbullet
     data:

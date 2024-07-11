@@ -6,7 +6,7 @@
     entity_id: binary_sensor.RF_Remote1_A
     to: 'on'
   action:
-  - service: homeassistant.turn_on
+  - service: script.turn_on
     entity_id:
       - script.home_lockdown_everything_off
 
@@ -22,7 +22,7 @@
     entity_id: person.kareem
     state: "home"
   action:
-  - service: homeassistant.turn_on
+  - service: script.turn_on
     entity_id:
       - script.home_lockdown_disarm
 
@@ -38,7 +38,7 @@
     entity_id: person.kareem
     state: "home"
   action:
-  - service: homeassistant.turn_on
+  - service: switch.turn_on
     entity_id:
       - switch.relay4c1_2
 
@@ -75,7 +75,7 @@
       entity_id: input_boolean.friends_visiting
       state: "on"
   action:
-  - service: homeassistant.turn_on
+  - service: switch.turn_on
     entity_id:
       - switch.relay4c1_2
   - service: notify.pushbullet

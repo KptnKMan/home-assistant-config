@@ -57,58 +57,58 @@ vacation_lights_away_sequence:
         title: 'Vacation sequence begin'
         message: "Vacation away sequence has activated at home!"
     ## trigger entrance light
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       data:
         entity_id: script.timed_lamp_entrance
     ## trigger downstairs light
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       data:
         entity_id: script.timed_lamp_downstairs
     ## trigger upstairs light
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       data:
         entity_id: script.timed_lamp_upstairs
     ## turn on downstairs TV
-    - service: homeassistant.turn_on
+    - service: switch.turn_on
       data:
         entity_id: switch.neocoolcamplug12a_6_25
     ## wait X mins
     - delay:
         minutes: 43
     ## turn off downstairs TV
-    - service: homeassistant.turn_off
+    - service: switch.turn_off
       data:
         entity_id: switch.neocoolcamplug12a_6_25
     ## trigger downstairs light
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       data:
         entity_id: script.timed_lamp_downstairs
     ## wait X mins
     - delay:
         minutes: 2
     ## trigger upstairs light
-    - service: homeassistant.turn_on
+    - service: script.turn_on
       data:
         entity_id: script.timed_lamp_upstairs
     ## wait X mins
     - delay:
         minutes: 2
     ## turn on bedroom lamp
-    - service: homeassistant.turn_on
+    - service: switch.turn_on
       data:
         entity_id: switch.NeoCoolcamPlug12A_2_21
     ## wait X mins
     - delay:
         minutes: 4
     ## turn on bedroom TV
-    - service: homeassistant.turn_on
+    - service: switch.turn_on
       data:
         entity_id: switch.NeoCoolcamPlug12A_3_22
     ## wait X mins
     - delay:
         minutes: 111
     ## turn off bedroom TV
-    - service: homeassistant.turn_off
+    - service: switch.turn_off
       data:
         entity_id: switch.NeoCoolcamPlug12A_3_22
     ## Notify

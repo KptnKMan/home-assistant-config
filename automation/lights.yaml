@@ -30,7 +30,7 @@
       entity_id: input_boolean.lights_keep_all_on
       state: "on"
   action:
-  - service: homeassistant.turn_on
+  - service: script.turn_on
     entity_id:
     - script.lights_cancel_all_timers
   - service: notify.pushbullet
@@ -54,7 +54,7 @@
       entity_id: input_boolean.lights_keep_all_on
       state: "off"
   action:
-  - service: homeassistant.turn_on
+  - service: script.turn_on
     entity_id:
     - script.lights_cancel_all_timers
   - service: notify.pushbullet
