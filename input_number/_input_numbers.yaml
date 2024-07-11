@@ -54,16 +54,6 @@ google_home_volume_bedroom_speaker:
   unit_of_measurement: "%"
   icon: mdi:google-home
 
-purifier_fave_level:
-  name: Air Purifier 2S Level
-  initial: 5
-  min: 0
-  max: 15
-  step: 1
-  mode: slider
-  unit_of_measurement: level
-  icon: mdi:air-filter
-
 # attic_high_temp:
 #   name: Attic High Temperature
 #   initial: 34
