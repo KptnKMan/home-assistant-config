@@ -69,3 +69,23 @@
   - service: notify.pushbullet
     data:
       message: 'Blinds closed at {{now().strftime("%H:%M:%S")}}, 2h before sunset'
+
+## Test conditional - Blinds close (go down) if upstairs is too warm
+- alias: blinds anytime close when too warm
+  id: blinds_anytime_close_when_too_warm
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.temperature_158d00019ce5c7
+    above: 23
+  condition:
+  - condition: state
+    entity_id: cover.tradfri_stairs_blinds
+    state: "open"
+  action:
+  - service: cover.set_cover_position
+    data:
+      entity_id: cover.tradfri_stairs_blinds
+      position: 10
+  - service: notify.pushbullet
+    data:
+      message: 'Blinds lowered at {{now().strftime("%H:%M:%S")}}, TOO WARM!'

@@ -26,6 +26,7 @@
   trigger:
   - platform: state
     entity_id:
+    - device_tracker.internet_uptime_8_8_8_8
     - person.kareem
     - person.friends
     - person.hotrod
@@ -59,6 +60,64 @@
     data:
       target: !secret email_target_pushbullet
       title: "Home Assistant - Device Offline!"
+      message: "{{ trigger.to_state.name }} is now {{ trigger.to_state.state }}! Device ID: {{ trigger.entity_id }}"
+
+## Tell me when INTERNET is offline
+- id: notification_internet_offline
+  alias: Notification Internet Offline
+  trigger:
+  - platform: state
+    entity_id: device_tracker.internet_uptime_8_8_8_8
+    to: "away"
+  action:
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Home Assistant - INTERNET OFFLINE!"
+      message: "Tracker For Internet is now OFFLINE! Device ID: {{ trigger.entity_id }}"
+  - service: persistent_notification.create
+    data:
+      title: "Home Assistant - INTERNET OFFLINE!"
+      message: "Tracker For Internet is now OFFLINE! Device ID: {{ trigger.entity_id }}"
+
+## Tell me when INTERNET is BACK ONLINE
+- id: notification_internet_online
+  alias: Notification Internet Online
+  trigger:
+  - platform: state
+    entity_id: device_tracker.internet_uptime_8_8_8_8
+    to: "home"
+  action:
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Home Assistant - INTERNET BACK ONLINE!"
+      message: "Tracker For Internet is now BACK ONLINE! Device ID: {{ trigger.entity_id }}"
+  - service: persistent_notification.create
+    data:
+      title: "Home Assistant - INTERNET BACK ONLINE!"
+      message: "Tracker For Internet is now BACK ONLINE! Device ID: {{ trigger.entity_id }}"
+
+## Tell me when battery is below 99%
+- id: notification_ups_below_100
+  alias: Notification UPS Below 100%
+  trigger:
+  - platform: numeric_state
+    entity_id:
+    - sensor.ups1_battery_charge
+    - sensor.ups2_battery_charge
+    - sensor.ups3_battery_charge
+    below: 100
+  action:
+  - service: notify.pushbullet
+    data:
+      target: !secret email_target_pushbullet
+      title: "Home Assistant - POWER IS OUT! UPS IS BELOW 100%"
+      message: "{{ trigger.to_state.name }} is now {{ trigger.to_state.state }}! Device ID: {{ trigger.entity_id }}"
+  - service: persistent_notification.create
+    data:
+      title: >
+        "Home Assistant - POWER IS OUT! UPS IS BELOW 100%"
       message: "{{ trigger.to_state.name }} is now {{ trigger.to_state.state }}! Device ID: {{ trigger.entity_id }}"
 
 ## Tell me when Home Assistant starts/restarts
