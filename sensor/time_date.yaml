@@ -1,8 +1,10 @@
 - platform: time_date
   display_options:
+    - 'time'
     - 'date'
     - 'date_time'
-    - 'time'
-    # - 'time_date'
-    # - 'time_utc'
-    - 'beat'
+    - 'date_time_utc'
+    - 'date_time_iso'
+    - 'time_date'
+    - 'time_utc'
+    # - 'beat' # removed in 2024.7

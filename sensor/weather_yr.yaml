@@ -1,0 +1,19 @@
+# Weather data - Replaces the old yr sensor.
+# The weather_data platform uses met.no as a source for current meteorological data for your location.
+# https://github.com/Danielhiversen/home_assistant_weather_data
+- platform: weather_data
+  name: yr # weather
+  monitored_conditions:
+    - temperature
+    - symbol
+    - precipitation
+    - windSpeed
+    - pressure
+    - windDirection
+    - humidity
+    - fog
+    - cloudiness
+    - lowClouds
+    - mediumClouds
+    - highClouds
+    - dewpointTemperature
