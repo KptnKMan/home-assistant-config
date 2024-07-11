@@ -117,8 +117,8 @@
         - !secret plug_9 # gameroom lamp
         - !secret plug_1 # gameroom monitors
         - !secret plug_4 # gameroom fan
-        - light.shellyrgbw21 # shelly LED controller (need to move)
-        - light.shellyrgbw22 # shelly LED controller (need to move)
+        # - light.shellyrgbw21 # shelly LED controller (need to move)
+        # - light.shellyrgbw22 # shelly LED controller (need to move)
 
 ## Turn off Workstation double click
 - id: sw3_deactivate_workstation

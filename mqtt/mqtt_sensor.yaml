@@ -1,0 +1,42 @@
+# sensor:
+#   - state_topic: "aigasmeter1/main/value"
+#     name: "Gasmeter Value"
+#     unique_id: gasmeter_value
+#     unit_of_measurement: 'm³'
+#     state_class: total_increasing
+#     device_class: gas # Needs Home Assistant 2022.11!
+#     icon: 'mdi:meter-gas'
+#     availability_topic: aigasmeter1/connection
+#     payload_available: connected
+#     payload_not_available: connection lost
+
+#   - state_topic: "aigasmeter1/main/rate"
+#     name: "Gasmeter Rate"
+#     unique_id: gasmeter_rate
+#     unit_of_measurement: 'm³/min'
+#     state_class: measurement
+#     device_class: gas # Needs Home Assistant 2022.11!
+#     icon: 'mdi:meter-gas'
+#     availability_topic: aigasmeter1/connection
+#     payload_available: connected
+#     payload_not_available: connection lost
+
+#   - state_topic: "aigasmeter1/main/error"
+#     name: "Gasmeter Error"
+#     unique_id: gasmeter_error
+#     icon: "mdi:meter-gas-outline"
+#     availability_topic: aigasmeter1/connection
+#     payload_available: connected
+#     payload_not_available: connection lost    
+
+#   - state_topic: "aigasmeter1/uptime"
+#     name: "Gasmeter Uptime"
+#     unique_id: gasmeter_uptime
+#     unit_of_measurement: 's'
+#     state_class: measurement
+#     device_class: duration
+#     entity_category: diagnostic
+#     icon: "mdi:timer-outline"
+#     availability_topic: aigasmeter1/connection
+#     payload_available: connected
+#     payload_not_available: connection lost
